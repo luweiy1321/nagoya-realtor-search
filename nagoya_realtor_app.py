@@ -34,7 +34,7 @@ st.sidebar.markdown(f"**更新时间:** {datetime.now().strftime('%Y-%m-%d %H:%M
 @st.cache_data(ttl=0)  # 不缓存
 def load_data():
     """从CSV加载房源数据"""
-    url = "https://raw.githubusercontent.com/luweiy1321/nagoya-realtor-spider/raw/refs/heads/main/nagoya_properties.csv"
+    url = "https://raw.githubusercontent.com/luweiy1321/nagoya-realtor-spider/main/nagoya_properties.csv"
     
     try:
         # 添加时间戳避免缓存
