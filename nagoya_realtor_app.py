@@ -9,6 +9,7 @@ import requests
 from datetime import datetime
 import time
 import random
+import re
 
 # 页面配置
 st.set_page_config(
@@ -33,7 +34,8 @@ st.sidebar.markdown(f"**更新时间:** {datetime.now().strftime('%Y-%m-%d %H:%M
 # 加载数据
 @st.cache_data(ttl=0)
 def load_data():
-    url = "https://raw.githubusercontent.com/luweiy1321/nagoya-realtor-spider/main/nagoya_properties.csv"
+    # 从GitHub加载详细数据
+    url = "https://raw.githubusercontent.com/luweiy1321/nagoya-realtor-spider/main/nagoya_properties_detailed.csv"
     try:
         response = requests.get(url, params={'t': time.time()})
         from io import StringIO
@@ -45,12 +47,38 @@ def load_data():
 df = load_data()
 
 if df is not None:
+    # 标准化列名
+    column_mapping = {
+        'ID': 'id',
+        '来源': 'source',
+        '房源ID': 'property_id',
+        '类型': 'type',
+        '标题': 'title',
+        '价格(日元)': 'price_raw',
+        '价格显示': 'price',
+        '地址': 'address',
+        '面积(㎡)': 'area',
+        '房型': 'layout',
+        '楼层': 'floor',
+        '建筑类型': 'building_type',
+        '建造年份': 'construction_year',
+        '总楼层': 'total_floors',
+        '最近车站': 'station',
+        '步行分钟': 'walking_minutes',
+        '联系人': 'contact',
+        '电话': 'phone',
+        '详情链接': 'detail_url',
+        '爬取时间': 'scraped_at'
+    }
+    df = df.rename(columns=column_mapping)
+    
     # ====== 筛选条件 ======
+    st.sidebar.title("🔍 筛选条件")
     
     # 语言选择
     language = st.sidebar.selectbox(
         "🌐 选择语言",
-        ["中文", "日语", "越南语", "尼泊尔语"]
+        ["中文", "日语"]
     )
     
     st.sidebar.markdown("---")
@@ -70,11 +98,9 @@ if df is not None:
     
     # 价格筛选
     if 'price' in df.columns:
-        # 提取数字价格
         def extract_price(p):
             if pd.isna(p):
                 return 0
-            import re
             nums = re.findall(r'[\d.]+', str(p))
             return float(nums[0]) * 10000 if nums else 0
         
@@ -83,9 +109,9 @@ if df is not None:
         price_range = st.sidebar.slider(
             "💰 价格范围 (万円/月)",
             min_value=0,
-            max_value=50,
-            value=(0, 50),
-            step=1
+            max_value=200,
+            value=(0, 200),
+            step=5
         )
         df = df[(df['price_num'] >= price_range[0]) & (df['price_num'] <= price_range[1])]
     
@@ -93,14 +119,7 @@ if df is not None:
     
     # 面积筛选
     if 'area' in df.columns:
-        def extract_area(a):
-            if pd.isna(a):
-                return 0
-            import re
-            nums = re.findall(r'[\d.]+', str(a))
-            return float(nums[0]) if nums else 0
-        
-        df['area_num'] = df['area'].apply(extract_area)
+        df['area_num'] = pd.to_numeric(df['area'], errors='coerce').fillna(0)
         
         area_range = st.sidebar.slider(
             "📐 面积范围 (m²)",
@@ -115,14 +134,14 @@ if df is not None:
     
     # 户型筛选
     if 'layout' in df.columns:
-        layouts = df['layout'].unique()
+        layouts = df['layout'].dropna().unique()
         selected_layouts = st.sidebar.multiselect(
             "🗺️ 户型",
-            sorted(layouts),
-            default=layouts
+            sorted([str(l) for l in layouts]),
+            default=[str(l) for l in layouts]
         )
         if selected_layouts:
-            df = df[df['layout'].isin(selected_layouts)]
+            df = df[df['layout'].astype(str).isin(selected_layouts)]
     
     st.sidebar.markdown("---")
     st.sidebar.markdown(f"**📊 筛选结果: {len(df)} 条**")
@@ -130,13 +149,6 @@ if df is not None:
     # ====== 显示内容 ======
     
     if len(df) > 0:
-        title_col = {
-            "中文": "title_zh",
-            "日语": "title_ja", 
-            "越南语": "title_vi",
-            "尼泊尔语": "title_ne"
-        }.get(language, "title_zh")
-        
         # 标签页
         tab1, tab2 = st.tabs(["🏠 房源列表", "📊 统计"])
         
@@ -146,16 +158,16 @@ if df is not None:
             # 搜索
             search = st.text_input("🔍 搜索房源")
             
-            if search:
-                df = df[df[title_col].str.contains(search, na=False, case=False)]
+            if search and 'title' in df.columns:
+                df = df[df['title'].str.contains(search, na=False, case=False)]
             
             # 显示
             for idx, row in df.head(50).iterrows():
                 with st.container():
+                    # 图片
                     col1, col2 = st.columns([1, 2])
                     
                     with col1:
-                        # 使用真实SUUMO截图
                         img_url = "https://raw.githubusercontent.com/luweiy1321/nagoya-realtor-spider/main/screenshots/nagoya_all.png"
                         try:
                             st.image(img_url, width=280)
@@ -163,19 +175,40 @@ if df is not None:
                             st.write("🏠")
                     
                     with col2:
-                        title = row.get(title_col, row.get('title_ja', ''))
+                        # 标题
+                        title = row.get('title', '未命名')
                         st.subheader(title)
                         
+                        # 基本信息
                         info_cols = st.columns(3)
                         with info_cols[0]:
                             st.metric("价格", row.get('price', 'N/A'))
                         with info_cols[1]:
-                            st.metric("面积", row.get('area', 'N/A'))
+                            st.metric("面积", f"{row.get('area', 'N/A')}m²")
                         with info_cols[2]:
                             st.metric("户型", row.get('layout', 'N/A'))
                         
-                        if 'address' in row and pd.notna(row['address']):
-                            st.write(f"📍 {row['address']}")
+                        # 详细信息
+                        if 'address' in row and pd.notna(row.get('address')):
+                            st.write(f"📍 **地址:** {row['address']}")
+                        
+                        if 'station' in row and pd.notna(row.get('station')):
+                            walk = row.get('walking_minutes', '')
+                            st.write(f"🚃 **车站:** {row['station']} {walk}分钟" if walk else f"🚃 **车站:** {row['station']}")
+                        
+                        # 联系信息
+                        st.markdown("---")
+                        contact_cols = st.columns(2)
+                        with contact_cols[0]:
+                            if 'contact' in row and pd.notna(row.get('contact')):
+                                st.write(f"👤 **联系人:** {row['contact']}")
+                        with contact_cols[1]:
+                            if 'phone' in row and pd.notna(row.get('phone')):
+                                st.write(f"📞 **电话:** {row['phone']}")
+                        
+                        # 详情链接
+                        if 'detail_url' in row and pd.notna(row.get('detail_url')):
+                            st.markdown(f"[查看详情 →]({row['detail_url']})")
                         
                         st.caption(f"来源: {row.get('source', 'N/A')}")
                     
