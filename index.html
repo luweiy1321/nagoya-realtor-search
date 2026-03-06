@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>名古屋租房信息 - 带真实图片</title>
+    <title>名古屋賃貸物件</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f5; }
@@ -33,26 +33,37 @@
         .source-Yahoo { background: #ffe66d; color: #333; }
         
         .no-image { display: flex; align-items: center; justify-content: center; background: #eee; color: #999; height: 200px; }
+        
+        .lang-switch { position: fixed; top: 20px; right: 20px; background: #fff; padding: 10px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); display: flex; gap: 10px; }
+        .lang-switch button { padding: 8px 12px; border: none; background: #f0f0f0; border-radius: 4px; cursor: pointer; }
+        .lang-switch button.active { background: #e74c3c; color: white; }
     </style>
 </head>
 <body>
+    <div class="lang-switch">
+        <button onclick="setLang('zh')" id="btn-zh">🇨🇳 中文</button>
+        <button onclick="setLang('ja')" id="btn-ja" class="active">🇯🇵 日本語</button>
+        <button onclick="setLang('vi')" id="btn-vi">🇻🇳 Tiếng Việt</button>
+        <button onclick="setLang('ne')" id="btn-ne">🇳🇵 नेपाली</button>
+    </div>
+
     <div class="container">
-        <h1>🏠 名古屋租房信息 - 带真实图片</h1>
+        <h1 id="page-title">🏠 名古屋賃貸物件情報</h1>
         
-        <div class="stats">
-            <strong>📊 数据统计：</strong> 共 <span id="total">30</span> 条房源 | 
-            来源：At-Home, SUUMO, CHINTAI, Yahoo!不动产
+        <div class="stats" id="stats">
+            <strong id="stats-label">📊 データ統計：</strong> <span id="total">30</span> <span id="stats-unit">件</span> | 
+            <span id="stats-source">出典：At-Home, SUUMO, CHINTAI, Yahoo!不動産</span>
         </div>
         
         <div class="filter">
             <select id="sourceFilter" onchange="filterData()">
-                <option value="all">全部来源</option>
+                <option value="all" id="opt-all">すべて</option>
                 <option value="at-home">At-Home</option>
                 <option value="SUUMO">SUUMO</option>
                 <option value="CHINTAI">CHINTAI</option>
-                <option value="Yahoo">Yahoo!不动产</option>
+                <option value="Yahoo">Yahoo!不動産</option>
             </select>
-            <input type="text" id="searchInput" placeholder="搜索名称/地址..." oninput="filterData()">
+            <input type="text" id="searchInput" placeholder="検索..." oninput="filterData()">
         </div>
         
         <div class="property-grid" id="propertyGrid">
@@ -60,45 +71,98 @@
     </div>
 
     <script>
+        const translations = {
+            zh: {
+                title: "🏠 名古屋租房信息查询",
+                statsLabel: "📊 数据统计：",
+                statsUnit: "条",
+                statsSource: "来源：At-Home, SUUMO, CHINTAI, Yahoo!不动产",
+                optAll: "全部来源",
+                searchPlaceholder: "搜索名称/地址...",
+                noImage: "暂无图片",
+                source: "来源"
+            },
+            ja: {
+                title: "🏠 名古屋賃貸物件情報",
+                statsLabel: "📊 データ統計：",
+                statsUnit: "件",
+                statsSource: "出典：At-Home, SUUMO, CHINTAI, Yahoo!不動産",
+                optAll: "すべて",
+                searchPlaceholder: "検索...",
+                noImage: "画像なし",
+                source: "出典"
+            },
+            vi: {
+                title: "🏠 Thông Tin Cho Thuê Căn Hộ Nagoya",
+                statsLabel: "📊 Thống kê:",
+                statsUnit: "bất động sản",
+                statsSource: "Nguồn: At-Home, SUUMO, CHINTAI, Yahoo! BĐS",
+                optAll: "Tất cả nguồn",
+                searchPlaceholder: "Tìm kiếm tên/địa chỉ...",
+                noImage: "Không có ảnh",
+                source: "Nguồn"
+            },
+            ne: {
+                title: "🏠 नागोया भाडामा कोठा जानकारी",
+                statsLabel: "📊 तथ्याङ्क:",
+                statsUnit: "घरहरू",
+                statsSource: "स्रोत: At-Home, SUUMO, CHINTAI, Yahoo! सम्पत्ति",
+                optAll: "सबै स्रोत",
+                searchPlaceholder: "नाम/ठेगाना खोज्नुहोस...",
+                noImage: "फोटो छैन",
+                source: "स्रोत"
+            }
+        };
+
         const properties = [
-            // At-Home (with real images)
             {名称:"名古屋万科公寓",地址:"愛知県名古屋市中区栄1",房型:"1LDK",面积:"28.35m²",房租:"86,000",管理费:"10,000",来源:"at-home",图片:"https://www.athome.co.jp/image_files/path/7vfHwH8uSYFbeRIWXCR9sA==.jpeg?width=400&height=300"},
             {名称:"名古屋站前大厦",地址:"愛知県名古屋市中村区名駅1",房型:"1LDK",面积:"28.34m²",房租:"85,000",管理费:"10,000",来源:"at-home",图片:"https://www.athome.co.jp/image_files/path/UwL2PNnJQyUVFIeDjZ_8OQ==.jpeg?width=400&height=300"},
-            {名称:"栄住宅",地址:"愛知県名古屋市中区栄2",房型:"1LDK",面积:"28.35m²",房租:"86,000",管理费:"10,000",来源:"at-home",图片:"https://www.athome.co.jp/image_files/path/qXonbheJwakfLBT6UTwvgQ==.jpeg?width=400&height=300"},
-            {名称:"名古屋公园公寓",地址:"愛知県名古屋市西区那古野2",房型:"1LDK",面积:"28.34m²",房租:"88,000",管理费:"10,000",来源:"at-home",图片:"https://www.athome.co.jp/image_files/path/ekK4RixKFD3eKPn8m3p2KA==.jpeg?width=400&height=300"},
+            {名称:"栄住宅",地址:"愛知県神戸市中区栄2",房型:"1LDK",面积:"28.35m²",房租:"86,000",管理费:"10,000",来源:"at-home",图片:"https://www.athome.co.jp/image_files/path/qXonbheJwakfLBT6UTwvgQ==.jpeg?width=400&height=300"},
+            {名称:"名古屋公园公寓",地址:"愛知県神戸市西区那古野2",房型:"1LDK",面积:"28.34m²",房租:"88,000",管理费:"10,000",来源:"at-home",图片:"https://www.athome.co.jp/image_files/path/ekK4RixKFD3eKPn8m3p2KA==.jpeg?width=400&height=300"},
             {名称:"名站南住宅",地址:"愛知県神戸市中村区名駅南1",房型:"1LDK",面积:"28.35m²",房租:"88,500",管理费:"10,000",来源:"at-home",图片:"https://www.athome.co.jp/image_files/path/9Qie90JyP0HJPzmas8PVyg==.jpeg?width=400&height=300"},
-            {名称:"伏见公寓",地址:"愛知県神戸市中区伏見1",房型:"1LDK",面积:"28.35m²",房租:"89,000",管理费:"10,000",来源:"at-home",图片:"https://www.athome.co.jp/image_files/path/eyoKjGEgxpgdLW2fgXbDwQ==.jpeg?width=400&height=300"},
-            {名称:"名古屋中央大厦",地址:"愛知県神戸市中村区太閤3",房型:"1K",面积:"24.45m²",房租:"62,000",管理费:"8,000",来源:"at-home",图片:"https://www.athome.co.jp/image_files/path/d2ThK53FeZDdnZQZbD6tKA==.jpeg?width=400&height=300"},
+            {名称:"伏见公寓",地址:"愛知県神戸市中区伏见1",房型:"1LDK",面积:"28.35m²",房租:"89,000",管理费:"10,000",来源:"at-home",图片:"https://www.athome.co.jp/image_files/path/eyoKjGEgxpgdLW2fgXbDwQ==.jpeg?width=400&height=300"},
+            {名称:"名古屋中央大厦",地址:"愛知県神戸市中区太閤3",房型:"1K",面积:"24.45m²",房租:"62,000",管理费:"8,000",来源:"at-home",图片:"https://www.athome.co.jp/image_files/path/d2ThK53FeZDdnZQZbD6tKA==.jpeg?width=400&height=300"},
             {名称:"栄高级公寓",地址:"愛知県神戸市中区栄2",房型:"1LDK",面积:"41.65m²",房租:"90,000",管理费:"8,000",来源:"at-home",图片:"https://www.athome.co.jp/image_files/path/JBJUBjaxP7txkjfx31nYHA==.jpeg?width=400&height=300"},
             {名称:"名古屋站西公寓",地址:"愛知県神戸市西区名駅2",房型:"1K",面积:"24.43m²",房租:"53,000",管理费:"8,000",来源:"at-home",图片:"https://www.athome.co.jp/image_files/path/jb11aH42D2aNxF7zFUK3zQ==.jpeg?width=400&height=300"},
-            {名称:"大须步行街",地址:"愛知県神戸市中区大須1",房型:"1K",面积:"24.43m²",房租:"63,000",管理费:"8,000",来源:"at-home",图片:"https://www.athome.co.jp/image_files/path/7auhu2krcDuRBR_hcQtjbQ==.jpeg?width=400&height=300"},
-            
-            // SUUMO
+            {名称:"大须步行街",地址:"愛知県神戸市中区大须1",房型:"1K",面积:"24.43m²",房租:"63,000",管理费:"8,000",来源:"at-home",图片:"https://www.athome.co.jp/image_files/path/7auhu2krcDuRBR_hcQtjbQ==.jpeg?width=400&height=300"},
             {名称:"ファステート名古屋駅前アルティス",地址:"愛知県名古屋市中村区名駅南1",房型:"1K",面积:"26.66m²",房租:"71,900",管理费:"10,000",来源:"SUUMO",图片:""},
             {名称:"プレサンス名古屋STATIONルミアス",地址:"愛知県神戸市中村区名駅南1",房型:"1K",面积:"22.91m²",房租:"56,700",管理费:"9,360",来源:"SUUMO",图片:""},
             {名称:"Ｚ・Ｒ名駅",地址:"愛知県神戸市西区名駅2",房型:"1K",面积:"26.09m²",房租:"66,000",管理费:"7,000",来源:"SUUMO",图片:""},
             {名称:"エルスタンザ名駅西",地址:"愛知県神戸市中村区亀島2",房型:"1K",面积:"28.49m²",房租:"69,000",管理费:"7,000",来源:"SUUMO",图片:""},
             {名称:"プレサンス名古屋ルーカス",地址:"愛知県神戸市西区那古野2",房型:"1K",面积:"22.42m²",房租:"69,200",管理费:"6,840",来源:"SUUMO",图片:""},
-            
-            // CHINTAI
-            {名称:"賃貸マンションディアレイシャス浅間町",地址:"愛知県名古屋市西区幅下2",房型:"1K",面积:"26.22m²",房租:"64,500",管理费:"8,000",来源:"CHINTAI",图片:""},
+            {名称:"賃貸マンションディアレイシャス浅間町",地址:"愛知県神戸市西区幅下2",房型:"1K",面积:"26.22m²",房租:"64,500",管理费:"8,000",来源:"CHINTAI",图片:""},
             {名称:"賃貸マンションプランドール名駅",地址:"愛知県神戸市西区那古野2",房型:"1K",面积:"24.82m²",房租:"62,000",管理费:"6,000",来源:"CHINTAI",图片:""},
             {名称:"賃貸マンションメゾンドガスパール名駅",地址:"愛知県神戸市中村区則武2",房型:"1K",面积:"28.6m²",房租:"63,000",管理费:"7,000",来源:"CHINTAI",图片:""},
-            
-            // Yahoo
-            {名称:"T's Dream",地址:"愛知県名古屋市中村区則武1",房型:"1K",面积:"24.9m²",房租:"54,000",管理费:"5,000",来源:"Yahoo",图片:""},
-            {名称:"ルミナス名駅",地址:"愛知県名古屋市中村区名駅5",房型:"1K",面积:"24.85m²",房租:"59,000",管理费:"6,000",来源:"Yahoo",图片:""},
-            {名称:"S－RESIDENCE名駅",地址:"愛知県西安市西区那古野2",房型:"1K",面积:"22.47m²",房租:"75,000",管理费:"7,000",来源:"Yahoo",图片:""},
-            {名称:"朝日プラザ名古屋ターミナルスクエア",地址:"愛知県西安市中村区則武2",房型:"ワンルーム",面积:"17.28m²",房租:"36,000",管理费:"5,000",来源:"Yahoo",图片:""},
-            {名称:"シャルマンソワレ名駅",地址:"愛知県西安市西区那古野2",房型:"1K",面积:"28.82m²",房租:"70,500",管理费:"6,500",来源:"Yahoo",图片:""},
-            
-            // More At-Home
+            {名称:"T's Dream",地址:"愛知県神戸市中村区則武1",房型:"1K",面积:"24.9m²",房租:"54,000",管理费:"5,000",来源:"Yahoo",图片:""},
+            {名称:"ルミナス名駅",地址:"愛知県神戸市中村区名駅5",房型:"1K",面积:"24.85m²",房租:"59,000",管理费:"6,000",来源:"Yahoo",图片:""},
+            {名称:"S－RESIDENCE名駅",地址:"愛知県神戸市西区那古野2",房型:"1K",面积:"22.47m²",房租:"75,000",管理费:"7,000",来源:"Yahoo",图片:""},
+            {名称:"朝日プラザ名古屋ターミナルスクエア",地址:"愛知県神戸市中村区則武2",房型:"ワンルーム",面积:"17.28m²",房租:"36,000",管理费:"5,000",来源:"Yahoo",图片:""},
+            {名称:"シャルマンソワレ名駅",地址:"愛知県神戸市西区那古野2",房型:"1K",面积:"28.82m²",房租:"70,500",管理费:"6,500",来源:"Yahoo",图片:""},
             {名称:"栄之光公寓",地址:"愛知県神戸市中区栄3",房型:"1LDK",面积:"35m²",房租:"75,000",管理费:"8,000",来源:"at-home",图片:"https://www.athome.co.jp/image_files/path/BgoYpEPpG5kMyEQbPXn4PA==.jpeg?width=400&height=300"},
             {名称:"名古屋城北",地址:"愛知県神戸市北区平安通1",房型:"1K",面积:"22m²",房租:"45,000",管理费:"5,000",来源:"at-home",图片:"https://www.athome.co.jp/image_files/path/HYPHd2D6GZKxVnDU6nFzIA==.jpeg?width=400&height=300"},
             {名称:"金山联合",地址:"愛知県神戸市中区金山1",房型:"1LDK",面积:"32m²",房租:"68,000",管理费:"7,500",来源:"at-home",图片:"https://www.athome.co.jp/image_files/path/VyOYhd7_Tdb7vW17MBiNBw==.jpeg?width=400&height=300"},
-            {名称:"本阵站前",地址:"愛知県神戸市东区本陣1",房型:"1K",面积:"23m²",房租:"48,000",管理费:"5,500",来源:"at-home",图片:"https://www.athome.co.jp/image_files/path/lLYq8jrZWj8M3fsj8YXV1A==.jpeg?width=400&height=300"},
+            {名称:"本阵站前",地址:"愛知県神戸市东区本阵1",房型:"1K",面积:"23m²",房租:"48,000",管理费:"5,500",来源:"at-home",图片:"https://www.athome.co.jp/image_files/path/lLYq8jrZWj8M3fsj8YXV1A==.jpeg?width=400&height=300"},
             {名称:"龟岛住宅",地址:"愛知県神戸市中村区亀島2",房型:"1K",面积:"25m²",房租:"55,000",管理费:"6,000",来源:"at-home",图片:"https://www.athome.co.jp/image_files/path/ZJbSDQP2Uu04UsfMQXQgww==.jpeg?width=400&height=300"}
         ];
+
+        let currentLang = 'ja';
+        
+        function setLang(lang) {
+            currentLang = lang;
+            const t = translations[lang];
+            
+            document.getElementById('page-title').textContent = t.title;
+            document.getElementById('stats-label').textContent = t.statsLabel;
+            document.getElementById('stats-unit').textContent = t.statsUnit;
+            document.getElementById('stats-source').textContent = t.statsSource;
+            document.getElementById('opt-all').textContent = t.optAll;
+            document.getElementById('searchInput').placeholder = t.searchPlaceholder;
+            
+            document.querySelectorAll('.lang-switch button').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('btn-' + lang).classList.add('active');
+            
+            renderProperties(properties);
+        }
 
         function getSourceClass(source) {
             if (source === 'at-home') return 'source-at-home';
@@ -110,6 +174,7 @@
         function renderProperties(data) {
             const grid = document.getElementById('propertyGrid');
             grid.innerHTML = '';
+            const t = translations[currentLang];
             
             data.forEach(item => {
                 const card = document.createElement('div');
@@ -119,18 +184,21 @@
                     ? `<img class="property-image" src="${item.图片}" alt="${item.名称}" onerror="this.style.display='none'; this.nextSibling.style.display='flex'">`
                     : '';
                 const noImageHtml = !item.图片 
-                    ? `<div class="no-image">暂无图片</div>` 
-                    : `<div class="no-image" style="display:none">暂无图片</div>`;
+                    ? `<div class="no-image">${t.noImage}</div>` 
+                    : `<div class="no-image" style="display:none">${t.noImage}</div>`;
+                
+                const priceLabel = currentLang === 'zh' ? '日元/月' : currentLang === 'ja' ? '円/月' : currentLang === 'vi' ? 'Yên/tháng' : 'येन/महिना';
+                const feeLabel = currentLang === 'zh' ? '管理费' : currentLang === 'ja' ? '管理費' : currentLang === 'vi' ? 'Phí quản lý' : 'व्यवस्थापन शुल्क';
                 
                 card.innerHTML = `
                     ${imageHtml}${noImageHtml}
                     <div class="property-info">
                         <div class="property-name">${item.名称}</div>
-                        <div class="property-price">${item.房租}日元/月</div>
+                        <div class="property-price">${item.房租}${priceLabel}</div>
                         <div class="property-details">
                             <div>📍 ${item.地址}</div>
                             <div>📐 ${item.房型} | ${item.面积}</div>
-                            <div>💰 管理费: ${item.管理费}日元</div>
+                            <div>💰 ${feeLabel}: ${item.管理费}</div>
                         </div>
                         <span class="source ${getSourceClass(item.来源)}">${item.来源}</span>
                     </div>
@@ -148,7 +216,7 @@
             const filtered = properties.filter(item => {
                 const matchSource = source === 'all' || item.来源 === source;
                 const matchSearch = item.名称.toLowerCase().includes(search) || 
-                                    item.地址.toLowerCase().includes(search);
+                                  item.地址.toLowerCase().includes(search);
                 return matchSource && matchSearch;
             });
             
