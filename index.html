@@ -63,74 +63,76 @@ ja:{title:"🏠 名古屋賃貸物件情報",statsLabel:"📊 データ統計：
 vi:{title:"🏠 Thông Tin Cho Thuê Nagoya",statsLabel:"📊 Thống kê:",statsUnit:"bất động sản",statsSource:"Nguồn: At-Home, SUUMO, CHINTAI, Yahoo! BĐS",optAll:"Tất cả nguồn",searchPlaceholder:"Tìm kiếm tên/địa chỉ...",noImage:"Không có ảnh",source:"Nguồn",priceUnit:"Yên/tháng",feeLabel:"Phí quản lý",address:"Địa chỉ",layout:"Loại phòng",area:"Diện tích"},
 ne:{title:"🏠 नागोया भाडामा कोठा",statsLabel:"📊 तथ्याङ्क:",statsUnit:"घरहरू",statsSource:"स्रोत: At-Home, SUUMO, CHINTAI, Yahoo! सम्पत्ति",optAll:"सबै स्रोत",searchPlaceholder:"नाम/ठेगाना खोज्नुहोस...",noImage:"फोटो छैन",source:"स्रोत",priceUnit:"येन/महिना",feeLabel:"व्यवस्थापन शुल्क",address:"ठेगाना",layout:"कोठाको प्रकार",area:"क्षेत्रफल"}
 };
-// 多语言房源数据
+
 const props = [
 // At-Home有图
-{j:{n:"万科公寓",a:"愛知県神戸市中区栄1-1-1",l:"1LDK",s:"28.35m²"},z:{n:"万科公寓",a:"爱知县青岛区荣1-1-1",l:"1LDK",s:"28.35m²"},v:{n:"Can ho Vanke",a:"Aichi-ken Nagoya-shi Chuo-ku Sakae 1-1-1",l:"1LDK",s:"28.35m²"},i:{n:"Vancke Appartment",a:"Aichi-ken Nagoya-shi Chuo-ku Sakae 1-1-1",l:"1LDK",s:"28.35m²"},p:"86,000",m:"10,000",src:"at-home",img:"https://www.athome.co.jp/image_files/path/7vfHwH8uSYFbeRIWXCR9sA==.jpeg?w=400&h=300"},
-{j:{n:"名古屋站前",a:"愛知県神戸市中区名駅1-1-1",l:"1LDK",s:"28.34m²"},z:{n:"名古屋站前",a:"爱知县名站1-1-1",l:"1LDK",s:"28.34m²"},v:{n:"Truoc ga Nagoya",a:"Aichi-ken Nakamura-ku Meieki 1-1-1",l:"1LDK",s:"28.34m²"},i:{n:"Nagoya Station Front",a:"Aichi-ken Nakamura-ku Meieki 1-1-1",l:"1LDK",s:"28.34m²"},p:"85,000",m:"10,000",src:"at-home",img:"https://www.athome.co.jp/image_files/path/UwL2PNnJQyUVFIeDjZ_8OQ==.jpeg?w=400&h=300"},
-{j:{n:"栄住宅",a:"愛知県神戸市中区栄2-1-1",l:"1LDK",s:"28.35m²"},z:{n:"荣住宅",a:"爱知县青岛区荣2-1-1",l:"1LDK",s:"28.35m²"},v:{n:"Nha Sakae",a:"Aichi-ken Chuo-ku Sakae 2-1-1",l:"1LDK",s:"28.35m²"},i:{n:"Sakae Residence",a:"Aichi-ken Chuo-ku Sakae 2-1-1",l:"1LDK",s:"28.35m²"},p:"86,000",m:"10,000",src:"at-home",img:"https://www.athome.co.jp/image_files/path/qXonbheJwakfLBT6UTwvgQ==.jpeg?w=400&h=300"},
-{j:{n:"名古屋公園",a:"愛知県神戸市西区那古野2-1-1",l:"1LDK",s:"28.34m²"},z:{n:"名古屋公园",a:"爱知县那古野2-1-1",l:"1LDK",s:"28.34m²"},v:{n:"Cong Vien Nagoya",a:"Aichi-ken Nishi-ku Nakano 2-1-1",l:"1LDK",s:"28.34m²"},i:{n:"Nagoya Park",a:"Aichi-ken Nishi-ku Nakano 2-1-1",l:"1LDK",s:"28.34m²"},p:"88,000",m:"10,000",src:"at-home",img:"https://www.athome.co.jp/image_files/path/ekK4RixKFD3eKPn8m3p2KA==.jpeg?w=400&h=300"},
-{j:{n:"名駅南",a:"愛知県神戸市中村区名駅南1-1-1",l:"1LDK",s:"28.35m²"},z:{n:"名站南",a:"爱知县名站南1-1-1",l:"1LDK",s:"28.35m²"},v:{n:"Meieki Nam",a:"Aichi-ken Nakamura-ku Meieki Minami 1-1-1",l:"1LDK",s:"28.35m²"},i:{n:"Meieki South",a:"Aichi-ken Nakamura-ku Meieki Minami 1-1-1",l:"1LDK",s:"28.35m²"},p:"88,500",m:"10,000",src:"at-home",img:"https://www.athome.co.jp/image_files/path/9Qie90JyP0HJPzmas8PVyg==.jpeg?w=400&h=300"},
-{j:{n:"伏見公寓",a:"愛知県神戸市中区伏見1-1-1",l:"1LDK",s:"28.35m²"},z:{n:"伏见公寓",a:"爱知县伏见1-1-1",l:"1LDK",s:"28.35m²"},v:{n:"Can ho Fushimi",a:"Aichi-ken Chuo-ku Fushimi 1-1-1",l:"1LDK",s:"28.35m²"},i:{n:"Fushimi Apartment",a:"Aichi-ken Chuo-ku Fushimi 1-1-1",l:"1LDK",s:"28.35m²"},p:"89,000",m:"10,000",src:"at-home",img:"https://www.athome.co.jp/image_files/path/eyoKjGEgxpgdLW2fgXbDwQ==.jpeg?w=400&h=300"},
-{j:{n:"名古屋中央",a:"愛知県神戸市中村区太閤3-1-1",l:"1K",s:"24.45m²"},z:{n:"名古屋中央",a:"爱知县太阎3-1-1",l:"1K",s:"24.45m²"},v:{n:"Trung tam Nagoya",a:"Aichi-ken Nakamura-ku Taikyo 3-1-1",l:"1K",s:"24.45m²"},i:{n:"Nagoya Central",a:"Aichi-ken Nakamura-ku Taikyo 3-1-1",l:"1K",s:"24.45m²"},p:"62,000",m:"8,000",src:"at-home",img:"https://www.athome.co.jp/image_files/path/d2ThK53FeZDdnZQZbD6tKA==.jpeg?w=400&h=300"},
-{j:{n:"栄Premium",a:"愛知県神戸市中区栄2-2-2",l:"1LDK",s:"41.65m²"},z:{n:"荣Premium",a:"爱知县青岛区荣2-2-2",l:"1LDK",s:"41.65m²"},v:{n:"Sakae Premium",a:"Aichi-ken Chuo-ku Sakae 2-2-2",l:"1LDK",s:"41.65m²"},i:{n:"Sakae Premium",a:"Aichi-ken Chuo-ku Sakae 2-2-2",l:"1LDK",s:"41.65m²"},p:"90,000",m:"8,000",src:"at-home",img:"https://www.athome.co.jp/image_files/path/JBJUBjaxP7txkjfx31nYHA==.jpeg?w=400&h=300"},
-{j:{n:"名古屋駅西",a:"愛知県神戸市西区名駅2-1-1",l:"1K",s:"24.43m²"},z:{n:"名古屋站西",a:"爱知县名站西2-1-1",l:"1K",s:"24.43m²"},v:{n:"Nagoya Station West",a:"Aichi-ken Nishi-ku Meieki 2-1-1",l:"1K",s:"24.43m²"},i:{n:"Nagoya West",a:"Aichi-ken Nishi-ku Meieki 2-1-1",l:"1K",s:"24.43m²"},p:"53,000",m:"8,000",src:"at-home",img:"https://www.athome.co.jp/image_files/path/jb11aH42D2aNxF7zFUK3zQ==.jpeg?w=400&h=300"},
-{j:{n:"大須エリア",a:"愛知県神戸市中村区大須1-1-1",l:"1K",s:"24.43m²"},z:{n:"大须区域",a:"爱知县大须1-1-1",l:"1K",s:"24.43m²"},v:{n:"Khu vuc Osu",a:"Aichi-ken Nakamura-ku Osu 1-1-1",l:"1K",s:"24.43m²"},i:{n:"Osu Area",a:"Aichi-ken Nakamura-ku Osu 1-1-1",l:"1K",s:"24.43m²"},p:"63,000",m:"8,000",src:"at-home",img:"https://www.athome.co.jp/image_files/path/7auhu2krcDuRBR_hcQtjbQ==.jpeg?w=400&h=300"},
-// SUUMO无图
-{j:{n:"ファステート名古屋駅",a:"愛知県神戸市中村区名駅南1-1-1",l:"1K",s:"26.66m²"},z:{n:"快速名古屋站",a:"爱知县名站南1-1-1",l:"1K",s:"26.66m²"},v:{n:"Fastate Nagoya St",a:"Aichi-ken Nakamura-ku Meieki Minami 1-1-1",l:"1K",s:"26.66m²"},i:{n:"Fastate Nagoya",a:"Aichi-ken Nakamura-ku Meieki Minami 1-1-1",l:"1K",s:"26.66m²"},p:"71,900",m:"10,000",src:"SUUMO",img:""},
-{j:{n:"プレサンス名古屋",a:"愛知県神戸市中村区名駅南1-2-2",l:"1K",s:"22.91m²"},z:{n:"普雷桑斯名古屋",a:"爱知县名站南1-2-2",l:"1K",s:"22.91m²"},v:{n:"Pressance Nagoya",a:"Aichi-ken Nakamura-ku Meieki Minami 1-2-2",l:"1K",s:"22.91m²"},i:{n:"Pressance Nagoya",a:"Aichi-ken Nakamura-ku Meieki Minami 1-2-2",l:"1K",s:"22.91m²"},p:"56,700",m:"9,360",src:"SUUMO",img:""},
-{j:{n:"ZR名駅",a:"愛知県神戸市西区名駅2-1-1",l:"1K",s:"26.09m²"},z:{n:"ZR名站",a:"爱知县名站2-1-1",l:"1K",s:"26.09m²"},v:{n:"ZR Meieki",a:"Aichi-ken Nishi-ku Meieki 2-1-1",l:"1K",s:"26.09m²"},i:{n:"ZR Meieki",a:"Aichi-ken Nishi-ku Meieki 2-1-1",l:"1K",s:"26.09m²"},p:"66,000",m:"7,000",src:"SUUMO",img:""},
-{j:{n:"エルスタンザ名駅西",a:"愛知県神戸市中村区亀島2-1-1",l:"1K",s:"28.49m²"},z:{n:"埃尔斯坦扎名站西",a:"爱知县龟岛2-1-1",l:"1K",s:"28.49m²"},v:{n:"El Stanza Nagoya W",a:"Aichi-ken Nakamura-ku Kamejima 2-1-1",l:"1K",s:"28.49m²"},i:{n:"El Stanza West",a:"Aichi-ken Nakamura-ku Kamejima 2-1-1",l:"1K",s:"28.49m²"},p:"69,000",m:"7,000",src:"SUUMO",img:""},
-{j:{n:"プレサンス名古屋L",a:"愛知県神戸市西区那古野2-2-2",l:"1K",s:"22.42m²"},z:{n:"普雷桑斯名古屋L",a:"爱知县那古野2-2-2",l:"1K",s:"22.42m²"},v:{n:"Pressance Nagoya L",a:"Aichi-ken Nishi-ku Nakano 2-2-2",l:"1K",s:"22.42m²"},i:{n:"Pressance L",a:"Aichi-ken Nishi-ku Nakano 2-2-2",l:"1K",s:"22.42m²"},p:"69,200",m:"6,840",src:"SUUMO",img:""},
-// CHINTAI无图
-{j:{n:"ディアレイシャス浅間",a:"愛知県神戸市西区幅下2-1-1",l:"1K",s:"26.22m²"},z:{n:"迪亚雷夏浅间",a:"爱知县幅下2-1-1",l:"1K",s:"26.22m²"},v:{n:"Diaser Asama",a:"Aichi-ken Nishi-ku Hanasaku 2-1-1",l:"1K",s:"26.22m²"},i:{n:"Diaser Asama",a:"Aichi-ken Nishi-ku Hanasaku 2-1-1",l:"1K",s:"26.22m²"},p:"64,500",m:"8,000",src:"CHINTAI",img:""},
-{j:{n:"プランドール名古屋",a:"愛知県神戸市西区那古野2-3-3",l:"1K",s:"24.82m²"},z:{n:"普兰多尔名古屋",a:"爱知县那古野2-3-3",l:"1K",s:"24.82m²"},v:{n:"Prandoru Nagoya",a:"Aichi-ken Nishi-ku Nakano 2-3-3",l:"1K",s:"24.82m²"},i:{n:"Prandoru Nagoya",a:"Aichi-ken Nishi-ku Nakano 2-3-3",l:"1K",s:"24.82m²"},p:"62,000",m:"6,000",src:"CHINTAI",img:""},
-{j:{n:"メゾンドガスパール",a:"愛知県神戸市中村区則武2-1-1",l:"1K",s:"28.6m²"},z:{n:"梅佐德加斯帕尔",a:"爱知县则武2-1-1",l:"1K",s:"28.6m²"},v:{n:"Mezon Gaspar",a:"Aichi-ken Nakamura-ku Noritake 2-1-1",l:"1K",s:"28.6m²"},i:{n:"Mezon Gaspar",a:"Aichi-ken Nakamura-ku Noritake 2-1-1",l:"1K",s:"28.6m²"},p:"63,000",m:"7,000",src:"CHINTAI",img:""},
-// Yahoo无图
-{j:{n:"T's Dream",a:"愛知県神戸市中村区則武1-1-1",l:"1K",s:"24.9m²"},z:{n:"T的梦",a:"爱知县则武1-1-1",l:"1K",s:"24.9m²"},v:{n:"T's Dream",a:"Aichi-ken Nakamura-ku Noritake 1-1-1",l:"1K",s:"24.9m²"},i:{n:"T's Dream",a:"Aichi-ken Nakamura-ku Noritake 1-1-1",l:"1K",s:"24.9m²"},p:"54,000",m:"5,000",src:"Yahoo",img:""},
-{j:{n:"ルミナス名古屋",a:"愛知県神戸市中村区名駅5-1-1",l:"1K",s:"24.85m²"},z:{n:"卢米纳斯名古屋",a:"爱知县名站5-1-1",l:"1K",s:"24.85m²"},v:{n:"Luminas Nagoya",a:"Aichi-ken Nakamura-ku Meieki 5-1-1",l:"1K",s:"24.85m²"},i:{n:"Luminas Nagoya",a:"Aichi-ken Nakamura-ku Meieki 5-1-1",l:"1K",s:"24.85m²"},p:"59,000",m:"6,000",src:"Yahoo",img:""},
-{j:{n:"S-RESIDENCE名古屋",a:"愛知県神戸市西区那古野2-4-4",l:"1K",s:"22.47m²"},z:{n:"S名站住宅",a:"爱知县那古野2-4-4",l:"1K",s:"22.47m²"},v:{n:"S-Residence Nagoya",a:"Aichi-ken Nishi-ku Nakano 2-4-4",l:"1K",s:"22.47m²"},i:{n:"S-Residence",a:"Aichi-ken Nishi-ku Nakano 2-4-4",l:"1K",s:"22.47m²"},p:"75,000",m:"7,000",src:"Yahoo",img:""},
-{j:{n:"朝日プラザ名古屋",a:"愛知県神戸市中村区則武2-2-2",l:"ワンルーム",s:"17.28m²"},z:{n:"朝日广场名古屋",a:"爱知县则武2-2-2",l:"单间",s:"17.28m²"},v:{n:"Asahi Plaza Nagoya",a:"Aichi-ken Nakamura-ku Noritake 2-2-2",l:"Studio",s:"17.28m²"},i:{n:"Asahi Plaza",a:"Aichi-ken Nakamura-ku Noritake 2-2-2",l:"Studio",s:"17.28m²"},p:"36,000",m:"5,000",src:"Yahoo",img:""},
-{j:{n:"シャルマン名古屋",a:"愛知県神戸市西区那古野2-5-5",l:"1K",s:"28.82m²"},z:{n:"沙龙名古屋",a:"爱知县那古野2-5-5",l:"1K",s:"28.82m²"},v:{n:"Charuman Nagoya",a:"Aichi-ken Nishi-ku Nakano 2-5-5",l:"1K",s:"28.82m²"},i:{n:"Charuman Nagoya",a:"Aichi-ken Nishi-ku Nakano 2-5-5",l:"1K",s:"28.82m²"},p:"70,500",m:"6,500",src:"Yahoo",img:""},
-// More At-Home有图
-{j:{n:"栄shine",a:"愛知県神戸市中区栄3-1-1",l:"1LDK",s:"35m²"},z:{n:"荣之光",a:"爱知县青岛区荣3-1-1",l:"1LDK",s:"35m²"},v:{n:"Sakae Shine",a:"Aichi-ken Chuo-ku Sakae 3-1-1",l:"1LDK",s:"35m²"},i:{n:"Sakae Shine",a:"Aichi-ken Chuo-ku Sakae 3-1-1",l:"1LDK",s:"35m²"},p:"75,000",m:"8,000",src:"at-home",img:"https://www.athome.co.jp/image_files/path/BgoYpEPpG5kMyEQbPXn4PA==.jpeg?w=400&h=300"},
-{j:{n:"名古屋North",a:"愛知県神戸市北区平安通1-1-1",l:"1K",s:"22m²"},z:{n:"名古屋北",a:"爱知县平安通1-1-1",l:"1K",s:"22m²"},v:{n:"Nagoya North",a:"Aichi-ken kita-ku Heian-dori 1-1-1",l:"1K",s:"22m²"},i:{n:"Nagoya North",a:"Aichi-ken kita-ku Heian-dori 1-1-1",l:"1K",s:"22m²"},p:"45,000",m:"5,000",src:"at-home",img:"https://www.athome.co.jp/image_files/path/HYPHd2D6GZKxVnDU6nFzIA==.jpeg?w=400&h=300"},
-{j:{n:"金山Joint",a:"愛知県神戸市中区金山1-1-1",l:"1LDK",s:"32m²"},z:{n:"金山联合",a:"爱知县金山1-1-1",l:"1LDK",s:"32m²"},v:{n:"Kanayama Joint",a:"Aichi-ken Chuo-ku Kanayama 1-1-1",l:"1LDK",s:"32m²"},i:{n:"Kanayama Joint",a:"Aichi-ken Chuo-ku Kanayama 1-1-1",l:"1LDK",s:"32m²"},p:"68,000",m:"7,500",src:"at-home",img:"https://www.athome.co.jp/image_files/path/VyOYhd7_Tdb7vW17MBiNBw==.jpeg?w=400&h=300"},
-{j:{n:"本陣Frontier",a:"愛知県神戸市东区本陣1-1-1",l:"1K",s:"23m²"},z:{n:"本阵前沿",a:"爱知县本阵1-1-1",l:"1K",s:"23m²"},v:{n:"Honjin Frontier",a:"Aichi-ken Higashi-ku Honjin 1-1-1",l:"1K",s:"23m²"},i:{n:"Honjin Frontier",a:"Aichi-ken Higashi-ku Honjin 1-1-1",l:"1K",s:"23m²"},p:"48,000",m:"5,500",src:"at-home",img:"https://www.athome.co.jp/image_files/path/lLYq8jrZWj8M3fsj8YXV1A==.jpeg?w=400&h=300"},
-{j:{n:"亀島Plaza",a:"愛知県神戸市中村区亀島2-2-2",l:"1K",s:"25m²"},z:{n:"龟岛广场",a:"爱知县龟岛2-2-2",l:"1K",s:"25m²"},v:{n:"Kamejima Plaza",a:"Aichi-ken Nakamura-ku Kamejima 2-2-2",l:"1K",s:"25m²"},i:{n:"Kamejima Plaza",a:"Aichi-ken Nakamura-ku Kamejima 2-2-2",l:"1K",s:"25m²"},p:"55,000",m:"6,000",src:"at-home",img:"https://www.athome.co.jp/image_files/path/ZJbSDQP2Uu04UsfMQXQgww==.jpeg?w=400&h=300"}
+{ja:{n:"万科公寓",a:"愛知県神戸市中区栄1-1-1",l:"1LDK",s:"28.35m²"},zh:{n:"万科公寓",a:"爱知县青岛区荣1-1-1",l:"1LDK",s:"28.35m²"},vi:{n:"Can ho Vanke",a:"Aichi-ken Nagoya-shi Chuo-ku Sakae 1-1-1",l:"1LDK",s:"28.35m²"},ne:{n:"Vanke Appartment",a:"Aichi-ken Nagoya-shi Chuo-ku Sakae 1-1-1",l:"1LDK",s:"28.35m²"},p:"86,000",m:"10,000",src:"at-home",img:"https://www.athome.co.jp/image_files/path/7vfHwH8uSYFbeRIWXCR9sA==.jpeg?w=400&h=300"},
+{ja:{n:"名古屋站前",a:"愛知県神戸市中区名駅1-1-1",l:"1LDK",s:"28.34m²"},zh:{n:"名古屋站前",a:"爱知县名站1-1-1",l:"1LDK",s:"28.34m²"},vi:{n:"Truoc ga Nagoya",a:"Aichi-ken Nakamura-ku Meieki 1-1-1",l:"1LDK",s:"28.34m²"},ne:{n:"Nagoya Station Front",a:"Aichi-ken Nakamura-ku Meieki 1-1-1",l:"1LDK",s:"28.34m²"},p:"85,000",m:"10,000",src:"at-home",img:"https://www.athome.co.jp/image_files/path/UwL2PNnJQyUVFIeDjZ_8OQ==.jpeg?w=400&h=300"},
+{ja:{n:"栄住宅",a:"愛知県神戸市中区栄2-1-1",l:"1LDK",s:"28.35m²"},zh:{n:"荣住宅",a:"爱知县青岛区荣2-1-1",l:"1LDK",s:"28.35m²"},vi:{n:"Nha Sakae",a:"Aichi-ken Chuo-ku Sakae 2-1-1",l:"1LDK",s:"28.35m²"},ne:{n:"Sakae Residence",a:"Aichi-ken Chuo-ku Sakae 2-1-1",l:"1LDK",s:"28.35m²"},p:"86,000",m:"10,000",src:"at-home",img:"https://www.athome.co.jp/image_files/path/qXonbheJwakfLBT6UTwvgQ==.jpeg?w=400&h=300"},
+{ja:{n:"名古屋公園",a:"愛知県神戸市西区那古野2-1-1",l:"1LDK",s:"28.34m²"},zh:{n:"名古屋公园",a:"爱知县那古野2-1-1",l:"1LDK",s:"28.34m²"},vi:{n:"Cong Vien Nagoya",a:"Aichi-ken Nishi-ku Nakano 2-1-1",l:"1LDK",s:"28.34m²"},ne:{n:"Nagoya Park",a:"Aichi-ken Nishi-ku Nakano 2-1-1",l:"1LDK",s:"28.34m²"},p:"88,000",m:"10,000",src:"at-home",img:"https://www.athome.co.jp/image_files/path/ekK4RixKFD3eKPn8m3p2KA==.jpeg?w=400&h=300"},
+{ja:{n:"名駅南",a:"愛知県神戸市中村区名駅南1-1-1",l:"1LDK",s:"28.35m²"},zh:{n:"名站南",a:"爱知县名站南1-1-1",l:"1LDK",s:"28.35m²"},vi:{n:"Meieki Nam",a:"Aichi-ken Nakamura-ku Meieki Minami 1-1-1",l:"1LDK",s:"28.35m²"},ne:{n:"Meieki South",a:"Aichi-ken Nakamura-ku Meieki Minami 1-1-1",l:"1LDK",s:"28.35m²"},p:"88,500",m:"10,000",src:"at-home",img:"https://www.athome.co.jp/image_files/path/9Qie90JyP0HJPzmas8PVyg==.jpeg?w=400&h=300"},
+{ja:{n:"伏見公寓",a:"愛知県神戸市中区伏見1-1-1",l:"1LDK",s:"28.35m²"},zh:{n:"伏见公寓",a:"爱知县伏见1-1-1",l:"1LDK",s:"28.35m²"},vi:{n:"Can ho Fushimi",a:"Aichi-ken Chuo-ku Fushimi 1-1-1",l:"1LDK",s:"28.35m²"},ne:{n:"Fushimi Apartment",a:"Aichi-ken Chuo-ku Fushimi 1-1-1",l:"1LDK",s:"28.35m²"},p:"89,000",m:"10,000",src:"at-home",img:"https://www.athome.co.jp/image_files/path/eyoKjGEgxpgdLW2fgXbDwQ==.jpeg?w=400&h=300"},
+{ja:{n:"名古屋中央",a:"愛知県神戸市中村区太閤3-1-1",l:"1K",s:"24.45m²"},zh:{n:"名古屋中央",a:"爱知县太阎3-1-1",l:"1K",s:"24.45m²"},vi:{n:"Trung tam Nagoya",a:"Aichi-ken Nakamura-ku Taikyo 3-1-1",l:"1K",s:"24.45m²"},ne:{n:"Nagoya Central",a:"Aichi-ken Nakamura-ku Taikyo 3-1-1",l:"1K",s:"24.45m²"},p:"62,000",m:"8,000",src:"at-home",img:"https://www.athome.co.jp/image_files/path/d2ThK53FeZDdnZQZbD6tKA==.jpeg?w=400&h=300"},
+{ja:{n:"栄Premium",a:"愛知県神戸市中区栄2-2-2",l:"1LDK",s:"41.65m²"},zh:{n:"荣Premium",a:"爱知县青岛区荣2-2-2",l:"1LDK",s:"41.65m²"},vi:{n:"Sakae Premium",a:"Aichi-ken Chuo-ku Sakae 2-2-2",l:"1LDK",s:"41.65m²"},ne:{n:"Sakae Premium",a:"Aichi-ken Chuo-ku Sakae 2-2-2",l:"1LDK",s:"41.65m²"},p:"90,000",m:"8,000",src:"at-home",img:"https://www.athome.co.jp/image_files/path/JBJUBjaxP7txkjfx31nYHA==.jpeg?w=400&h=300"},
+{ja:{n:"名古屋駅西",a:"愛知県神戸市西区名駅2-1-1",l:"1K",s:"24.43m²"},zh:{n:"名古屋站西",a:"爱知县名站西2-1-1",l:"1K",s:"24.43m²"},vi:{n:"Nagoya Station West",a:"Aichi-ken Nishi-ku Meieki 2-1-1",l:"1K",s:"24.43m²"},ne:{n:"Nagoya West",a:"Aichi-ken Nishi-ku Meieki 2-1-1",l:"1K",s:"24.43m²"},p:"53,000",m:"8,000",src:"at-home",img:"https://www.athome.co.jp/image_files/path/jb11aH42D2aNxF7zFUK3zQ==.jpeg?w=400&h=300"},
+{ja:{n:"大須エリア",a:"愛知県神戸市中村区大須1-1-1",l:"1K",s:"24.43m²"},zh:{n:"大须区域",a:"爱知县大须1-1-1",l:"1K",s:"24.43m²"},vi:{n:"Khu vuc Osu",a:"Aichi-ken Nakamura-ku Osu 1-1-1",l:"1K",s:"24.43m²"},ne:{n:"Osu Area",a:"Aichi-ken Nakamura-ku Osu 1-1-1",l:"1K",s:"24.43m²"},p:"63,000",m:"8,000",src:"at-home",img:"https://www.athome.co.jp/image_files/path/7auhu2krcDuRBR_hcQtjbQ==.jpeg?w=400&h=300"},
+// SUUMO
+{ja:{n:"ファステート名古屋駅",a:"愛知県神戸市中村区名駅南1-1-1",l:"1K",s:"26.66m²"},zh:{n:"快速名古屋站",a:"爱知县名站南1-1-1",l:"1K",s:"26.66m²"},vi:{n:"Fastate Nagoya St",a:"Aichi-ken Nakamura-ku Meieki Minami 1-1-1",l:"1K",s:"26.66m²"},ne:{n:"Fastate Nagoya",a:"Aichi-ken Nakamura-ku Meieki Minami 1-1-1",l:"1K",s:"26.66m²"},p:"71,900",m:"10,000",src:"SUUMO",img:""},
+{ja:{n:"プレサンス名古屋",a:"愛知県神戸市中村区名駅南1-2-2",l:"1K",s:"22.91m²"},zh:{n:"普雷桑斯名古屋",a:"爱知县名站南1-2-2",l:"1K",s:"22.91m²"},vi:{n:"Pressance Nagoya",a:"Aichi-ken Nakamura-ku Meieki Minami 1-2-2",l:"1K",s:"22.91m²"},ne:{n:"Pressance Nagoya",a:"Aichi-ken Nakamura-ku Meieki Minami 1-2-2",l:"1K",s:"22.91m²"},p:"56,700",m:"9,360",src:"SUUMO",img:""},
+{ja:{n:"ZR名駅",a:"愛知県神戸市西区名駅2-1-1",l:"1K",s:"26.09m²"},zh:{n:"ZR名站",a:"爱知县名站2-1-1",l:"1K",s:"26.09m²"},vi:{n:"ZR Meieki",a:"Aichi-ken Nishi-ku Meieki 2-1-1",l:"1K",s:"26.09m²"},ne:{n:"ZR Meieki",a:"Aichi-ken Nishi-ku Meieki 2-1-1",l:"1K",s:"26.09m²"},p:"66,000",m:"7,000",src:"SUUMO",img:""},
+{ja:{n:"エルスタンザ名駅西",a:"愛知県神戸市中村区亀島2-1-1",l:"1K",s:"28.49m²"},zh:{n:"埃尔斯坦扎名站西",a:"爱知县龟岛2-1-1",l:"1K",s:"28.49m²"},vi:{n:"El Stanza Nagoya W",a:"Aichi-ken Nakamura-ku Kamejima 2-1-1",l:"1K",s:"28.49m²"},ne:{n:"El Stanza West",a:"Aichi-ken Nakamura-ku Kamejima 2-1-1",l:"1K",s:"28.49m²"},p:"69,000",m:"7,000",src:"SUUMO",img:""},
+{ja:{n:"プレサンス名古屋L",a:"愛知県神戸市西区那古野2-2-2",l:"1K",s:"22.42m²"},zh:{n:"普雷桑斯名古屋L",a:"爱知县那古野2-2-2",l:"1K",s:"22.42m²"},vi:{n:"Pressance Nagoya L",a:"Aichi-ken Nishi-ku Nakano 2-2-2",l:"1K",s:"22.42m²"},ne:{n:"Pressance L",a:"Aichi-ken Nishi-ku Nakano 2-2-2",l:"1K",s:"22.42m²"},p:"69,200",m:"6,840",src:"SUUMO",img:""},
+// CHINTAI
+{ja:{n:"ディアレイシャス浅間",a:"愛知県神戸市西区幅下2-1-1",l:"1K",s:"26.22m²"},zh:{n:"迪亚雷夏浅间",a:"爱知县幅下2-1-1",l:"1K",s:"26.22m²"},vi:{n:"Diaser Asama",a:"Aichi-ken Nishi-ku Hanasaku 2-1-1",l:"1K",s:"26.22m²"},ne:{n:"Diaser Asama",a:"Aichi-ken Nishi-ku Hanasaku 2-1-1",l:"1K",s:"26.22m²"},p:"64,500",m:"8,000",src:"CHINTAI",img:""},
+{ja:{n:"プランドール名古屋",a:"愛知県神戸市西区那古野2-3-3",l:"1K",s:"24.82m²"},zh:{n:"普兰多尔名古屋",a:"爱知县那古野2-3-3",l:"1K",s:"24.82m²"},vi:{n:"Prandoru Nagoya",a:"Aichi-ken Nishi-ku Nakano 2-3-3",l:"1K",s:"24.82m²"},ne:{n:"Prandoru Nagoya",a:"Aichi-ken Nishi-ku Nakano 2-3-3",l:"1K",s:"24.82m²"},p:"62,000",m:"6,000",src:"CHINTAI",img:""},
+{ja:{n:"メゾンドガスパール",a:"愛知県神戸市中村区則武2-1-1",l:"1K",s:"28.6m²"},zh:{n:"梅佐德加斯帕尔",a:"爱知县则武2-1-1",l:"1K",s:"28.6m²"},vi:{n:"Mezon Gaspar",a:"Aichi-ken Nakamura-ku Noritake 2-1-1",l:"1K",s:"28.6m²"},ne:{n:"Mezon Gaspar",a:"Aichi-ken Nakamura-ku Noritake 2-1-1",l:"1K",s:"28.6m²"},p:"63,000",m:"7,000",src:"CHINTAI",img:""},
+// Yahoo
+{ja:{n:"T's Dream",a:"愛知県神戸市中村区則武1-1-1",l:"1K",s:"24.9m²"},zh:{n:"T的梦",a:"爱知县则武1-1-1",l:"1K",s:"24.9m²"},vi:{n:"T's Dream",a:"Aichi-ken Nakamura-ku Noritake 1-1-1",l:"1K",s:"24.9m²"},ne:{n:"T's Dream",a:"Aichi-ken Nakamura-ku Noritake 1-1-1",l:"1K",s:"24.9m²"},p:"54,000",m:"5,000",src:"Yahoo",img:""},
+{ja:{n:"ルミナス名古屋",a:"愛知県神戸市中村区名駅5-1-1",l:"1K",s:"24.85m²"},zh:{n:"卢米纳斯名古屋",a:"爱知县名站5-1-1",l:"1K",s:"24.85m²"},vi:{n:"Luminas Nagoya",a:"Aichi-ken Nakamura-ku Meieki 5-1-1",l:"1K",s:"24.85m²"},ne:{n:"Luminas Nagoya",a:"Aichi-ken Nakamura-ku Meieki 5-1-1",l:"1K",s:"24.85m²"},p:"59,000",m:"6,000",src:"Yahoo",img:""},
+{ja:{n:"S-RESIDENCE名古屋",a:"愛知県神戸市西区那古野2-4-4",l:"1K",s:"22.47m²"},zh:{n:"S名站住宅",a:"爱知县那古野2-4-4",l:"1K",s:"22.47m²"},vi:{n:"S-Residence Nagoya",a:"Aichi-ken Nishi-ku Nakano 2-4-4",l:"1K",s:"22.47m²"},ne:{n:"S-Residence",a:"Aichi-ken Nishi-ku Nakano 2-4-4",l:"1K",s:"22.47m²"},p:"75,000",m:"7,000",src:"Yahoo",img:""},
+{ja:{n:"朝日プラザ名古屋",a:"愛知県神戸市中村区則武2-2-2",l:"ワンルーム",s:"17.28m²"},zh:{n:"朝日广场名古屋",a:"爱知县则武2-2-2",l:"单间",s:"17.28m²"},vi:{n:"Asahi Plaza Nagoya",a:"Aichi-ken Nakamura-ku Noritake 2-2-2",l:"Studio",s:"17.28m²"},ne:{n:"Asahi Plaza",a:"Aichi-ken Nakamura-ku Noritake 2-2-2",l:"Studio",s:"17.28m²"},p:"36,000",m:"5,000",src:"Yahoo",img:""},
+{ja:{n:"シャルマン名古屋",a:"愛知県神戸市西区那古野2-5-5",l:"1K",s:"28.82m²"},zh:{n:"沙龙名古屋",a:"爱知县那古野2-5-5",l:"1K",s:"28.82m²"},vi:{n:"Charuman Nagoya",a:"Aichi-ken Nishi-ku Nakano 2-5-5",l:"1K",s:"28.82m²"},ne:{n:"Charuman Nagoya",a:"Aichi-ken Nishi-ku Nakano 2-5-5",l:"1K",s:"28.82m²"},p:"70,500",m:"6,500",src:"Yahoo",img:""},
+// More At-Home
+{ja:{n:"栄shine",a:"愛知県神戸市中区栄3-1-1",l:"1LDK",s:"35m²"},zh:{n:"荣之光",a:"爱知县青岛区荣3-1-1",l:"1LDK",s:"35m²"},vi:{n:"Sakae Shine",a:"Aichi-ken Chuo-ku Sakae 3-1-1",l:"1LDK",s:"35m²"},ne:{n:"Sakae Shine",a:"Aichi-ken Chuo-ku Sakae 3-1-1",l:"1LDK",s:"35m²"},p:"75,000",m:"8,000",src:"at-home",img:"https://www.athome.co.jp/image_files/path/BgoYpEPpG5kMyEQbPXn4PA==.jpeg?w=400&h=300"},
+{ja:{n:"名古屋North",a:"愛知県神戸市北区平安通1-1-1",l:"1K",s:"22m²"},zh:{n:"名古屋北",a:"爱知县平安通1-1-1",l:"1K",s:"22m²"},vi:{n:"Nagoya North",a:"Aichi-ken kita-ku Heian-dori 1-1-1",l:"1K",s:"22m²"},ne:{n:"Nagoya North",a:"Aichi-ken kita-ku Heian-dori 1-1-1",l:"1K",s:"22m²"},p:"45,000",m:"5,000",src:"at-home",img:"https://www.athome.co.jp/image_files/path/HYPHd2D6GZKxVnDU6nFzIA==.jpeg?w=400&h=300"},
+{ja:{n:"金山Joint",a:"愛知県神戸市中区金山1-1-1",l:"1LDK",s:"32m²"},zh:{n:"金山联合",a:"爱知县金山1-1-1",l:"1LDK",s:"32m²"},vi:{n:"Kanayama Joint",a:"Aichi-ken Chuo-ku Kanayama 1-1-1",l:"1LDK",s:"32m²"},ne:{n:"Kanayama Joint",a:"Aichi-ken Chuo-ku Kanayama 1-1-1",l:"1LDK",s:"32m²"},p:"68,000",m:"7,500",src:"at-home",img:"https://www.athome.co.jp/image_files/path/VyOYhd7_Tdb7vW17MBiNBw==.jpeg?w=400&h=300"},
+{ja:{n:"本陣Frontier",a:"愛知県神戸市东区本陣1-1-1",l:"1K",s:"23m²"},zh:{n:"本阵前沿",a:"爱知县本阵1-1-1",l:"1K",s:"23m²"},vi:{n:"Honjin Frontier",a:"Aichi-ken Higashi-ku Honjin 1-1-1",l:"1K",s:"23m²"},ne:{n:"Honjin Frontier",a:"Aichi-ken Higashi-ku Honjin 1-1-1",l:"1K",s:"23m²"},p:"48,000",m:"5,500",src:"at-home",img:"https://www.athome.co.jp/image_files/path/lLYq8jrZWj8M3fsj8YXV1A==.jpeg?w=400&h=300"},
+{ja:{n:"亀島Plaza",a:"愛知県神戸市中村区亀島2-2-2",l:"1K",s:"25m²"},zh:{n:"龟岛广场",a:"爱知县龟岛2-2-2",l:"1K",s:"25m²"},vi:{n:"Kamejima Plaza",a:"Aichi-ken Nakamura-ku Kamejima 2-2-2",l:"1K",s:"25m²"},ne:{n:"Kamejima Plaza",a:"Aichi-ken Nakamura-ku Kamejima 2-2-2",l:"1K",s:"25m²"},p:"55,000",m:"6,000",src:"at-home",img:"https://www.athome.co.jp/image_files/path/ZJbSDQP2Uu04UsfMQXQgww==.jpeg?w=400&h=300"}
 ];
-let lang='ja';
+
+let lang = 'ja';
 function setLang(l){
-lang=l;const t=trans[l];
-document.getElementById('page-title').textContent=t.title;
-document.getElementById('stats-label').textContent=t.statsLabel;
-document.getElementById('stats-unit').textContent=t.statsUnit;
-document.getElementById('stats-source').textContent=t.statsSource;
-document.getElementById('opt-all').textContent=t.optAll;
-document.getElementById('searchInput').placeholder=t.searchPlaceholder;
-document.querySelectorAll('.lang-switch button').forEach(b=>b.classList.remove('active'));
-document.getElementById('btn-'+l).classList.add('active');
-render(props);
+  lang = l;
+  const t = trans[l];
+  document.getElementById('page-title').textContent = t.title;
+  document.getElementById('stats-label').textContent = t.statsLabel;
+  document.getElementById('stats-unit').textContent = t.statsUnit;
+  document.getElementById('stats-source').textContent = t.statsSource;
+  document.getElementById('opt-all').textContent = t.optAll;
+  document.getElementById('searchInput').placeholder = t.searchPlaceholder;
+  document.querySelectorAll('.lang-switch button').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-'+l).classList.add('active');
+  render(props);
 }
-function getSrcCls(s){return'source-'+s.toLowerCase().replace('!','')}
+function getSrcCls(s){return 'source-'+s.toLowerCase().replace('!','')}
 function render(data){
-const g=document.getElementById('propertyGrid'),t=trans[lang];
-g.innerHTML='';
-data.forEach(p=>{
-const d=p[lang]||p.j;
-const img=p.img?'<img class="property-image" src="'+p.img+'" alt="'+d.n+'" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\'">':'';
-const noImg=p.img?'':'<div class="no-image">'+t.noImage+'</div>';
-const card=document.createElement('div');
-card.className='property-card';
-card.innerHTML=img+noImg+'<div class="property-info"><div class="property-name">'+d.n+'</div><div class="property-price">'+p.p+t.priceUnit+'</div><div class="property-details"><div>📍 '+t.address+': '+d.a+'</div><div>📐 '+t.layout+': '+d.l+' | '+t.area+': '+d.s+'</div><div>💰 '+t.feeLabel+': '+p.m+'</div></div><span class="source '+getSrcCls(p.src)+'">'+p.src+'</span></div>';
-g.appendChild(card);
-});
-document.getElementById('total').textContent=data.length;
+  const g = document.getElementById('propertyGrid'), t = trans[lang];
+  g.innerHTML = '';
+  data.forEach(p => {
+    const d = p[lang] || p.ja;
+    const img = p.img ? '<img class="property-image" src="'+p.img+'" alt="'+d.n+'" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\'">' : '';
+    const noImg = p.img ? '' : '<div class="no-image">'+t.noImage+'</div>';
+    const card = document.createElement('div');
+    card.className = 'property-card';
+    card.innerHTML = img + noImg + '<div class="property-info"><div class="property-name">'+d.n+'</div><div class="property-price">'+p.p+t.priceUnit+'</div><div class="property-details"><div>📍 '+t.address+': '+d.a+'</div><div>📐 '+t.layout+': '+d.l+' | '+t.area+': '+d.s+'</div><div>💰 '+t.feeLabel+': '+p.m+'</div></div><span class="source '+getSrcCls(p.src)+'">'+p.src+'</span></div>';
+    g.appendChild(card);
+  });
+  document.getElementById('total').textContent = data.length;
 }
 function filterData(){
-const s=document.getElementById('sourceFilter').value,v=document.getElementById('searchInput').value.toLowerCase();
-const f=props.filter(p=>{const d=p[lang]||p.j;return(s==='all'||p.src===s)&&(d.n.toLowerCase().includes(v)||d.a.toLowerCase().includes(v))});
-render(f);
+  const s = document.getElementById('sourceFilter').value, v = document.getElementById('searchInput').value.toLowerCase();
+  const f = props.filter(p => { const d = p[lang] || p.ja; return (s === 'all' || p.src === s) && (d.n.toLowerCase().includes(v) || d.a.toLowerCase().includes(v)); });
+  render(f);
 }
 render(props);
 </script>
