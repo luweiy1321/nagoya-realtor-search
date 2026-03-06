@@ -1,0 +1,327 @@
+{
+  "source": "yahoo.co.jp",
+  "scrapeDate": "2026-03-06T23:58:00Z",
+  "totalProperties": 4780,
+  "sampleCount": 31,
+  "averageRent": 74556,
+  "minRent": 45000,
+  "maxRent": 210000,
+  "stats": {
+    "oneRoom": 4,
+    "oneK": 22,
+    "oneLDK": 2,
+    "other": 3
+  },
+  "properties": [
+    {
+      "building": "Z・R名駅",
+      "floor": "3",
+      "rent": 66000,
+      "management": 7000,
+      "deposit": "なし",
+      "keymoney": 66000,
+      "layout": "1K",
+      "area": 26.09
+    },
+    {
+      "building": "Z・R名駅",
+      "floor": "8",
+      "rent": 70000,
+      "management": 7000,
+      "deposit": "なし",
+      "keymoney": 70000,
+      "layout": "1K",
+      "area": 26.09
+    },
+    {
+      "building": "L'ENVOL MEIEKI",
+      "floor": "6",
+      "rent": 106000,
+      "management": 9500,
+      "deposit": "なし",
+      "keymoney": 1,
+      "layout": "1K",
+      "area": 36.2
+    },
+    {
+      "building": "L'ENVOL MEIEKI",
+      "floor": "9",
+      "rent": 210000,
+      "management": 20000,
+      "deposit": "なし",
+      "keymoney": 1,
+      "layout": "2LDK",
+      "area": 63.74
+    },
+    {
+      "building": "名鉄名古屋駅",
+      "floor": "7",
+      "rent": 60000,
+      "management": 6000,
+      "deposit": "なし",
+      "keymoney": "なし",
+      "layout": "1K",
+      "area": 22.44
+    },
+    {
+      "building": "名鉄名古屋駅",
+      "floor": "5",
+      "rent": 63000,
+      "management": 6000,
+      "deposit": "なし",
+      "keymoney": "なし",
+      "layout": "1K",
+      "area": 22.56
+    },
+    {
+      "building": "亀島駅",
+      "floor": "4",
+      "rent": 79000,
+      "management": 7000,
+      "deposit": "なし",
+      "keymoney": 1,
+      "layout": "1LDK",
+      "area": 34.98
+    },
+    {
+      "building": "メゾンドガスパール名駅",
+      "floor": "5",
+      "rent": 67000,
+      "management": 7500,
+      "deposit": 1,
+      "keymoney": "なし",
+      "layout": "1K",
+      "area": 28.6
+    },
+    {
+      "building": "グランドソレイユ名駅",
+      "floor": "9",
+      "rent": 81000,
+      "management": 7000,
+      "deposit": 1,
+      "keymoney": 2,
+      "layout": "1K",
+      "area": 35.53
+    },
+    {
+      "building": "エルスタンザ名駅西",
+      "floor": "7",
+      "rent": 69000,
+      "management": 7000,
+      "deposit": "なし",
+      "keymoney": "なし",
+      "layout": "ワンルーム",
+      "area": 28.24
+    },
+    {
+      "building": "エルスタンザ名駅西",
+      "floor": "8",
+      "rent": 70000,
+      "management": 7000,
+      "deposit": "なし",
+      "keymoney": "なし",
+      "layout": "ワンルーム",
+      "area": 28.24
+    },
+    {
+      "building": "B's117",
+      "floor": "5",
+      "rent": 76000,
+      "management": 6000,
+      "deposit": "なし",
+      "keymoney": "なし",
+      "layout": "1DK",
+      "area": 43.9
+    },
+    {
+      "building": "B's117",
+      "floor": "6",
+      "rent": 71000,
+      "management": 6000,
+      "deposit": "なし",
+      "keymoney": "なし",
+      "layout": "ワンルーム",
+      "area": 40.43
+    },
+    {
+      "building": "伏見駅",
+      "floor": "2",
+      "rent": 45000,
+      "management": 4000,
+      "deposit": "なし",
+      "keymoney": "なし",
+      "layout": "1LDK",
+      "area": 29.35
+    },
+    {
+      "building": "S-RESIDENCE名駅南",
+      "floor": "3",
+      "rent": 64000,
+      "management": 7000,
+      "deposit": "なし",
+      "keymoney": "なし",
+      "layout": "1K",
+      "area": 24.64
+    },
+    {
+      "building": "プレサンス伏見アーバンベース",
+      "floor": "5",
+      "rent": 64760,
+      "management": 7240,
+      "deposit": "なし",
+      "keymoney": 72000,
+      "layout": "1K",
+      "area": 23.37
+    },
+    {
+      "building": "プレサンス伏見アーバンベース",
+      "floor": "11",
+      "rent": 68800,
+      "management": 7280,
+      "deposit": "なし",
+      "keymoney": 76000,
+      "layout": "1K",
+      "area": 23.47
+    },
+    {
+      "building": "レオパレス拓亀島",
+      "floor": "3",
+      "rent": 73000,
+      "management": 7500,
+      "deposit": "なし",
+      "keymoney": 1,
+      "layout": "1K",
+      "area": 23.18
+    },
+    {
+      "building": "レオパレス拓亀島",
+      "floor": "1",
+      "rent": 68000,
+      "management": 7500,
+      "deposit": "なし",
+      "keymoney": 68000,
+      "layout": "1K",
+      "area": 23.18
+    },
+    {
+      "building": "グリーンハイツ浅間町",
+      "floor": "5",
+      "rent": 45000,
+      "management": 0,
+      "deposit": "なし",
+      "keymoney": 1,
+      "layout": "ワンルーム",
+      "area": 31.39
+    },
+    {
+      "building": "レオパレスかこまち",
+      "floor": "4",
+      "rent": 61000,
+      "management": 7500,
+      "deposit": "なし",
+      "keymoney": 1,
+      "layout": "1K",
+      "area": 20.81
+    },
+    {
+      "building": "レオパレスかこまち",
+      "floor": "3",
+      "rent": 60000,
+      "management": 7500,
+      "deposit": "なし",
+      "keymoney": 60000,
+      "layout": "1K",
+      "area": 20.81
+    },
+    {
+      "building": "ファステート名古屋駅前アルティス",
+      "floor": "4",
+      "rent": 71900,
+      "management": 10000,
+      "deposit": "なし",
+      "keymoney": 81900,
+      "layout": "1K",
+      "area": 26.66
+    },
+    {
+      "building": "ファステート名古屋駅前アルティス",
+      "floor": "9",
+      "rent": 73000,
+      "management": 10000,
+      "deposit": "なし",
+      "keymoney": 83000,
+      "layout": "1K",
+      "area": 26.66
+    },
+    {
+      "building": "T's Dream",
+      "floor": "6",
+      "rent": 54000,
+      "management": 5000,
+      "deposit": "なし",
+      "keymoney": "なし",
+      "layout": "1K",
+      "area": 24.9
+    },
+    {
+      "building": "ベレーサ名駅ウエスト",
+      "floor": "5",
+      "rent": 58000,
+      "management": 6000,
+      "deposit": "なし",
+      "keymoney": 29000,
+      "layout": "1K",
+      "area": 24.64
+    },
+    {
+      "building": "ベレーサ名駅ウエスト",
+      "floor": "8",
+      "rent": 66000,
+      "management": 6000,
+      "deposit": "なし",
+      "keymoney": 33000,
+      "layout": "1K",
+      "area": 32.58
+    },
+    {
+      "building": "プレサンス名古屋駅前ヴェルロード",
+      "floor": "3",
+      "rent": 60000,
+      "management": 11000,
+      "deposit": "なし",
+      "keymoney": 60000,
+      "layout": "1K",
+      "area": 20.8
+    },
+    {
+      "building": "プレサンス名古屋駅前ヴェルロード",
+      "floor": "11",
+      "rent": 60800,
+      "management": 12220,
+      "deposit": "なし",
+      "keymoney": 73000,
+      "layout": "1K",
+      "area": 25.55
+    },
+    {
+      "building": "ルミナス名駅",
+      "floor": "7",
+      "rent": 59000,
+      "management": 6000,
+      "deposit": "なし",
+      "keymoney": "なし",
+      "layout": "1K",
+      "area": 24.85
+    },
+    {
+      "building": "THE LOUNGE LINEAR GATE",
+      "floor": "11",
+      "rent": 171000,
+      "management": 11000,
+      "deposit": "なし",
+      "keymoney": "なし",
+      "layout": "2LDK",
+      "area": 57.76
+    }
+  ]
+}
