@@ -17,7 +17,7 @@ st.markdown("---")
 @st.cache_data
 def load_data():
     try:
-        # 尝试从GitHub加载
+        # 从GitHub加载
         url = "https://raw.githubusercontent.com/luweiy1321/nagoya-realtor-search/main/nagoya_all_properties.csv"
         df = pd.read_csv(url)
         return df
