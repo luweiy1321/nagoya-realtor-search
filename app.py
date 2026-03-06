@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from pathlib import Path
+import re
 
 # 设置页面
 st.set_page_config(
@@ -20,8 +20,21 @@ def load_data():
         # 从GitHub加载
         url = "https://raw.githubusercontent.com/luweiy1321/nagoya-realtor-search/main/nagoya_all_properties.csv"
         df = pd.read_csv(url)
+        
+        # 清理房租数据，转换为数字
+        def parse_price(price):
+            if pd.isna(price):
+                return 0
+            price_str = str(price).replace(',', '').replace(' ', '')
+            try:
+                return int(price_str.split('-')[0])  # 取范围的前一个值
+            except:
+                return 0
+        
+        df['房租_numeric'] = df['房租'].apply(parse_price)
         return df
-    except:
+    except Exception as e:
+        st.error(f"加载数据失败: {e}")
         return None
 
 df = load_data()
@@ -35,27 +48,30 @@ if df is not None:
     selected_sources = st.sidebar.multiselect("来源", sources, default=sources)
     
     # 价格筛选
-    prices = df["房租"].dropna()
-    if len(prices) > 0:
+    prices = df["房租_numeric"].dropna()
+    if len(prices) > 0 and prices.max() > 0:
         min_price = int(prices.min())
         max_price = int(prices.max())
         price_range = st.sidebar.slider("房租 (日元/月)", min_price, max_price, (min_price, max_price))
+    else:
+        price_range = None
     
     # 筛选数据
     filtered_df = df[df["来源"].isin(selected_sources)]
-    if len(prices) > 0:
+    if price_range:
         filtered_df = filtered_df[
-            (filtered_df["房租"] >= price_range[0]) & 
-            (filtered_df["房租"] <= price_range[1])
+            (filtered_df["房租_numeric"] >= price_range[0]) & 
+            (filtered_df["房租_numeric"] <= price_range[1])
         ]
     
     # 显示统计
     st.sidebar.markdown("---")
     st.sidebar.markdown(f"**共 {len(filtered_df)} 条房源**")
     
-    # 显示数据
+    # 显示数据（去掉numeric列）
+    display_df = filtered_df.drop(columns=["房租_numeric"]) if "房租_numeric" in filtered_df.columns else filtered_df
     st.dataframe(
-        filtered_df,
+        display_df,
         use_container_width=True,
         hide_index=True
     )
