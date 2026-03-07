@@ -1,0 +1,11 @@
+:root {
+  --primary: #e94560;
+  --secondary: #0f3460;
+  --dark: #1a1a2e;
+  --darker: #16213e;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}

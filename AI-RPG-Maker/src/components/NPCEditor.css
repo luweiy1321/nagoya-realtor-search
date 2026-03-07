@@ -1,0 +1,336 @@
+.npc-editor {
+  display: grid;
+  grid-template-columns: 250px 300px 1fr;
+  height: 100%;
+  background: #1a1a2e;
+}
+
+/* NPC列表 */
+.npc-list {
+  background: #16213e;
+  border-right: 1px solid #0f3460;
+  display: flex;
+  flex-direction: column;
+}
+
+.npc-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #0f3460;
+}
+
+.npc-list-header h3 {
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.npc-list-header button {
+  padding: 0.3rem 0.8rem;
+  background: #e94560;
+  border: none;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.npc-items {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem;
+}
+
+.npc-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.npc-item:hover {
+  background: #0f3460;
+}
+
+.npc-item.selected {
+  background: #0f3460;
+  border: 1px solid #e94560;
+}
+
+.npc-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #fff;
+}
+
+.npc-info {
+  flex: 1;
+}
+
+.npc-name {
+  font-weight: 500;
+}
+
+.npc-pos {
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.delete-btn {
+  width: 24px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.delete-btn:hover {
+  color: #e94560;
+}
+
+/* NPC属性 */
+.npc-properties {
+  background: #16213e;
+  border-right: 1px solid #0f3460;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.property-section {
+  margin-bottom: 1.5rem;
+}
+
+ {
+  font-size: 0..property-section h48rem;
+  color: #888;
+  margin-bottom: 0.8rem;
+  text-transform: uppercase;
+}
+
+.property-section label {
+  display: block;
+  margin-bottom: 0.8rem;
+  font-size: 0.85rem;
+  color: #aaa;
+}
+
+.property-section input,
+.property-section select,
+.property-section textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.3rem;
+  background: #0f3460;
+  border: 1px solid #0f3460;
+  border-radius: 4px;
+  color: #eee;
+}
+
+.property-section input:focus,
+.property-section select:focus,
+.property-section textarea:focus {
+  outline: none;
+  border-color: #e94560;
+}
+
+/* 对话树 */
+.dialogue-tree {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.dialogue-node {
+  padding: 0.8rem;
+  background: #0f3460;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  border: 1px solid transparent;
+}
+
+.dialogue-node:hover {
+  background: #1a4a7a;
+}
+
+.dialogue-node.editing {
+  border-color: #e94560;
+}
+
+.node-text {
+  font-size: 0.85rem;
+  margin-bottom: 0.3rem;
+}
+
+.node-choices {
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.delete-node {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 20px;
+  height: 20px;
+  background: transparent;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.delete-node:hover {
+  color: #e94560;
+}
+
+.add-node {
+  padding: 0.5rem;
+  background: transparent;
+  border: 1px dashed #0f3460;
+  color: #888;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-node:hover {
+  border-color: #e94560;
+  color: #e94560;
+}
+
+/* 行为 */
+.behavior-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.behavior-item {
+  padding: 0.5rem;
+  background: #0f3460;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.empty {
+  color: #666;
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+/* 对话编辑器 */
+.dialogue-editor {
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.dialogue-editor h4 {
+  font-size: 0.9rem;
+  color: #e94560;
+  margin-bottom: 1rem;
+}
+
+.dialogue-editor label {
+  display: block;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+  color: #aaa;
+}
+
+.dialogue-editor textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.3rem;
+  background: #0f3460;
+  border: 1px solid #0f3460;
+  border-radius: 4px;
+  color: #eee;
+  resize: vertical;
+}
+
+.dialogue-editor textarea:focus {
+  outline: none;
+  border-color: #e94560;
+}
+
+.choices-section,
+.condition-section {
+  margin-bottom: 1.5rem;
+}
+
+.choices-section h5,
+.condition-section h5 {
+  font-size: 0.8rem;
+  color: #888;
+  margin-bottom: 0.5rem;
+}
+
+.choice-item {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.choice-item input {
+  flex: 1;
+  padding: 0.5rem;
+  background: #0f3460;
+  border: 1px solid #0f3460;
+  border-radius: 4px;
+  color: #eee;
+}
+
+.choice-item select {
+  width: 120px;
+  padding: 0.5rem;
+  background: #0f3460;
+  border: 1px solid #0f3460;
+  border-radius: 4px;
+  color: #eee;
+}
+
+.choice-item button {
+  width: 30px;
+  background: transparent;
+  border: none;
+  color: #666;
+  cursor: pointer;
+}
+
+.choice-item button:hover {
+  color: #e94560;
+}
+
+.add-choice {
+  padding: 0.5rem;
+  background: transparent;
+  border: 1px dashed #0f3460;
+  color: #888;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.add-choice:hover {
+  border-color: #e94560;
+  color: #e94560;
+}
+
+.no-selection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #666;
+  font-size: 1rem;
+}

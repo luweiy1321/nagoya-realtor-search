@@ -1,0 +1,411 @@
+.ai-generator {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  height: 100%;
+  background: #1a1a2e;
+}
+
+/* 配置面板 */
+.config-panel {
+  background: #16213e;
+  border-right: 1px solid #0f3460;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.config-panel h3 {
+  font-size: 1.1rem;
+  color: #e94560;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.config-section {
+  margin-bottom: 1.5rem;
+}
+
+.config-section > label {
+  display: block;
+  font-size: 0.85rem;
+  color: #888;
+  margin-bottom: 0.5rem;
+}
+
+.config-section select,
+.config-section input[type="text"] {
+  width: 100%;
+  padding: 0.6rem;
+  background: #0f3460;
+  border: 1px solid #0f3460;
+  border-radius: 4px;
+  color: #eee;
+  font-size: 0.9rem;
+}
+
+.world-types {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+.world-types button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.8rem 0.5rem;
+  background: #0f3460;
+  border: 1px solid #0f3460;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.world-types button:hover {
+  border-color: #e94560;
+}
+
+.world-types button.active {
+  border-color: #e94560;
+  background: #1a4a7a;
+}
+
+.world-types button .icon {
+  font-size: 1.5rem;
+}
+
+.world-types button .name {
+  font-size: 0.75rem;
+  color: #aaa;
+}
+
+.difficulty-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.difficulty-buttons button {
+  flex: 1;
+  padding: 0.5rem;
+  background: #0f3460;
+  border: 1px solid #0f3460;
+  border-radius: 4px;
+  color: #aaa;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.difficulty-buttons button.active {
+  background: #e94560;
+  border-color: #e94560;
+  color: #fff;
+}
+
+.config-section input[type="range"] {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.generate-btn {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, #e94560, #d63850);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 1rem;
+}
+
+.generate-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(233, 69, 96, 0.4);
+}
+
+.generate-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* 结果面板 */
+.result-panel {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  overflow: hidden;
+}
+
+.result-header {
+  margin-bottom: 1rem;
+}
+
+.result-header h3 {
+  font-size: 1.3rem;
+  color: #eee;
+  margin-bottom: 0.5rem;
+}
+
+.result-header p {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.result-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #0f3460;
+  padding-bottom: 0.5rem;
+}
+
+.result-tabs button {
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.result-tabs button:hover {
+  background: #0f3460;
+  color: #eee;
+}
+
+.result-tabs button.active {
+  background: #e94560;
+  color: #fff;
+}
+
+.result-content {
+  flex: 1;
+  overflow-y: auto;
+  background: #16213e;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+/* 地图预览 */
+.map-preview {
+  text-align: center;
+}
+
+.mini-map {
+  display: inline-block;
+  position: relative;
+  width: 200px;
+  height: 200px;
+  background: #1a1a2e;
+  border: 1px solid #0f3460;
+}
+
+.mini-map .tile {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+}
+
+.mini-map .tile-1 { background: #4a7c59; }
+.mini-map .tile-2 { background: #8b7355; }
+.mini-map .tile-3 { background: #4a90a4; }
+.mini-map .tile-4 { background: #6b6b6b; }
+.mini-map .tile-5 { background: #8b4513; }
+
+.map-preview p {
+  margin-top: 1rem;
+  color: #666;
+  font-size: 0.85rem;
+}
+
+/* NPC列表 */
+.npc-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.npc-card {
+  display: flex;
+  gap: 0.8rem;
+  padding: 1rem;
+  background: #0f3460;
+  border-radius: 8px;
+}
+
+.npc-avatar {
+  font-size: 2rem;
+}
+
+.npc-name {
+  font-weight: bold;
+  color: #eee;
+}
+
+.npc-role {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.npc-pos {
+  font-size: 0.75rem;
+  color: #666;
+}
+
+/* 任务列表 */
+.quest-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.quest-card {
+  padding: 1rem;
+  background: #0f3460;
+  border-radius: 8px;
+  border-left: 3px solid;
+}
+
+.quest-card.main {
+  border-left-color: #e94560;
+}
+
+.quest-card.side {
+  border-left-color: #9b59b6;
+}
+
+.quest-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.quest-type {
+  padding: 0.2rem 0.5rem;
+  background: #e94560;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+.quest-card.side .quest-type {
+  background: #9b59b6;
+}
+
+.quest-name {
+  font-weight: bold;
+  color: #eee;
+}
+
+.quest-desc {
+  font-size: 0.85rem;
+  color: #aaa;
+  margin-bottom: 0.5rem;
+}
+
+.quest-rewards {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.8rem;
+  color: #888;
+}
+
+/* 剧情 */
+.story-content {
+  padding: 1rem;
+  background: #0f3460;
+  border-radius: 8px;
+}
+
+.story-content p {
+  line-height: 1.8;
+  color: #ccc;
+  font-size: 0.95rem;
+}
+
+.story-hint {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #0f3460;
+  color: #666;
+  font-size: 0.85rem;
+}
+
+/* 操作按钮 */
+.result-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.save-btn,
+.export-btn {
+  flex: 1;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.save-btn {
+  background: #e94560;
+  color: #fff;
+}
+
+.export-btn {
+  background: #0f3460;
+  color: #aaa;
+  border: 1px solid #0f3460;
+}
+
+.save-btn:hover {
+  background: #d63850;
+}
+
+.export-btn:hover {
+  background: #1a4a7a;
+  color: #fff;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  color: #666;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.empty-state h4 {
+  font-size: 1.5rem;
+  color: #eee;
+  margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+  margin-bottom: 1.5rem;
+}
+
+.features {
+  list-style: none;
+  text-align: left;
+}
+
+.features li {
+  padding: 0.5rem 0;
+  font-size: 0.9rem;
+}

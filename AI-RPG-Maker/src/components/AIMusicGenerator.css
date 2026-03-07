@@ -1,0 +1,327 @@
+.ai-music {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  height: 100%;
+  background: #1a1a2e;
+}
+
+/* 配置面板 */
+.music-config {
+  background: #16213e;
+  border-right: 1px solid #0f3460;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.music-config h3 {
+  font-size: 1.1rem;
+  color: #9b59b6;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.config-section {
+  margin-bottom: 1.5rem;
+}
+
+.config-section > label {
+  display: block;
+  font-size: 0.85rem;
+  color: #888;
+  margin-bottom: 0.5rem;
+}
+
+.config-section select {
+  width: 100%;
+  padding: 0.6rem;
+  background: #0f3460;
+  border: 1px solid #0f3460;
+  border-radius: 4px;
+  color: #eee;
+  font-size: 0.9rem;
+}
+
+.config-section input[type="range"] {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.genre-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.4rem;
+}
+
+.genre-grid button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.5rem 0.3rem;
+  background: #0f3460;
+  border: 1px solid #0f3460;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.genre-grid button:hover {
+  border-color: #9b59b6;
+}
+
+.genre-grid button.active {
+  border-color: #9b59b6;
+  background: #1a4a7a;
+}
+
+.genre-grid button .icon {
+  font-size: 1.2rem;
+}
+
+.genre-grid button span:last-child {
+  font-size: 0.65rem;
+  color: #aaa;
+}
+
+.instrument-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.4rem;
+}
+
+.instrument-grid button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.5rem 0.3rem;
+  background: #0f3460;
+  border: 1px solid #0f3460;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.instrument-grid button:hover {
+  border-color: #9b59b6;
+}
+
+.instrument-grid button.active {
+  border-color: #9b59b6;
+  background: #1a4a7a;
+}
+
+.instrument-grid button .icon {
+  font-size: 1.2rem;
+}
+
+.instrument-grid button span:last-child {
+  font-size: 0.65rem;
+  color: #aaa;
+}
+
+.generate-btn {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, #9b59b6, #8e44ad);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 1rem;
+}
+
+.generate-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(155, 89, 182, 0.4);
+}
+
+.generate-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* 播放器 */
+.music-player {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  overflow: hidden;
+}
+
+.player-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.player-header h3 {
+  font-size: 1.2rem;
+  color: #eee;
+}
+
+.player-controls button {
+  padding: 0.5rem 1.5rem;
+  background: #9b59b6;
+  border: none;
+  border-radius: 20px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.progress-bar {
+  position: relative;
+  height: 30px;
+  background: #0f3460;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #9b59b6, #8e44ad);
+  transition: width 0.1s;
+}
+
+.time-display {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.8rem;
+  color: #fff;
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* 轨道 */
+.tracks {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.tracks h4 {
+  font-size: 0.85rem;
+  color: #888;
+  margin-bottom: 1rem;
+}
+
+.track-item {
+  background: #16213e;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.track-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.track-icon {
+  font-size: 1.2rem;
+}
+
+.track-name {
+  font-weight: 500;
+  color: #eee;
+}
+
+.track-notes {
+  margin-left: auto;
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.track-visual {
+  position: relative;
+  height: 60px;
+  background: #0f3460;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.note {
+  position: absolute;
+  width: 4px;
+  background: #9b59b6;
+  border-radius: 2px;
+  opacity: 0.6;
+}
+
+.note.playing {
+  background: #e94560;
+  opacity: 1;
+  box-shadow: 0 0 8px #e94560;
+}
+
+/* 导出按钮 */
+.export-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.export-buttons button {
+  flex: 1;
+  padding: 0.8rem;
+  background: #0f3460;
+  border: 1px solid #0f3460;
+  border-radius: 8px;
+  color: #aaa;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+
+.export-buttons button:hover {
+  background: #1a4a7a;
+  color: #fff;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  color: #666;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.empty-state h4 {
+  font-size: 1.5rem;
+  color: #eee;
+  margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+  margin-bottom: 1.5rem;
+}
+
+.features {
+  list-style: none;
+  text-align: left;
+}
+
+.features li {
+  padding: 0.5rem 0;
+  font-size: 0.9rem;
+}

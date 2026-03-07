@@ -1,0 +1,395 @@
+.multiplayer-system {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  height: 100%;
+  background: #1a1a2e;
+}
+
+/* 左侧导航 */
+.mp-nav {
+  background: #16213e;
+  border-right: 1px solid #0f3460;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-header {
+  padding: 1rem;
+  border-bottom: 1px solid #0f3460;
+}
+
+.nav-header h3 {
+  font-size: 1rem;
+  color: #3498db;
+}
+
+.mp-nav nav {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mp-nav nav button {
+  padding: 0.8rem 1rem;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: #aaa;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+}
+
+.mp-nav nav button:hover {
+  background: #0f3460;
+}
+
+.mp-nav nav button.active {
+  background: #0f3460;
+  border-color: #3498db;
+  color: #fff;
+}
+
+/* 玩家信息 */
+.player-info {
+  margin-top: auto;
+  padding: 1rem;
+  border-top: 1px solid #0f3460;
+  text-align: center;
+}
+
+.player-avatar {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.player-name {
+  font-weight: 500;
+  color: #eee;
+  margin-bottom: 0.3rem;
+}
+
+.player-status {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 0.3rem;
+}
+
+.status-dot.online { background: #2ecc71; }
+.status-dot.ingame { background: #e94560; }
+.status-dot.away { background: #f39c12; }
+
+/* 主内容 */
+.mp-content {
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.content-header h3 {
+  font-size: 1.2rem;
+  color: #eee;
+}
+
+.content-header button {
+  padding: 0.6rem 1.2rem;
+  background: #3498db;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+/* 房间列表 */
+.room-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.room-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: #16213e;
+  border-radius: 8px;
+  border: 1px solid #0f3460;
+}
+
+.room-icon {
+  font-size: 1.5rem;
+}
+
+.room-info {
+  flex: 1;
+}
+
+.room-name {
+  font-weight: 500;
+  color: #eee;
+  margin-bottom: 0.2rem;
+}
+
+.room-map {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.room-players {
+  font-size: 1.2rem;
+  color: #eee;
+}
+
+.room-players .separator {
+  color: #666;
+  margin: 0 0.2rem;
+}
+
+.room-players .max-players {
+  color: #666;
+}
+
+.room-status {
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+}
+
+.room-status.waiting {
+  background: #27ae60;
+  color: #fff;
+}
+
+.room-status.playing {
+  background: #e94560;
+  color: #fff;
+}
+
+.join-btn {
+  padding: 0.5rem 1.2rem;
+  background: #3498db;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* 快速加入 */
+.quick-join {
+  margin-top: 2rem;
+}
+
+.quick-join h4 {
+  font-size: 0.9rem;
+  color: #888;
+  margin-bottom: 1rem;
+}
+
+.quick-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.quick-buttons button {
+  flex: 1;
+  padding: 1rem;
+  background: #16213e;
+  border: 1px solid #0f3460;
+  border-radius: 8px;
+  color: #eee;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.quick-buttons button:hover {
+  background: #1a4a7a;
+  border-color: #3498db;
+}
+
+/* 好友列表 */
+.friend-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.friend-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: #16213e;
+  border-radius: 8px;
+}
+
+.friend-avatar {
+  font-size: 2rem;
+}
+
+.friend-info {
+  flex: 1;
+}
+
+.friend-name {
+  font-weight: 500;
+  color: #eee;
+  margin-bottom: 0.2rem;
+}
+
+.friend-status {
+  font-size: 0.8rem;
+}
+
+.friend-status.online { color: #2ecc71; }
+.friend-status.ingame { color: #e94560; }
+.friend-status.away { color: #f39c12; }
+
+.friend-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.friend-actions button {
+  padding: 0.4rem 0.8rem;
+  background: #0f3460;
+  border: none;
+  border-radius: 4px;
+  color: #aaa;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.friend-actions button:hover {
+  background: #1a4a7a;
+  color: #fff;
+}
+
+/* 设置 */
+.settings-panel {
+  max-width: 500px;
+}
+
+.settings-panel h3 {
+  font-size: 1.2rem;
+  color: #eee;
+  margin-bottom: 1.5rem;
+}
+
+.setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: #16213e;
+  border-radius: 8px;
+  margin-bottom: 0.8rem;
+}
+
+.setting-item label {
+  color: #eee;
+}
+
+.setting-item select {
+  padding: 0.5rem;
+  background: #0f3460;
+  border: 1px solid #0f3460;
+  border-radius: 4px;
+  color: #eee;
+}
+
+.setting-item input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+}
+
+/* 弹窗 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal {
+  background: #16213e;
+  border-radius: 12px;
+  padding: 2rem;
+  width: 400px;
+  border: 1px solid #0f3460;
+}
+
+.modal h3 {
+  font-size: 1.2rem;
+  color: #eee;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.85rem;
+  color: #888;
+  margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 0.6rem;
+  background: #0f3460;
+  border: 1px solid #0f3460;
+  border-radius: 4px;
+  color: #eee;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.modal-buttons button {
+  flex: 1;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.modal-buttons button:first-child {
+  background: #0f3460;
+  color: #aaa;
+}
+
+.modal-buttons button.primary {
+  background: #3498db;
+  color: #fff;
+}

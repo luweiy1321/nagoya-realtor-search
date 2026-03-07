@@ -1,0 +1,457 @@
+.cloud-panel {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  height: 100%;
+  background: #1a1a2e;
+}
+
+.cloud-sidebar {
+  background: #16213e;
+  border-right: 1px solid #0f3460;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-header {
+  padding: 1rem;
+  border-bottom: 1px solid #0f3460;
+}
+
+.sidebar-header h3 {
+  font-size: 1rem;
+  color: #3498db;
+}
+
+.cloud-sidebar nav {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cloud-sidebar nav button {
+  padding: 0.8rem 1rem;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: #aaa;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+}
+
+.cloud-sidebar nav button:hover {
+  background: #0f3460;
+}
+
+.cloud-sidebar nav button.active {
+  background: #0f3460;
+  color: #fff;
+}
+
+.current-plan {
+  margin-top: auto;
+  padding: 1rem;
+  border-top: 1px solid #0f3460;
+  text-align: center;
+}
+
+.plan-badge {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  background: linear-gradient(135deg, #3498db, #2980b9);
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.current-plan p {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.cloud-content {
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.content-header h2 {
+  font-size: 1.3rem;
+  color: #eee;
+}
+
+.content-header button {
+  padding: 0.6rem 1.2rem;
+  background: #3498db;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* 统计卡片 */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.2rem;
+  background: #16213e;
+  border-radius: 12px;
+  border: 1px solid #0f3460;
+}
+
+.stat-icon {
+  font-size: 2rem;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #eee;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+/* 最近项目 */
+.recent-projects h3 {
+  font-size: 1rem;
+  color: #888;
+  margin-bottom: 1rem;
+}
+
+.project-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.project-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: #16213e;
+  border-radius: 8px;
+  border: 1px solid #0f3460;
+}
+
+.project-icon {
+  font-size: 1.5rem;
+}
+
+.project-info {
+  flex: 1;
+}
+
+.project-name {
+  font-weight: 500;
+  color: #eee;
+  margin-bottom: 0.2rem;
+}
+
+.project-meta {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.project-item button {
+  padding: 0.5rem 1rem;
+  background: #0f3460;
+  border: none;
+  border-radius: 6px;
+  color: #aaa;
+  cursor: pointer;
+}
+
+/* 订阅计划 */
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.plan-card {
+  position: relative;
+  padding: 1.5rem;
+  background: #16213e;
+  border-radius: 12px;
+  border: 1px solid #0f3460;
+  text-align: center;
+}
+
+.plan-card.popular {
+  border-color: #3498db;
+}
+
+.plan-card.current {
+  border-color: #2ecc71;
+  background: #1a3d2e;
+}
+
+.popular-badge {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.3rem 1rem;
+  background: #3498db;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+.plan-card h3 {
+  font-size: 1.1rem;
+  color: #eee;
+  margin-bottom: 1rem;
+}
+
+.plan-price {
+  margin-bottom: 1rem;
+}
+
+.plan-price .currency {
+  font-size: 1rem;
+  color: #888;
+}
+
+.plan-price .amount {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #eee;
+}
+
+.plan-price .period {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.plan-features {
+  list-style: none;
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+
+.plan-features li {
+  padding: 0.4rem 0;
+  font-size: 0.85rem;
+  color: #aaa;
+}
+
+.plan-card button {
+  width: 100%;
+  padding: 0.8rem;
+  background: #3498db;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.plan-card.current button {
+  background: #2ecc71;
+}
+
+.plan-card button.current-btn {
+  background: #2ecc71;
+}
+
+/* AI点数 */
+.ai-credits h3 {
+  font-size: 1rem;
+  color: #888;
+  margin-bottom: 1rem;
+}
+
+.credits-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.credit-card {
+  padding: 1.5rem;
+  background: #16213e;
+  border-radius: 12px;
+  border: 1px solid #0f3460;
+  text-align: center;
+}
+
+.credit-amount {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #eee;
+  margin-bottom: 0.5rem;
+}
+
+.credit-price {
+  font-size: 1rem;
+  color: #f39c12;
+  margin-bottom: 1rem;
+}
+
+.credit-card button {
+  padding: 0.5rem 1.5rem;
+  background: #0f3460;
+  border: none;
+  border-radius: 6px;
+  color: #eee;
+  cursor: pointer;
+}
+
+/* 存储 */
+.storage-overview {
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.storage-circle {
+  position: relative;
+  width: 150px;
+  height: 150px;
+}
+
+.storage-circle svg {
+  width: 100%;
+  height: 100%;
+}
+
+.storage-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.storage-text .used {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #eee;
+}
+
+.storage-text .total {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.storage-details h4 {
+  font-size: 1rem;
+  color: #888;
+  margin-bottom: 1rem;
+}
+
+.storage-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid #0f3460;
+  font-size: 0.9rem;
+}
+
+.storage-item span:first-child {
+  color: #aaa;
+}
+
+.storage-item span:last-child {
+  color: #eee;
+}
+
+.upgrade-storage {
+  padding: 0.8rem 2rem;
+  background: #3498db;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* 团队 */
+.team-members {
+  margin-bottom: 2rem;
+}
+
+.member-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: #16213e;
+  border-radius: 8px;
+}
+
+.member-avatar {
+  font-size: 2rem;
+}
+
+.member-info {
+  flex: 1;
+}
+
+.member-name {
+  font-weight: 500;
+  color: #eee;
+}
+
+.member-email {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.member-role {
+  padding: 0.3rem 0.8rem;
+  background: #2ecc71;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  color: #fff;
+}
+
+.team-invite h3 {
+  font-size: 1rem;
+  color: #888;
+  margin-bottom: 1rem;
+}
+
+.invite-link {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.invite-link input {
+  flex: 1;
+  padding: 0.8rem;
+  background: #0f3460;
+  border: 1px solid #0f3460;
+  border-radius: 8px;
+  color: #eee;
+}
+
+.invite-link button {
+  padding: 0.8rem 1.5rem;
+  background: #3498db;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+}

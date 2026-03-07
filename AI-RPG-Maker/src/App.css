@@ -1,0 +1,211 @@
+/* ============================================================================
+ * App CSS - RPG Maker MZ Theme
+ * ============================================================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* RPG Maker MZ Color Palette */
+  --rm-darker: #1a1a2e;
+  --rm-dark: #263238;
+  --rm-panel: #2d3748;
+  --rm-light: #374151;
+  --rm-border: rgba(255, 255, 255, 0.1);
+  --rm-border-light: rgba(255, 255, 255, 0.05);
+  --rm-accent: #5c6bc0;
+  --rm-accent-hover: #4a5a9f;
+  --rm-accent-light: rgba(92, 107, 192, 0.2);
+  --rm-text: #e2e8f0;
+  --rm-text-muted: #a0aec0;
+  --rm-text-dark: #718096;
+  --rm-success: #48bb78;
+  --rm-warning: #ecc94b;
+  --rm-error: #e94560;
+  --panel-header-bg: rgba(0, 0, 0, 0.2);
+  --panel-divider: rgba(255, 255, 255, 0.05);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: var(--rm-darker);
+  color: var(--rm-text);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Legacy Component Styling (for gradual migration) */
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: var(--rm-dark);
+  border-bottom: 1px solid var(--rm-border);
+}
+
+.header h1 {
+  font-size: 1.5rem;
+  color: var(--rm-accent);
+}
+
+.header nav {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.header nav button {
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: 1px solid var(--rm-border);
+  color: var(--rm-text);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.85rem;
+}
+
+.header nav button:hover {
+  background: var(--rm-accent-light);
+}
+
+.header nav button.active {
+  background: var(--rm-accent);
+  border-color: var(--rm-accent);
+}
+
+.main {
+  flex: 1;
+  overflow: hidden;
+}
+
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 1.5rem;
+  color: var(--rm-text-muted);
+}
+
+/* Utility Classes */
+.btn {
+  padding: 0.5rem 1rem;
+  background: var(--rm-accent);
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.2s;
+}
+
+.btn:hover {
+  background: var(--rm-accent-hover);
+}
+
+.btn-secondary {
+  background: var(--rm-panel);
+  color: var(--rm-text);
+}
+
+.btn-secondary:hover {
+  background: var(--rm-light);
+}
+
+.btn-danger {
+  background: var(--rm-error);
+}
+
+.btn-danger:hover {
+  background: #d63750;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--rm-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--rm-border);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Input Styling */
+input[type="text"],
+input[type="number"],
+input[type="password"],
+input[type="email"],
+input[type="search"],
+textarea,
+select {
+  padding: 0.5rem 0.75rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--rm-border);
+  border-radius: 4px;
+  color: var(--rm-text);
+  font-size: 0.85rem;
+  transition: border-color 0.2s;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--rm-accent);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--rm-text-dark);
+}
+
+/* Checkbox Styling */
+input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--rm-accent);
+}
+
+/* Global Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}

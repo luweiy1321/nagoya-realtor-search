@@ -1,0 +1,397 @@
+.event-editor {
+  display: grid;
+  grid-template-columns: 280px 1fr 250px;
+  height: 100%;
+  background: #1a1a2e;
+}
+
+/* 事件列表 */
+.event-list {
+  background: #16213e;
+  border-right: 1px solid #0f3460;
+  display: flex;
+  flex-direction: column;
+}
+
+.event-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #0f3460;
+}
+
+.event-list-header h3 {
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.event-list-header button {
+  padding: 0.3rem 0.8rem;
+  background: #e94560;
+  border: none;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.templates {
+  padding: 1rem;
+  border-bottom: 1px solid #0f3460;
+}
+
+.templates h4 {
+  font-size: 0.75rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.template-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.template-buttons button {
+  padding: 0.3rem 0.5rem;
+  background: #0f3460;
+  border: 1px solid #0f3460;
+  color: #aaa;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.75rem;
+}
+
+.template-buttons button:hover {
+  border-color: #e94560;
+  color: #e94560;
+}
+
+.event-items {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem;
+}
+
+.event-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.event-item:hover {
+  background: #0f3460;
+}
+
+.event-item.selected {
+  background: #0f3460;
+  border: 1px solid #e94560;
+}
+
+.event-icon {
+  font-size: 1.2rem;
+}
+
+.event-info {
+  flex: 1;
+}
+
+.event-name {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.event-trigger {
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.delete-btn {
+  width: 24px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.delete-btn:hover {
+  color: #e94560;
+}
+
+/* 事件属性 */
+.event-properties {
+  background: #16213e;
+  border-right: 1px solid #0f3460;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.property-section {
+  margin-bottom: 1.5rem;
+}
+
+.property-section h4 {
+  font-size: 0.8rem;
+  color: #888;
+  margin-bottom: 0.8rem;
+  text-transform: uppercase;
+}
+
+.property-section label {
+  display: block;
+  margin-bottom: 0.8rem;
+  font-size: 0.85rem;
+  color: #aaa;
+}
+
+.property-section input,
+.property-section select,
+.property-section textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.3rem;
+  background: #0f3460;
+  border: 1px solid #0f3460;
+  border-radius: 4px;
+  color: #eee;
+  font-size: 0.85rem;
+}
+
+.property-section input:focus,
+.property-section select:focus,
+.property-section textarea:focus {
+  outline: none;
+  border-color: #e94560;
+}
+
+.trigger-config {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.trigger-params {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.trigger-params label {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+/* 条件 */
+.conditions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.condition-item {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.condition-item input {
+  flex: 1;
+}
+
+.condition-item button {
+  width: 30px;
+  background: transparent;
+  border: none;
+  color: #666;
+  cursor: pointer;
+}
+
+.condition-item button:hover {
+  color: #e94560;
+}
+
+.add-condition {
+  padding: 0.5rem;
+  background: transparent;
+  border: 1px dashed #0f3460;
+  color: #888;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.add-condition:hover {
+  border-color: #e94560;
+  color: #e94560;
+}
+
+/* 动作列表 */
+.action-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.action-item {
+  background: #0f3460;
+  border-radius: 4px;
+  padding: 0.8rem;
+}
+
+.action-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.action-number {
+  width: 24px;
+  height: 24px;
+  background: #e94560;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.action-header select {
+  flex: 1;
+  margin: 0;
+}
+
+.action-controls {
+  display: flex;
+  gap: 0.2rem;
+}
+
+.action-controls button {
+  width: 28px;
+  height: 28px;
+  background: transparent;
+  border: 1px solid #0f3460;
+  color: #888;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.action-controls button:hover:not(:disabled) {
+  border-color: #e94560;
+  color: #e94560;
+}
+
+.action-controls button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.action-params {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.action-params input,
+.action-params textarea {
+  width: 100%;
+  padding: 0.5rem;
+  background: #16213e;
+  border: 1px solid #16213e;
+  border-radius: 4px;
+  color: #eee;
+  font-size: 0.85rem;
+}
+
+.add-action {
+  padding: 0.8rem;
+  background: transparent;
+  border: 1px dashed #0f3460;
+  color: #888;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-action:hover {
+  border-color: #e94560;
+  color: #e94560;
+}
+
+/* 预览 */
+.event-preview {
+  background: #16213e;
+  padding: 1rem;
+}
+
+.event-preview h4 {
+  font-size: 0.8rem;
+  color: #888;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.preview-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.preview-item {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.preview-item .label {
+  color: #666;
+}
+
+.preview-flow {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #0f3460;
+}
+
+.preview-flow h5 {
+  font-size: 0.8rem;
+  color: #888;
+  margin-bottom: 0.5rem;
+}
+
+.flow-step {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0;
+  font-size: 0.8rem;
+}
+
+.step-num {
+  width: 20px;
+  height: 20px;
+  background: #0f3460;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+}
+
+.step-action {
+  color: #aaa;
+}
+
+.no-selection,
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #666;
+  font-size: 1rem;
+}

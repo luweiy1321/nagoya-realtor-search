@@ -1,0 +1,224 @@
+/* ============================================================================
+ * Resource Manager Styles
+ * ============================================================================ */
+
+.resource-manager {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 0.75rem;
+}
+
+.resource-manager-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.resource-manager-header h4 {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--rm-text-muted, #a0aec0);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.import-btn {
+  padding: 0.3rem 0.6rem;
+  background: var(--rm-accent, #5c6bc0);
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  font-size: 0.75rem;
+  transition: background 0.2s;
+}
+
+.import-btn:hover {
+  background: var(--rm-accent-hover, #4a5a9f);
+}
+
+.resource-search {
+  margin-bottom: 0.75rem;
+}
+
+.resource-search input {
+  width: 100%;
+  padding: 0.4rem 0.6rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--rm-border, rgba(255, 255, 255, 0.1));
+  border-radius: 4px;
+  color: var(--rm-text, #e2e8f0);
+  font-size: 0.75rem;
+}
+
+.resource-search input:focus {
+  outline: none;
+  border-color: var(--rm-accent, #5c6bc0);
+}
+
+.resource-categories {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.35rem;
+  margin-bottom: 0.75rem;
+}
+
+.category-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: var(--rm-text-muted, #a0aec0);
+  cursor: pointer;
+  font-size: 0.7rem;
+  transition: all 0.2s;
+}
+
+.category-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--rm-text, #e2e8f0);
+}
+
+.category-btn.active {
+  background: var(--rm-accent-light, rgba(92, 107, 192, 0.2));
+  border-color: var(--rm-accent, #5c6bc0);
+  color: var(--rm-accent, #5c6bc0);
+}
+
+.category-btn span:first-child {
+  font-size: 0.9rem;
+}
+
+.resource-list {
+  flex: 1;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  padding: 0.25rem;
+}
+
+.resource-item {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.resource-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--rm-border, rgba(255, 255, 255, 0.1));
+}
+
+.resource-item.selected {
+  background: var(--rm-accent-light, rgba(92, 107, 192, 0.2));
+  border-color: var(--rm-accent, #5c6bc0);
+}
+
+.resource-thumbnail {
+  width: 100%;
+  aspect-ratio: 1;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.4rem;
+  overflow: hidden;
+}
+
+.resource-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.placeholder-icon {
+  font-size: 1.5rem;
+  opacity: 0.5;
+}
+
+.resource-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.resource-name {
+  font-size: 0.7rem;
+  color: var(--rm-text, #e2e8f0);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.resource-size {
+  font-size: 0.65rem;
+  color: var(--rm-text-muted, #a0aec0);
+}
+
+.resource-empty {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  opacity: 0.5;
+}
+
+.resource-empty p {
+  color: var(--rm-text-muted, #a0aec0);
+  font-size: 0.8rem;
+  margin: 0 0 1rem 0;
+}
+
+.add-first-btn {
+  padding: 0.4rem 0.8rem;
+  background: var(--rm-accent, #5c6bc0);
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  font-size: 0.75rem;
+}
+
+.resource-footer {
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--rm-border, rgba(255, 255, 255, 0.05));
+  font-size: 0.7rem;
+  color: var(--rm-text-muted, #a0aec0);
+  text-align: center;
+}
+
+.resource-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.resource-list::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.resource-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.resource-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}

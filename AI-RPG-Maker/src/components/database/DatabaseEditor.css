@@ -1,0 +1,555 @@
+/* ============================================================================
+ * Database Editor Styles - RPG Maker MZ Style
+ * ============================================================================ */
+
+.database-editor {
+  display: flex;
+  height: 100%;
+  background: var(--rm-darker, #1a1a2e);
+  color: var(--rm-text, #e2e8f0);
+}
+
+/* Left Sidebar - Section Navigation */
+.db-sidebar {
+  width: 200px;
+  background: var(--rm-dark, #263238);
+  border-right: 1px solid var(--rm-border, rgba(255, 255, 255, 0.1));
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.db-sidebar-header {
+  padding: 1rem;
+  border-bottom: 1px solid var(--rm-border, rgba(255, 255, 255, 0.1));
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.db-sidebar-header h3 {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--rm-text, #e2e8f0);
+}
+
+.dirty-indicator {
+  color: #e94560;
+  font-size: 1.2rem;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.db-sections {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem 0;
+}
+
+.db-section-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: none;
+  color: var(--rm-text-muted, #a0aec0);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+  font-size: 0.85rem;
+}
+
+.db-section-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--rm-text, #e2e8f0);
+}
+
+.db-section-btn.active {
+  background: var(--rm-accent, #5c6bc0);
+  color: white;
+}
+
+.section-icon {
+  font-size: 1.2rem;
+  width: 24px;
+  text-align: center;
+}
+
+.section-name {
+  flex: 1;
+}
+
+/* List Container */
+.db-list-container {
+  width: 250px;
+  background: var(--rm-darker, #1a1a2e);
+  border-right: 1px solid var(--rm-border, rgba(255, 255, 255, 0.1));
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.db-list-header {
+  padding: 1rem;
+  border-bottom: 1px solid var(--rm-border, rgba(255, 255, 255, 0.1));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.db-list-header h4 {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--rm-text, #e2e8f0);
+}
+
+.add-btn {
+  padding: 0.25rem 0.75rem;
+  background: var(--rm-accent, #5c6bc0);
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background 0.2s;
+}
+
+.add-btn:hover {
+  background: #4a5a9f;
+}
+
+.db-list-items {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem;
+}
+
+.db-list-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-bottom: 0.25rem;
+}
+
+.db-list-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.db-list-item.selected {
+  background: rgba(92, 107, 192, 0.3);
+  border: 1px solid var(--rm-accent, #5c6bc0);
+}
+
+.item-id {
+  font-size: 0.7rem;
+  color: var(--rm-text-muted, #a0aec0);
+  min-width: 30px;
+}
+
+.item-name {
+  flex: 1;
+  font-size: 0.85rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.delete-item-btn {
+  opacity: 0;
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: rgba(233, 69, 96, 0.5);
+  color: white;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  transition: all 0.2s;
+}
+
+.db-list-item:hover .delete-item-btn {
+  opacity: 1;
+}
+
+.delete-item-btn:hover {
+  background: #e94560;
+}
+
+.db-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.db-empty p {
+  color: var(--rm-text-muted, #a0aec0);
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.add-first-btn {
+  padding: 0.5rem 1rem;
+  background: var(--rm-accent, #5c6bc0);
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.db-list-footer {
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--rm-border, rgba(255, 255, 255, 0.1));
+  font-size: 0.75rem;
+  color: var(--rm-text-muted, #a0aec0);
+}
+
+/* Properties Container */
+.db-properties-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--rm-panel, #2d3748);
+  overflow: hidden;
+}
+
+.db-properties-header {
+  padding: 1rem;
+  border-bottom: 1px solid var(--rm-border, rgba(255, 255, 255, 0.1));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--panel-header-bg, rgba(0, 0, 0, 0.2));
+}
+
+.db-properties-header h4 {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--rm-text, #e2e8f0);
+}
+
+.item-id-display {
+  font-size: 0.75rem;
+  color: var(--rm-text-muted, #a0aec0);
+  font-family: monospace;
+}
+
+.db-properties-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.db-empty-selection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--rm-text-muted, #a0aec0);
+}
+
+.empty-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+/* Editor Form */
+.db-editor-form {
+  max-width: 800px;
+}
+
+.form-section {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  border: 1px solid var(--rm-border, rgba(255, 255, 255, 0.05));
+}
+
+.form-section h5 {
+  margin: 0 0 1rem 0;
+  font-size: 0.85rem;
+  color: var(--rm-accent, #5c6bc0);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-section h6 {
+  margin: 0.75rem 0 0.5rem;
+  font-size: 0.8rem;
+  color: var(--rm-text-muted, #a0aec0);
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.8rem;
+  color: var(--rm-text-muted, #a0aec0);
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--rm-border, rgba(255, 255, 255, 0.1));
+  border-radius: 4px;
+  color: var(--rm-text, #e2e8f0);
+  font-size: 0.85rem;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--rm-accent, #5c6bc0);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+  font-family: inherit;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* Skills List */
+.skills-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.skill-item {
+  display: grid;
+  grid-template-columns: 1fr auto 60px 30px;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.skill-level-label {
+  font-size: 0.8rem;
+  color: var(--rm-text-muted, #a0aec0);
+}
+
+.level-input {
+  width: 60px !important;
+}
+
+.add-skill-btn {
+  padding: 0.5rem 1rem;
+  background: rgba(92, 107, 192, 0.3);
+  border: 1px solid var(--rm-accent, #5c6bc0);
+  border-radius: 4px;
+  color: var(--rm-text, #e2e8f0);
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+
+.add-skill-btn:hover {
+  background: var(--rm-accent, #5c6bc0);
+}
+
+/* Remove Button */
+.remove-btn {
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: rgba(233, 69, 96, 0.3);
+  color: #e94560;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  transition: all 0.2s;
+}
+
+.remove-btn:hover {
+  background: #e94560;
+  color: white;
+}
+
+/* Learning Item */
+.learning-item {
+  display: grid;
+  grid-template-columns: 1fr auto 80px 30px;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+/* Drop Item */
+.drop-item {
+  display: grid;
+  grid-template-columns: 100px 1fr 80px;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+/* Member Item */
+.member-item {
+  display: grid;
+  grid-template-columns: 1fr 60px 60px 60px 30px;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+/* Page Item */
+.page-item {
+  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+/* Tileset Image Item */
+.tileset-image-item {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.tileset-image-item span {
+  font-size: 0.8rem;
+  color: var(--rm-text-muted, #a0aec0);
+}
+
+/* Event Commands List */
+.event-commands-list {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  min-height: 100px;
+}
+
+.command-item {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  font-family: monospace;
+  font-size: 0.8rem;
+  border-bottom: 1px solid var(--rm-border, rgba(255, 255, 255, 0.05));
+}
+
+.command-code {
+  color: var(--rm-accent, #5c6bc0);
+  min-width: 40px;
+}
+
+.command-indent {
+  color: var(--rm-text-muted, #a0aec0);
+}
+
+.command-params {
+  color: var(--rm-text, #e2e8f0);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Utility Text Classes */
+.empty-text {
+  color: var(--rm-text-muted, #a0aec0);
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 1rem;
+}
+
+.info-text {
+  color: var(--rm-text-muted, #a0aec0);
+  font-size: 0.8rem;
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+/* Scrollbar Styling */
+.db-sections::-webkit-scrollbar,
+.db-list-items::-webkit-scrollbar,
+.db-properties-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.db-sections::-webkit-scrollbar-track,
+.db-list-items::-webkit-scrollbar-track,
+.db-properties-content::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.db-sections::-webkit-scrollbar-thumb,
+.db-list-items::-webkit-scrollbar-thumb,
+.db-properties-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.db-sections::-webkit-scrollbar-thumb:hover,
+.db-list-items::-webkit-scrollbar-thumb:hover,
+.db-properties-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* RPG Maker MZ Theme Variables (to be added to App.css) */
+:root {
+  --rm-darker: #1a1a2e;
+  --rm-dark: #263238;
+  --rm-panel: #2d3748;
+  --rm-border: rgba(255, 255, 255, 0.1);
+  --rm-accent: #5c6bc0;
+  --rm-text: #e2e8f0;
+  --rm-text-muted: #a0aec0;
+  --panel-header-bg: rgba(0, 0, 0, 0.2);
+  --panel-divider: rgba(255, 255, 255, 0.05);
+}
