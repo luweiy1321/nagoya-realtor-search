@@ -61,8 +61,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <div class="stats-bar">
 <h1 id="page-title">🏠 名古屋賃貸物件</h1>
 <div class="stats-grid">
-<div class="stat-item"><div class="num" id="totalCount">54</div><div class="label" id="totalLabel">総房源数</div></div>
-<div class="stat-item"><div class="num" id="todayNew">+54</div><div class="label" id="newLabel">今日更新</div></div>
+<div class="stat-item"><div class="num" id="totalCount">58</div><div class="label" id="totalLabel">総房源数</div></div>
+<div class="stat-item"><div class="num" id="todayNew">+4</div><div class="label" id="newLabel">今日更新</div></div>
 <div class="stat-item"><div class="num" id="todayExpired">-0</div><div class="label" id="expiredLabel">今日失效</div></div>
 <div class="stat-item"><div class="num" id="updateTime">00:20</div><div class="label" id="timeLabel">更新JST</div></div>
 </div>
@@ -85,7 +85,15 @@ const districts=["all","naka","higashi","nishi","kita","minami","nakamura","chik
 const now=new Date();const jst=new Date(now.getTime()+9*60*60*1000);
 const updateTimeStr=jst.getHours()+":"+String(jst.getMinutes()).padStart(2,'0');
 
-const rentProps=[
+const newRentProps=[
+{name:"アラシード",ward:"nakagawa",addr:"中川区南脇町3",floor:"2階",rent:5.7,fee:4000,layout:"1K",area:"33.35m²",age:"築20年",url:"https://suumo.jp/chintai/jnc_000104359293/",src:"SUUMO"},
+{name:"ウェルストン車道",ward:"higashi",addr:"东区豊前町3",floor:"1階",rent:5.65,fee:4000,layout:"1K",area:"21.16m²",age:"築12年",url:"https://suumo.jp/chintai/jnc_000100149610/",src:"SUUMO",img:"https://www.athome.co.jp/image_files/path/7M6E7LR2x-q5LY3DRy8cCw==.jpeg?w=400"},
+{name:"アネックス栄",ward:"minato",addr:"港区知多2",floor:"2階",rent:5.3,fee:2500,layout:"3DK",area:"57.67m²",age:"築40年",url:"https://suumo.jp/chintai/jnc_000078056430/",src:"SUUMO"},
+{name:"セントラルハイツ",ward:"minato",addr:"港区春田野2",floor:"2階",rent:5.7,fee:3300,layout:"3LDK",area:"65.25m²",age:"築31年",url:"https://suumo.jp/chintai/jnc_000099742627/",src:"SUUMO"}
+];
+
+const rentProps=[...newRentProps,
+{name:"エステムプランザ名古屋丸の内",ward:"naka",addr:"中区丸の内3-5-1",floor:"12階",rent:8.56,fee:13440,layout:"1LDK",area:"34.4m²",age:"築9年",url:"https://suumo.jp/chintai/jnc_000066235570/",src:"SUUMO",phone:"052-589-0044",company:"リブ・マックス名古屋店",img:"https://www.athome.co.jp/image_files/path/QIsM1CmnYPkJ618tFba1SQ==.jpeg?w=400"},
 {name:"エステムプランザ名古屋丸の内",ward:"naka",addr:"中区丸の内3-5-1",floor:"12階",rent:8.56,fee:13440,layout:"1LDK",area:"34.4m²",age:"築9年",url:"https://suumo.jp/chintai/jnc_000066235570/",src:"SUUMO",phone:"052-589-0044",company:"リブ・マックス名古屋店",img:"https://www.athome.co.jp/image_files/path/QIsM1CmnYPkJ618tFba1SQ==.jpeg?w=400"},
 {name:"ミリオレビータ金山",ward:"naka",addr:"中区平和2-3-2",img:"https://www.athome.co.jp/image_files/path/S1oPpSiVVOc7VfKBV6JKWA==.jpeg?w=400",floor:"4階",rent:8.7,fee:7000,layout:"1LDK",area:"39.88m²",age:"築7年",url:"https://suumo.jp/chintai/jnc_000054362866/",src:"SUUMO",phone:"052-261-5100",company:"(株)エムホーム"},
 {name:"ヒールコートII",ward:"higashi",addr:"札幌市東区筒井2-1-1",floor:"1階",rent:8.5,fee:6000,layout:"1LDK",area:"37.13m²",age:"築8年",url:"https://suumo.jp/chintai/jnc_000105454775/",src:"SUUMO",phone:"052-242-2422",company:"部屋セレブ大須店"},
@@ -170,7 +178,7 @@ function setSource(s){currentSource=s;document.querySelectorAll('.source-tabs bu
 function renderTabs(){const t=trans[lang],container=document.getElementById('districtTabs');container.innerHTML='';districts.forEach(d=>{const btn=document.createElement('button');btn.textContent=d==='all'?t.districts.all:t.districts[d];btn.className=d===currentDistrict?'active':'';btn.onclick=()=>{currentDistrict=d;renderTabs();renderProperties();};container.appendChild(btn);});}
 function renderProperties(){const t=trans[lang],container=document.getElementById('propertyContainer');container.innerHTML='';const props=currentType==="sell"?sellProps:rentProps;
 const filtered=props.filter(p=>(currentDistrict==='all'||p.ward===currentDistrict)&&(currentSource==='all'||p.src===currentSource));document.getElementById('totalCount').textContent=rentProps.length + sellProps.length;
-    document.getElementById('todayNew').textContent='+'+ (rentProps.length + sellProps.length);document.getElementById('updateTime').textContent=updateTimeStr;if(filtered.length===0){container.innerHTML='<p style="text-align:center;color:#666;padding:40px">データなし</p>';return;}
+    document.getElementById('todayNew').textContent='+4';document.getElementById('updateTime').textContent=updateTimeStr;if(filtered.length===0){container.innerHTML='<p style="text-align:center;color:#666;padding:40px">データなし</p>';return;}
 const grouped={};filtered.forEach(p=>{if(!grouped[p.ward])grouped[p.ward]=[];grouped[p.ward].push(p);});Object.keys(grouped).forEach(ward=>{const wardName=trans[lang].districts[ward]||ward;const section=document.createElement('div');section.innerHTML=`<div style="background:#fff;padding:15px;border-radius:8px;margin:15px 0 10px 0;box-shadow:0 2px 4px rgba(0,0,0,0.1)"><h3 style="margin:0;color:#333">${wardName} (${grouped[ward].length}件)</h3></div><div class="property-grid"></div>`;const grid=section.querySelector('.property-grid');grouped[ward].forEach(p=>{const imgHtml=p.img?`<img class="property-image" src="${p.img}" alt="${p.name}" onerror="this.style.display='none';this.nextSibling.style.display='flex'">`:`<div class="no-image">${t.noImage}</div>`;const contactHtml=p.phone?`<div class="contact-info"><strong>📞${t.contact}: ${p.company||''}</strong><br>${t.phone}: ${p.phone}</div>`:'';const card=document.createElement('div');card.className='property-card';card.innerHTML=imgHtml+`<div class="property-info"><div class="property-name"><a href="${p.url}" target="_blank">${p.name}</a></div><div class="property-price">${p.price?p.price+t.priceUnit2:p.rent+t.priceUnit2+t.priceUnit}</div><div class="property-details"><div>📍${t.address}: ${p.addr}</div><div>📐${p.layout?p.layout+t.layout:''}: ${p.area}</div><div>🏗️${t.age}: ${p.age.replace("築","").replace("年",p.age.includes("年")?" years":"").replace("新房","New")}</div>${p.fee?`<div>${t.feeLabel}: ${p.fee.toLocaleString()}円</div>`:''}</div>${contactHtml}<a href="${p.url}" target="_blank" style="display:inline-block;margin-top:8px;padding:6px 12px;background:#667eea;color:#fff;text-decoration:none;border-radius:4px;font-size:12px">${t.viewDetail} →</a></div><span class="source source-${(p.src||"suumo").toLowerCase()}">${p.src||"SUUMO"}</span>`;grid.appendChild(card);});container.appendChild(section);});}
 renderTabs();renderProperties();
 </script>
