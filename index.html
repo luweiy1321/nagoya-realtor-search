@@ -148,8 +148,9 @@ const sellProps=[
 {name:"南区公寓",ward:"minami",addr:"南区港1-1-1",floor:"5階",price:1800,area:"55m²",age:"築25年",url:"https://suumo.jp/mansion/aichi/sc_nagoyashiminami/",src:"SUUMO"},
 {name:"西区新房",ward:"nishi",addr:"西区牛島1-1-1",floor:"10階",price:3200,area:"65m²",age:"新房",url:"https://suumo.jp/mansion/aichi/sc_nagoyashinishiku/",src:"SUUMO"}
 ];
-let lang='ja',currentDistrict='all',currentSource='all';
+let lang='ja',currentDistrict='all',currentSource='all',currentType='rent';
 function setLang(l){lang=l;const t=trans[l];document.getElementById('page-title').textContent=t.title;document.getElementById('totalLabel').textContent=t.totalLabel;document.getElementById('newLabel').textContent=t.newLabel;document.getElementById('expiredLabel').textContent=t.expiredLabel;document.getElementById('timeLabel').textContent=t.timeLabel;document.querySelectorAll('.lang-switch button').forEach(b=>b.classList.remove('active'));document.getElementById('btn-'+l).classList.add('active');renderTabs();renderProperties();}
+function setType(t){currentType=t;document.querySelectorAll('.type-tabs button').forEach(b=>b.classList.remove('active'));document.getElementById('type-'+t).classList.add('active');renderProperties();}
 function setSource(s){currentSource=s;document.querySelectorAll('.source-tabs button').forEach(b=>b.classList.remove('active'));document.getElementById('src-'+(s==='all'?'all':s.toLowerCase())).classList.add('active');renderProperties();}
 function renderTabs(){const t=trans[lang],container=document.getElementById('districtTabs');container.innerHTML='';districts.forEach(d=>{const btn=document.createElement('button');btn.textContent=d==='all'?t.districts.all:t.districts[d];btn.className=d===currentDistrict?'active':'';btn.onclick=()=>{currentDistrict=d;renderTabs();renderProperties();};container.appendChild(btn);});}
 function renderProperties(){const t=trans[lang],container=document.getElementById('propertyContainer');container.innerHTML='';const props=currentType==="sell"?sellProps:rentProps;
