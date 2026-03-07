@@ -61,10 +61,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <div class="stats-bar">
 <h1 id="page-title">🏠 名古屋賃貸物件</h1>
 <div class="stats-grid">
-<div class="stat-item"><div class="num" id="totalCount">58</div><div class="label" id="totalLabel">総房源数</div></div>
-<div class="stat-item"><div class="num" id="todayNew">+4</div><div class="label" id="newLabel">今日更新</div></div>
+<div class="stat-item"><div class="num" id="totalCount">63</div><div class="label" id="totalLabel">総房源数</div></div>
+<div class="stat-item"><div class="num" id="todayNew">+5</div><div class="label" id="newLabel">今日更新</div></div>
 <div class="stat-item"><div class="num" id="todayExpired">-0</div><div class="label" id="expiredLabel">今日失效</div></div>
-<div class="stat-item"><div class="num" id="updateTime">00:20</div><div class="label" id="timeLabel">更新JST</div></div>
+<div class="stat-item"><div class="num" id="updateTime">02:31</div><div class="label" id="timeLabel">更新JST</div></div>
 </div>
 </div>
 <div class="type-tabs">
@@ -86,10 +86,11 @@ const now=new Date();const jst=new Date(now.getTime()+9*60*60*1000);
 const updateTimeStr=jst.getHours()+":"+String(jst.getMinutes()).padStart(2,'0');
 
 const newRentProps=[
-{name:"アラシード",ward:"nakagawa",addr:"中川区南脇町3",floor:"2階",rent:5.7,fee:4000,layout:"1K",area:"33.35m²",age:"築20年",url:"https://suumo.jp/chintai/jnc_000104359293/",src:"SUUMO"},
-{name:"ウェルストン車道",ward:"higashi",addr:"东区豊前町3",floor:"1階",rent:5.65,fee:4000,layout:"1K",area:"21.16m²",age:"築12年",url:"https://suumo.jp/chintai/jnc_000100149610/",src:"SUUMO",img:"https://www.athome.co.jp/image_files/path/7M6E7LR2x-q5LY3DRy8cCw==.jpeg?w=400"},
-{name:"アネックス栄",ward:"minato",addr:"港区知多2",floor:"2階",rent:5.3,fee:2500,layout:"3DK",area:"57.67m²",age:"築40年",url:"https://suumo.jp/chintai/jnc_000078056430/",src:"SUUMO"},
-{name:"セントラルハイツ",ward:"minato",addr:"港区春田野2",floor:"2階",rent:5.7,fee:3300,layout:"3LDK",area:"65.25m²",age:"築31年",url:"https://suumo.jp/chintai/jnc_000099742627/",src:"SUUMO"}
+{name:"アルベンセII",ward:"moriyama",addr:"守山区桔梗平3",floor:"1階",rent:5.95,fee:4600,layout:"1LDK",area:"40.99m²",age:"築3年",url:"https://suumo.jp/chintai/jnc_000105283912/",src:"SUUMO"},
+{name:"名西荘",ward:"nishi",addr:"西区名西2",floor:"2階",rent:2.5,fee:0,layout:"1DK",area:"25m²",age:"築99年以上",url:"https://suumo.jp/chintai/jnc_000104193404/",src:"SUUMO"},
+{name:"エスリード上前津セレーノ",ward:"naka",addr:"中区千代田3",floor:"3階",rent:6.24,fee:8000,layout:"1K",area:"25.2m²",age:"築3年",url:"https://suumo.jp/chintai/jnc_000083945396/",src:"SUUMO",img:"https://www.athome.co.jp/image_files/path/v9ayLQvNFemj4tqqrkBjJg==.jpeg?w=400"},
+{name:"ラクラーレVINTIA",ward:"naka",addr:"中区新栄1",floor:"8階",rent:8,fee:8000,layout:"1LDK",area:"32.11m²",age:"築7年",url:"https://suumo.jp/chintai/jnc_000105521623/",src:"SUUMO",img:"https://www.athome.co.jp/image_files/path/3gi0OLBCsY8IqSeKsWujWg==.jpeg?w=400"},
+{name:"ダイワシティー大須",ward:"naka",addr:"中区大須3",floor:"5階",rent:9.45,fee:10000,layout:"1LDK",area:"42.69m²",age:"築10年",url:"https://suumo.jp/chintai/jnc_000104087694/",src:"SUUMO",img:"https://www.athome.co.jp/image_files/path/n9cRE9poDF-aHb2X-I4q0A==.jpeg?w=400"}
 ];
 
 const rentProps=[...newRentProps,
@@ -155,6 +156,10 @@ const rentProps=[...newRentProps,
 {name:"レジデンス葵",ward:"higashi",addr:"东区葵1-4-5",floor:"1階",rent:6.8,fee:5000,layout:"1K",area:"25m²",age:"築10年",url:"https://suumo.jp/chintai/jnc_000105370001/",src:"SUUMO",img:"https://www.athome.co.jp/image_files/path/ay9zSPLgnyTfYgba-vlD3g==.jpeg?w=400"},
 {name:"メインステージ名古屋東",ward:"higashi",addr:"东区古出来1-5-6",floor:"4階",rent:8.2,fee:7000,layout:"1LDK",area:"32m²",age:"築4年",url:"https://suumo.jp/chintai/jnc_000105360001/",src:"SUUMO",img:"https://www.athome.co.jp/image_files/path/JBJUBjaxP7txkjfx31nYHA==.jpeg?w=400"}];
 const sellProps=[
+{name:"金山駅徒步5分・2LDK",ward:"naka",addr:"中区金山2-1-1",floor:"8階",price:3580,area:"55m²",age:"築8年",img:"https://www.athome.co.jp/image_files/path/S1oPpSiVVOc7VfKBV6JKWA==.jpeg?w=400",url:"https://suumo.jp/ms/chuko/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"名古屋駅徒步10分・1LDK",ward:"nakamura",addr:"中村区名駅3-3-3",floor:"12階",price:2890,area:"35m²",age:"築5年",img:"https://www.athome.co.jp/image_files/path/QIsM1CmnYPkJ618tFba1SQ==.jpeg?w=400",url:"https://suumo.jp/ms/chuko/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"栄駅徒步2分・3LDK",ward:"naka",addr:"中区栄3-5-5",floor:"15階",price:6800,area:"85m²",age:"築3年",img:"https://www.athome.co.jp/image_files/path/v9ayLQvNFemj4tqqrkBjJg==.jpeg?w=400",url:"https://suumo.jp/ms/chuko/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"伏見駅徒步3分・1LDK",ward:"naka",addr:"中区伏見2-2-2",floor:"6階",price:2200,area:"30m²",age:"築12年",img:"https://www.athome.co.jp/image_files/path/3gi0OLBCsY8IqSeKsWujWg==.jpeg?w=400",url:"https://suumo.jp/ms/chuko/aichi/sc_nagoyashinaka/",src:"SUUMO"},
 {name:"栄駅徒歩3分・1LDK",ward:"naka",addr:"中区栄4-1-1",floor:"1階",price:2988,area:"32.89m²",age:"新房",img:"https://www.athome.co.jp/image_files/path/S1oPpSiVVOc7VfKBV6JKWA==.jpeg?w=400",url:"https://suumo.jp/ms/shinchiku/aichi/sc_nagoyashinaka/nc_67729764/",src:"SUUMO"},
 {name:"栄駅徒歩4分・2LDK",ward:"naka",addr:"中区栄4-2-2",floor:"2階",price:4490,area:"58.14m²",age:"築5年",img:"https://www.athome.co.jp/image_files/path/QIsM1CmnYPkJ618tFba1SQ==.jpeg?w=400",url:"https://suumo.jp/ms/chuko/aichi/sc_nagoyashinaka/nc_77960105/",src:"SUUMO"},
 {name:"矢場町駅徒歩5分・2LDK",ward:"naka",addr:"中区栄4-3-3",floor:"5階",price:5780,area:"64.76m²",age:"築3年",img:"https://www.athome.co.jp/image_files/path/-cjE2OGg1tLFHCWX40rPug==.jpeg?w=400",url:"https://suumo.jp/ms/chuko/aichi/sc_nagoyashinaka/nc_79077625/",src:"SUUMO"},
@@ -178,7 +183,7 @@ function setSource(s){currentSource=s;document.querySelectorAll('.source-tabs bu
 function renderTabs(){const t=trans[lang],container=document.getElementById('districtTabs');container.innerHTML='';districts.forEach(d=>{const btn=document.createElement('button');btn.textContent=d==='all'?t.districts.all:t.districts[d];btn.className=d===currentDistrict?'active':'';btn.onclick=()=>{currentDistrict=d;renderTabs();renderProperties();};container.appendChild(btn);});}
 function renderProperties(){const t=trans[lang],container=document.getElementById('propertyContainer');container.innerHTML='';const props=currentType==="sell"?sellProps:rentProps;
 const filtered=props.filter(p=>(currentDistrict==='all'||p.ward===currentDistrict)&&(currentSource==='all'||p.src===currentSource));document.getElementById('totalCount').textContent=rentProps.length + sellProps.length;
-    document.getElementById('todayNew').textContent='+4';document.getElementById('updateTime').textContent=updateTimeStr;if(filtered.length===0){container.innerHTML='<p style="text-align:center;color:#666;padding:40px">データなし</p>';return;}
+    document.getElementById('todayNew').textContent='+5';document.getElementById('updateTime').textContent=updateTimeStr;if(filtered.length===0){container.innerHTML='<p style="text-align:center;color:#666;padding:40px">データなし</p>';return;}
 const grouped={};filtered.forEach(p=>{if(!grouped[p.ward])grouped[p.ward]=[];grouped[p.ward].push(p);});Object.keys(grouped).forEach(ward=>{const wardName=trans[lang].districts[ward]||ward;const section=document.createElement('div');section.innerHTML=`<div style="background:#fff;padding:15px;border-radius:8px;margin:15px 0 10px 0;box-shadow:0 2px 4px rgba(0,0,0,0.1)"><h3 style="margin:0;color:#333">${wardName} (${grouped[ward].length}件)</h3></div><div class="property-grid"></div>`;const grid=section.querySelector('.property-grid');grouped[ward].forEach(p=>{const imgHtml=p.img?`<img class="property-image" src="${p.img}" alt="${p.name}" onerror="this.style.display='none';this.nextSibling.style.display='flex'">`:`<div class="no-image">${t.noImage}</div>`;const contactHtml=p.phone?`<div class="contact-info"><strong>📞${t.contact}: ${p.company||''}</strong><br>${t.phone}: ${p.phone}</div>`:'';const card=document.createElement('div');card.className='property-card';card.innerHTML=imgHtml+`<div class="property-info"><div class="property-name"><a href="${p.url}" target="_blank">${p.name}</a></div><div class="property-price">${p.price?p.price+t.priceUnit2:p.rent+t.priceUnit2+t.priceUnit}</div><div class="property-details"><div>📍${t.address}: ${p.addr}</div><div>📐${p.layout?p.layout+t.layout:''}: ${p.area}</div><div>🏗️${t.age}: ${p.age.replace("築","").replace("年",p.age.includes("年")?" years":"").replace("新房","New")}</div>${p.fee?`<div>${t.feeLabel}: ${p.fee.toLocaleString()}円</div>`:''}</div>${contactHtml}<a href="${p.url}" target="_blank" style="display:inline-block;margin-top:8px;padding:6px 12px;background:#667eea;color:#fff;text-decoration:none;border-radius:4px;font-size:12px">${t.viewDetail} →</a></div><span class="source source-${(p.src||"suumo").toLowerCase()}">${p.src||"SUUMO"}</span>`;grid.appendChild(card);});container.appendChild(section);});}
 renderTabs();renderProperties();
 </script>
