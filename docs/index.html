@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>名古屋賃貸物件</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#f5f5f5}
+.container{max-width:1600px;margin:0 auto;padding:20px}
+.stats-bar{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;padding:20px;border-radius:12px;margin-bottom:20px}
+.stats-bar h1{margin-bottom:15px}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:15px}
+.stat-item{background:rgba(255,255,255,0.2);padding:15px;border-radius:8px;text-align:center}
+.stat-item .num{font-size:24px;font-weight:bold}
+.stat-item .label{font-size:12px;opacity:0.9}
+.type-tabs{display:flex;gap:10px;margin-bottom:15px}
+.type-tabs button{padding:12px 28px;border:none;background:#fff;border-radius:25px;cursor:pointer;font-size:14px;font-weight:bold;transition:all 0.3s;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
+.type-tabs button:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.15)}
+.type-tabs button.active{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff}
+.district-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.district-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.district-tabs button{padding:10px 18px;border:none;background:#fff;border-radius:25px;cursor:pointer;font-size:13px;transition:all 0.3s;box-shadow:0 2px 6px rgba(0,0,0,0.08)}
+.district-tabs button:hover{transform:translateY(-2px);box-shadow:0 4px 10px rgba(0,0,0,0.12)}
+.district-tabs button.active{background:#667eea;color:#fff}
+.district-tabs button.active{background:#667eea;color:#fff}
+.property-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:20px}
+.property-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.1)}
+.property-card:hover{transform:translateY(-3px)}
+.property-image{width:100%;height:180px;object-fit:cover;background:#ddd}
+.property-info{padding:12px}
+.property-name{font-size:14px;font-weight:bold;margin-bottom:5px;color:#333}
+.property-name a{color:#333;text-decoration:none}
+.property-name a:hover{color:#667eea}
+.property-price{font-size:17px;font-weight:bold;color:#e74c3c;margin-bottom:5px}
+.property-details{font-size:12px;color:#666;line-height:1.5}
+.contact-info{background:#f0f8ff;padding:8px;border-radius:4px;margin-top:8px;font-size:11px;border-left:3px solid #2196F3}
+.source{display:inline-block;padding:2px 6px;border-radius:4px;font-size:10px;margin-top:6px}
+.source-at-home{background:#27ae60;color:#fff}
+.source-suumo{background:#ff6b6b;color:#fff}
+.update-time{font-size:11px;color:#888;margin-top:5px}
+.no-image{display:flex;align-items:center;justify-content:center;background:#eee;color:#999;height:180px;font-size:14px}
+.lang-switch{position:fixed;top:20px;right:20px;background:#fff;padding:10px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1);display:flex;gap:10px;z-index:100}
+.lang-switch button{padding:6px 10px;border:none;background:#f0f0f0;border-radius:4px;cursor:pointer;font-size:12px}
+.lang-switch button.active{background:#667eea;color:#fff}
+.source-tabs{margin-bottom:15px;display:flex;gap:10px}
+.source-tabs button{padding:10px 20px;border:none;background:#fff;border-radius:25px;cursor:pointer;font-size:13px;transition:all 0.3s;box-shadow:0 2px 6px rgba(0,0,0,0.08)}
+.source-tabs button:hover{transform:translateY(-2px);box-shadow:0 4px 10px rgba(0,0,0,0.12)}
+.source-tabs button.active{background:#27ae60;color:#fff}
+.source-tabs button.active{background:#667eea;color:#fff}
+</style>
+</head>
+<body>
+<div class="lang-switch">
+<button onclick="setLang('zh')" id="btn-zh">中文</button>
+<button onclick="setLang('ja')" id="btn-ja" class="active">日本語</button>
+<button onclick="setLang('vi')" id="btn-vi">Tiếng Việt</button>
+<button onclick="setLang('ne')" id="btn-ne">नेपाली</button>
+</div>
+<div class="container">
+<div class="stats-bar">
+<h1 id="page-title">🏠 名古屋賃貸物件</h1>
+<div class="stats-grid">
+<div class="stat-item"><div class="num" id="rentCount">0</div><div class="label" id="rentLabel">租房</div></div>
+<div class="stat-item"><div class="num" id="sellCount">0</div><div class="label" id="sellLabel">卖房</div></div>
+<div class="stat-item"><div class="num" id="todayNew">+5</div><div class="label" id="newLabel">今日更新</div></div>
+<div class="stat-item"><div class="num" id="updateTime">02:31</div><div class="label" id="timeLabel">更新JST</div></div>
+</div>
+</div>
+<div class="type-tabs">
+<button onclick="setType('rent')" id="type-rent" class="active">🏠 賃貸(租房)</button>
+<button onclick="setType('sell')" id="type-sell">🏷️ 売却(卖房)</button>
+</div>
+<div class="source-tabs"><button onclick="setSource('all')" id="src-all" class="active">全部</button><button onclick="setSource('At-Home')" id="src-at-home">At-Home</button><button onclick="setSource('SUUMO')" id="src-suumo">SUUMO</button></div>
+<div class="district-tabs" id="districtTabs"></div>
+<div id="propertyContainer"></div>
+</div>
+<script>alert('START');
+const trans={zh:{title:"🏠 名古屋租房",rentLabel:"租房",sellLabel:"卖房",totalLabel:"租房+卖房",newLabel:"今日新增",expiredLabel:"今日失效",timeLabel:"更新时间",districts:{all:"全部",naka:"中区",showa:"昭和区",mizuho:"瑞穂区",atsuta:"熱田区",higashi:"东区",nishi:"西区",kita:"北区",minami:"南区",nakamura:"中村区",chikusa:"千種区",nakagawa:"中川区",minato:"港区",moriyama:"守山区",midori:"绿区",meito:"名东区",tenpaku:"天白区"},priceUnit:"/月",priceUnit2:"万",feeLabel:"管理费",address:"地址",layout:"房型",area:"面积",age:"房龄",contact:"联系",phone:"电话",noImage:"无图",viewDetail:"查看详情",rent:"租房",sell:"卖房",layoutTypes:{"1R":"一室","1K":"1K","1DK":"1DK","1LDK":"1LDK","2K":"2K","2DK":"2DK","2LDK":"2LDK","3K":"3K","3DK":"3DK","3LDK":"3LDK"}},
+ja:{title:"🏠 名古屋賃貸物件",rentLabel:"賃貸",sellLabel:"売却",totalLabel:"総房源数",newLabel:"今日更新",expiredLabel:"今日失效",timeLabel:"更新JST",districts:{all:"すべて",naka:"中区",showa:"昭和区",mizuho:"瑞穂区",atsuta:"熱田区",higashi:"东区",nishi:"西区",kita:"北区",minami:"南区",nakamura:"中村区",chikusa:"千種区",nakagawa:"中川区",minato:"港区",moriyama:"守山区",midori:"緑区",meito:"名东区",tenpaku:"天白区"},priceUnit:"/月",priceUnit2:"万",feeLabel:"管理費",address:"住所",layout:"間取り",area:"面積",age:"築年数",contact:"連絡先",phone:"電話",noImage:"画像なし",viewDetail:"詳細を見る",rent:"賃貸",sell:"売却",layoutTypes:{"1R":"1R","1K":"1K","1DK":"1DK","1LDK":"1LDK","2K":"2K","2DK":"2DK","2LDK":"2LDK","3K":"3K","3DK":"3DK","3LDK":"3LDK"}},
+vi:{title:"🏠 Cho Thuê Nagoya",rentLabel:"Thuê",sellLabel:"Bán",totalLabel:"Tổng",newLabel:"Hôm nay",expiredLabel:"Hết hạn",timeLabel:"Cập nhật",districts:{all:"Tất cả",naka:"Chuo",higashi:"Higashi",nishi:"Nishi",kita:"Kita",minami:"Minami",nakamura:"Nakamura",chikusa:"Chikusa",nakagawa:"Nakagawa",minato:"Minato",moriyama:"Moriyama",midori:"Midori",meito:"Meito",tenpaku:"Tenpaku"},priceUnit:"/tháng",priceUnit2:"Triệu",feeLabel:"Phí QL",address:"Địa chỉ",layout:"Loại",area:"Diện tích",age:"Năm xây",contact:"Liên hệ",phone:"ĐT",noImage:"No img",viewDetail:"Xem chi tiết",rent:"Thuê",sell:"Bán",layoutTypes:{"1R":"1R","1K":"1K","1DK":"1DK","1LDK":"1LDK","2K":"2K","2DK":"2DK","2LDK":"2LDK","3K":"3K","3DK":"3DK","3LDK":"3LDK"}},
+ne:{title:"🏠 नागोया भाडा",rentLabel:"भाडा",sellLabel:"बिक्री",totalLabel:"कुल",newLabel:"आज",expiredLabel:"समाप्त",timeLabel:"अपडेट",districts:{all:"सबै",naka:"चुओ",higashi:"हिगाशी",nishi:"निशी",kita:"किता",minami:"मिनामी",nakamura:"नाकामुरा",chikusa:"चिकुसा",nakagawa:"नाकागावा",minato:"मिनातो",moriyama:"मोरियामा",midori:"मिदोरी",meito:"मेइतो",tenpaku:"तेम्पाकु"},priceUnit:"/महिना",priceUnit2:"लाख",feeLabel:"शुल्क",address:"ठेगाना",layout:"प्रकार",area:"क्षेत्र",age:"उमेर",contact:"सम्पर्क",phone:"फोन",noImage:"फोटो छैन",viewDetail:"हेर्नुहोस्",rent:"भाडा",sell:"बिक्री",layoutTypes:{"1R":"1R","1K":"1K","1DK":"1DK","1LDK":"1LDK","2K":"2K","2DK":"2DK","2LDK":"2LDK","3K":"3K","3DK":"3DK","3LDK":"3LDK"}}};
+
+const districts=["all","naka","higashi","nishi","kita","minami","nakamura","chikusa","nakagawa","minato","moriyama","midori","meito","tenpaku","showa","mizuho","atsuta"];
+const now=new Date();const jst=new Date(now.getTime()+9*60*60*1000);
+const updateTimeStr=jst.getHours()+":"+String(jst.getMinutes()).padStart(2,'0');
+
+const newRentProps=[
+{name:"セルナハイツⅠ 102",ward:"nakagawa",addr:"中川区",floor:"1階",rent:5.5,fee:4000,layout:"1K",area:"26.5m²",age:"築3年",url:"https://www.shiranet.net/2026/03/06/chintai/1991",src:"SUUMO"},
+{name:"セルナパレスⅠ 102",ward:"nakagawa",addr:"中川区",floor:"1階",rent:5.8,fee:4500,layout:"1K",area:"27m²",age:"築2年",url:"https://www.shiranet.net/2026/03/02/chintai/2874",src:"SUUMO"},
+{name:"セルナクレスト 103",ward:"nakagawa",addr:"中川区",floor:"1階",rent:6.2,fee:5000,layout:"1LDK",area:"35m²",age:"築1年",url:"https://www.shiranet.net/2026/03/05/chintai/5346",src:"SUUMO"},
+{name:"カーサ・エスペランサ 204",ward:"nakagawa",addr:"中川区",floor:"2階",rent:7.5,fee:6000,layout:"2LDK",area:"55m²",age:"築5年",url:"https://www.shiranet.net/2026/03/05/chintai/6022",src:"SUUMO"},
+{name:"アルベンセII",ward:"moriyama",addr:"守山区桔梗平3",floor:"1階",rent:5.95,fee:4600,layout:"1LDK",area:"40.99m²",age:"築3年",url:"https://suumo.jp/chintai/jnc_000105283912/",src:"SUUMO"},
+{name:"名西荘",ward:"nishi",addr:"西区名西2",floor:"2階",rent:2.5,fee:0,layout:"1DK",area:"25m²",age:"築99年以上",url:"https://suumo.jp/chintai/jnc_000104193404/",src:"SUUMO"},
+{name:"エスリード上前津セレーノ",ward:"naka",addr:"中区千代田3",floor:"3階",rent:6.24,fee:8000,layout:"1K",area:"25.2m²",age:"築3年",url:"https://suumo.jp/chintai/jnc_000083945396/",src:"SUUMO",img:"https://www.athome.co.jp/image_files/path/v9ayLQvNFemj4tqqrkBjJg==.jpeg?w=400"},
+{name:"ラクラーレVINTIA",ward:"naka",addr:"中区新栄1",floor:"8階",rent:8,fee:8000,layout:"1LDK",area:"32.11m²",age:"築7年",url:"https://suumo.jp/chintai/jnc_000105521623/",src:"SUUMO",img:"https://www.athome.co.jp/image_files/path/3gi0OLBCsY8IqSeKsWujWg==.jpeg?w=400"},
+{name:"ダイワシティー大須",ward:"naka",addr:"中区大須3",floor:"5階",rent:9.45,fee:10000,layout:"1LDK",area:"42.69m²",age:"築10年",url:"https://suumo.jp/chintai/jnc_000104087694/",src:"SUUMO",img:"https://www.athome.co.jp/image_files/path/n9cRE9poDF-aHb2X-I4q0A==.jpeg?w=400"},
+// At-Home宠物可房源 (2026-03-07)
+{name:"ペット可能名古屋房源207",ward:"naka",addr:"中区",floor:"2階",rent:8.26,fee:8000,layout:"1LDK",area:"29.75m²",age:"築5年",url:"https://www.athome.co.jp/chintai/1117181517/",src:"At-Home",img:"https://www.athome.co.jp/image_files/path/7M6E7LR2x-q5LY3DRy8cCw==.jpeg?w=400"},
+{name:"ペット可能名古屋房源305",ward:"naka",addr:"中区",floor:"3階",rent:8.24,fee:8000,layout:"1LDK",area:"29.75m²",age:"築5年",url:"https://www.athome.co.jp/chintai/1118120817/",src:"At-Home",img:"https://www.athome.co.jp/image_files/path/n9cRE9poDF-aHb2X-I4q0A==.jpeg?w=400"},
+{name:"ペット可能名古屋房源15階",ward:"naka",addr:"中区",floor:"15階",rent:8.7,fee:8000,layout:"1LDK",area:"29.75m²",age:"築5年",url:"https://www.athome.co.jp/chintai/1130368622/",src:"At-Home",img:"https://www.athome.co.jp/image_files/path/jrfvfX3D0nXdaLCqWkFVvQ==.jpeg?w=400"},
+// At-Home 2LDK房源
+{name:"名古屋2LDK房源102",ward:"naka",addr:"中区",floor:"1階",rent:7.2,fee:7000,layout:"2LDK",area:"57.66m²",age:"築8年",url:"https://www.athome.co.jp/chintai/1190198714/",src:"At-Home",img:"https://www.athome.co.jp/image_files/path/eGwimvhJRWv11weI6ZkKsw==.jpeg?w=400"},
+{name:"名古屋2LDK房源105",ward:"naka",addr:"中区",floor:"10階",rent:8.7,fee:6500,layout:"2LDK",area:"53.79m²",age:"築8年",url:"https://www.athome.co.jp/chintai/1005474463/",src:"At-Home",img:"https://www.athome.co.jp/image_files/path/8g_7Ru-8QVzEqUOlLcaQ-g==.jpeg?w=400"},
+// At-Home新房房源
+{name:"名古屋新房207",ward:"naka",addr:"中区",floor:"2階",rent:8.26,fee:8000,layout:"1LDK",area:"29.88m²",age:"新房",url:"https://www.athome.co.jp/chintai/1133419620/",src:"At-Home",img:"https://www.athome.co.jp/image_files/path/xVa_KSy09lFqLxcGeR3qlw==.jpeg?w=400"},
+{name:"名古屋新房411",ward:"naka",addr:"中区",floor:"4階",rent:6.95,fee:8000,layout:"1K",area:"25.37m²",age:"新房",url:"https://www.athome.co.jp/chintai/1134874020/",src:"At-Home",img:"https://www.athome.co.jp/image_files/path/xVa_KSy09lHgexvVXzyNxw==.jpeg?w=400"},
+// At-Home名古屋站附近房源
+{name:"名古屋站1K房源",ward:"nakamura",addr:"中村区則武",floor:"2階",rent:5.3,fee:4000,layout:"1K",area:"21.76m²",age:"築5年",url:"https://www.athome.co.jp/chintai/1107495817/",src:"At-Home",img:"https://www.athome.co.jp/image_files/path/3g6Van8B3o-oqiq6twnqhg==.jpeg?w=400"},
+{name:"名古屋站1LDK",ward:"nakamura",addr:"中村区",floor:"2階",rent:6.9,fee:4000,layout:"1LDK",area:"31.17m²",age:"築5年",url:"https://www.athome.co.jp/chintai/1122177817/",src:"At-Home",img:"https://www.athome.co.jp/image_files/path/S1oPpSiVVOc7VfKBV6JKWA==.jpeg?w=400"},
+{name:"名古屋站低价1K",ward:"nakamura",addr:"中村区",floor:"1階",rent:5,fee:4000,layout:"1K",area:"20.15m²",age:"築5年",url:"https://www.athome.co.jp/chintai/1186554511/",src:"At-Home",img:"https://www.athome.co.jp/image_files/path/CyVeT-RnHEwZVSZfMFaYZQ==.jpeg?w=400"},
+// At-Home昭和区房源
+{name:"昭和区1K房源",ward:"showa",addr:"昭和区",floor:"1階",rent:5.45,fee:4000,layout:"1K",area:"21.09m²",age:"築5年",url:"https://www.athome.co.jp/chintai/1124402217/",src:"At-Home",img:"https://www.athome.co.jp/image_files/path/yO2b8ctp7lWMQwjWl6WGOg==.jpeg?w=400"},
+{name:"昭和区2DK房源",ward:"showa",addr:"昭和区",floor:"5階",rent:7.2,fee:8500,layout:"2DK",area:"57.87m²",age:"築10年",url:"https://www.athome.co.jp/chintai/1125201417/",src:"At-Home",img:"https://www.athome.co.jp/image_files/path/g6St4hWSk6rXrvOsj9Yf6Q==.jpeg?w=400"},
+// CHINTAI房源
+{name:"名古屋栄2丁目",ward:"naka",addr:"中区栄2",floor:"11階",rent:8.5,fee:8000,layout:"1LDK",area:"41.15m²",age:"築28年",url:"https://www.chintai.net/detail/bk-C030009390000000000016730027/",src:"CHINTAI"},
+{name:"中村区新房",ward:"nakamura",addr:"中村区塩池町",floor:"1階",rent:7.5,fee:4500,layout:"1LDK",area:"40.16m²",age:"新房",url:"https://www.chintai.net/aichi/area/23100/",src:"CHINTAI"},
+{name:"北区柳原",ward:"kita",addr:"北区柳原2",floor:"2階",rent:6.9,fee:4000,layout:"1LDK",area:"36.94m²",age:"築4年",url:"https://www.chintai.net/detail/bk-C030009390000000000024190002/",src:"CHINTAI"},
+{name:"名東高針低价",ward:"meito",addr:"名东区高針2",floor:"3階",rent:4,fee:3000,layout:"1LDK",area:"36m²",age:"築38年",url:"https://www.chintai.net/aichi/area/23100/",src:"CHINTAI"},
+// CHINTAI 1K房源
+{name:"中区正木1K",ward:"naka",addr:"中区正木4",floor:"3階",rent:4.6,fee:6000,layout:"1K",area:"22.77m²",age:"築32年",url:"https://www.chintai.net/aichi/area/23100/list/1k/",src:"CHINTAI"},
+{name:"昭和区田面超便宜",ward:"showa",addr:"昭和区田面町",floor:"3階",rent:2.7,fee:3000,layout:"1K",area:"24.47m²",age:"築41年",url:"https://www.chintai.net/aichi/area/23100/list/1k/",src:"CHINTAI"},
+{name:"东区泉1K",ward:"higashi",addr:"东区泉",floor:"3階",rent:4.3,fee:3500,layout:"1K",area:"23.1m²",age:"築35年",url:"https://www.chintai.net/aichi/area/23100/list/1k/",src:"CHINTAI"},
+{name:"守山1K便宜",ward:"moriyama",addr:"守山区大永寺",floor:"1階",rent:3.9,fee:4500,layout:"1K",area:"20.22m²",age:"築18年",url:"https://www.chintai.net/aichi/area/23100/list/1k/",src:"CHINTAI"},
+// CHINTAI 3LDK房源
+{name:"昭和区3LDK",ward:"showa",addr:"昭和区滝子町",floor:"2階",rent:8.5,fee:0,layout:"3LDK",area:"58.32m²",age:"築29年",url:"https://www.chintai.net/aichi/area/23100/list/3ldk/",src:"CHINTAI"},
+{name:"中区丸の内新房",ward:"naka",addr:"中区丸の内2",floor:"4階",rent:23.3,fee:15000,layout:"3LDK",area:"69.4m²",age:"新房",url:"https://www.chintai.net/aichi/area/23100/list/3ldk/",src:"CHINTAI"},
+{name:"北区楠3LDK",ward:"kita",addr:"北区楠1",floor:"1階",rent:7.5,fee:4000,layout:"3LDK",area:"62.94m²",age:"築22年",url:"https://www.chintai.net/aichi/area/23100/list/",src:"CHINTAI"},
+// 车库房源
+{name:"名东车库1LDK",ward:"meito",addr:"名东区引山1",floor:"3階",rent:11.2,fee:9000,layout:"1LDK",area:"65m²",age:"築12年",url:"https://www.nissho-apn.co.jp/chintai/detail/2303327/",src:"nissho",parking:true},
+{name:"中川新房3LDK",ward:"nakagawa",addr:"中川区荒江町",floor:"1階",rent:14.5,fee:0,layout:"3LDK",area:"106.84m²",age:"新房",url:"https://www.nissho-apn.co.jp/chintai/detail/2603768/",src:"nissho",parking:true},
+{name:"昭和区车库3LDK",ward:"showa",addr:"昭和区丸屋町6",floor:"3階",rent:15.8,fee:10000,layout:"3LDK",area:"84.36m²",age:"築19年",url:"https://www.nissho-apn.co.jp/chintai/detail/3301390/",src:"nissho",parking:true},
+// 名古屋站周边房源
+{name:"西区那古野1LDK",ward:"nishi",addr:"西区那古野2",floor:"5階",rent:8.2,fee:7500,layout:"1LDK",area:"41m²",age:"築19年",url:"https://www.chintai.net/aichi/ensen/000001711/list/",src:"CHINTAI"},
+{name:"中村太閤新房",ward:"nakamura",addr:"中村区太閤2",floor:"1階",rent:8.95,fee:6500,layout:"1LDK",area:"40.53m²",age:"新房",url:"https://www.chintai.net/aichi/ensen/000001711/list/",src:"CHINTAI"},
+{name:"中村1K站近",ward:"nakamura",addr:"中村区中島町1",floor:"2階",rent:6.51,fee:6000,layout:"1K",area:"25.56m²",age:"築5年",url:"https://www.chintai.net/aichi/ensen/000001711/list/",src:"CHINTAI"},
+{name:"名古屋站1K便宜",ward:"nakamura",addr:"中村区名駅南3",floor:"2階",rent:4.4,fee:7000,layout:"1K",area:"24.96m²",age:"築20年",url:"https://www.chintai.net/aichi/ensen/000001711/list/",src:"CHINTAI"},
+// 卫浴分离房源
+{name:"中区千代田1LDK",ward:"naka",addr:"中区千代田2",floor:"8階",rent:9.1,fee:9000,layout:"1LDK",area:"45.92m²",age:"築12年",url:"https://www.chintai.net/aichi/area/23106/list/bath-toilet/",src:"CHINTAI"},
+{name:"中区丸之内2LDK",ward:"naka",addr:"中区丸の内2",floor:"4階",rent:25.7,fee:8000,layout:"2LDK",area:"71.74m²",age:"築6年",url:"https://www.chintai.net/aichi/area/23106/list/bath-toilet/",src:"CHINTAI"},
+{name:"中区丸之内1LDK",ward:"naka",addr:"中区丸の内2",floor:"8階",rent:11.4,fee:8000,layout:"1LDK",area:"35.34m²",age:"築6年",url:"https://www.chintai.net/aichi/area/23106/list/bath-toilet/",src:"CHINTAI"},
+// 女性限定房源
+{name:"昭和区女性限定",ward:"showa",addr:"昭和区滝川",floor:"4階",rent:3.9,fee:3500,layout:"1K",area:"19.7m²",age:"築36年",url:"https://www.chintai.net/aichi/area/23100/list/woman/",src:"CHINTAI",women:true},
+{name:"昭和区女性限定2",ward:"showa",addr:"昭和区滝川",floor:"2階",rent:4.2,fee:3500,layout:"1K",area:"20.4m²",age:"築36年",url:"https://www.chintai.net/aichi/area/23100/list/woman/",src:"CHINTAI",women:true},
+{name:"中区金山女性",ward:"naka",addr:"中区金山1",floor:"3階",rent:5.9,fee:5500,layout:"1K",area:"30m²",age:"築18年",url:"https://www.chintai.net/aichi/area/23100/list/woman/",src:"CHINTAI",women:true},
+// 低初期费用房源
+{name:"昭和区低费1K",ward:"showa",addr:"昭和区荒田",floor:"2階",rent:3.5,fee:0,layout:"1K",area:"21.68m²",age:"築39年",url:"https://www.chintai.net/aichi/area/23100/list/initial-cost/",src:"CHINTAI"},
+{name:"昭和区低费1K",ward:"showa",addr:"昭和区桜山町",floor:"3階",rent:3.2,fee:3000,layout:"1K",area:"21.38m²",age:"築37年",url:"https://www.chintai.net/aichi/area/23100/list/initial-cost/",src:"CHINTAI"},
+{name:"千種区駅近",ward:"chikusa",addr:"千種区内山1",floor:"6階",rent:6.3,fee:6000,layout:"1K",area:"24.82m²",age:"築18年",url:"https://www.chintai.net/aichi/area/23100/list/initial-cost/",src:"CHINTAI"},
+// 敷金礼金0房源
+{name:"中川尾頭橋",ward:"nakagawa",addr:"中川区尾頭橋3",floor:"1階",rent:5.2,fee:4000,layout:"1K",area:"22m²",age:"築12年",url:"https://www.chintai.net/aichi/area/23100/list/zero/",src:"CHINTAI",deposit:0},
+{name:"名东牧之原",ward:"meito",addr:"名东区牧の原",floor:"1階",rent:3.2,fee:3000,layout:"1K",area:"26.08m²",age:"築22年",url:"https://www.chintai.net/aichi/area/23100/list/zero/",src:"CHINTAI",deposit:0},
+{name:"中村押木田",ward:"nakamura",addr:"中村区押木田2",floor:"1階",rent:5.9,fee:4000,layout:"1DK",area:"25.41m²",age:"築5年",url:"https://www.chintai.net/aichi/area/23100/list/zero/",src:"CHINTAI",deposit:0},
+{name:"名东一社",ward:"meito",addr:"名东区一社",floor:"3階",rent:4.8,fee:4000,layout:"1R",area:"31.59m²",age:"築39年",url:"https://www.chintai.net/aichi/area/23100/list/zero/",src:"CHINTAI",deposit:0},
+// SUUMO房源
+{name:"守山白山3DK",ward:"moriyama",addr:"守山区白山4",floor:"4階",rent:7,fee:5000,layout:"3DK",area:"62.98m²",age:"築46年",url:"https://suumo.jp/chintai/jnc_000104006140/",src:"SUUMO"},
+{name:"守山白山1LDK",ward:"moriyama",addr:"守山区白山4",floor:"6階",rent:7.5,fee:5000,layout:"1LDK",area:"50m²",age:"築46年",url:"https://suumo.jp/chintai/jnc_000096048916/",src:"SUUMO"},
+{name:"中川南脇1K",ward:"nakagawa",addr:"中川区南脇町3",floor:"2階",rent:5.4,fee:5000,layout:"1K",area:"33.35m²",age:"築20年",url:"https://suumo.jp/chintai/jnc_000105538251/",src:"SUUMO"},
+{name:"中川南脇1K",ward:"nakagawa",addr:"中川区南脇町3",floor:"2階",rent:5.7,fee:4000,layout:"1K",area:"33.35m²",age:"築20年",url:"https://suumo.jp/chintai/jnc_000104359293/",src:"SUUMO"},
+{name:"名东高针别墅",ward:"meito",addr:"名东区高針5",floor:"1階",rent:12,fee:0,layout:"6SLDK",area:"115.91m²",age:"築69年",url:"https://suumo.jp/chintai/jnc_000105345737/",src:"SUUMO"},
+{name:"守山桔梗平",ward:"moriyama",addr:"守山区桔梗平3",floor:"1階",rent:5.95,fee:4600,layout:"1LDK",area:"40.99m²",age:"築3年",url:"https://suumo.jp/chintai/jnc_000105283912/",src:"SUUMO"},
+{name:"西区名西1DK",ward:"nishi",addr:"西区名西2",floor:"2階",rent:2.5,fee:0,layout:"1DK",area:"25m²",age:"築99年以上",url:"https://suumo.jp/chintai/jnc_000104193404/",src:"SUUMO"},
+// 中村区房源
+{name:"中村塩池1LDK",ward:"nakamura",addr:"中村区塩池町1",floor:"3階",rent:5.7,fee:4000,layout:"1LDK",area:"32.4m²",age:"築8年",url:"https://suumo.jp/chintai/jnc_000070280036/",src:"SUUMO"},
+{name:"中村草薙1LDK",ward:"nakamura",addr:"中村区草薙町1",floor:"3階",rent:6.5,fee:3000,layout:"1LDK",area:"30.39m²",age:"築3年",url:"https://suumo.jp/chintai/jnc_000105440343/",src:"SUUMO"},
+{name:"中村上石川1LDK",ward:"nakamura",addr:"中村区上石川町1",floor:"1階",rent:6.25,fee:4000,layout:"1LDK",area:"30.84m²",age:"築6年",url:"https://suumo.jp/chintai/jnc_000091904009/",src:"SUUMO"},
+{name:"中村東枇杷島新房",ward:"nakamura",addr:"中村区新富町4",floor:"1階",rent:7.5,fee:3000,layout:"2LDK",area:"41.46m²",age:"新房",url:"https://suumo.jp/chintai/jnc_000105470085/",src:"SUUMO"},
+// 千種区房源
+{name:"千種区今池1LDK",ward:"chikusa",addr:"千種区今池2",floor:"1階",rent:6.7,fee:3300,layout:"1LDK",area:"36.79m²",age:"築15年",url:"https://suumo.jp/chintai/jnc_000105432837/",src:"SUUMO"},
+{name:"千種区内山新房",ward:"chikusa",addr:"千種区内山2",floor:"2階",rent:7.75,fee:9300,layout:"1LDK",area:"29.58m²",age:"新房",url:"https://suumo.jp/chintai/jnc_000097180115/",src:"SUUMO"},
+{name:"千種区今池1K",ward:"chikusa",addr:"千種区今池5",floor:"7階",rent:5.77,fee:8000,layout:"1K",area:"22.79m²",age:"築6年",url:"https://suumo.jp/chintai/jnc_000063214938/",src:"SUUMO"},
+// 西区房源
+{name:"西区栄生1LDK",ward:"nishi",addr:"西区栄生1",floor:"1階",rent:6.1,fee:4000,layout:"1LDK",area:"32.31m²",age:"築8年",url:"https://suumo.jp/chintai/jnc_000066967472/",src:"SUUMO"},
+{name:"西区押切1LDK",ward:"nishi",addr:"西区押切1",floor:"2階",rent:6.6,fee:3000,layout:"1LDK",area:"31.06m²",age:"築10年",url:"https://suumo.jp/chintai/jnc_000088823837/",src:"SUUMO"},
+{name:"西区上名古屋1LDK",ward:"nishi",addr:"西区上名古屋1",floor:"3階",rent:6.7,fee:3000,layout:"1LDK",area:"35.75m²",age:"築5年",url:"https://suumo.jp/chintai/jnc_000105283679/",src:"SUUMO"},
+// 天白区房源
+{name:"天白区野並1LDK",ward:"tenpaku",addr:"天白区野並2",floor:"3階",rent:6.45,fee:4000,layout:"1LDK",area:"28.67m²",age:"新房",url:"https://suumo.jp/chintai/jnc_000105371022/",src:"SUUMO"},
+{name:"天白区植田3LDK",ward:"tenpaku",addr:"天白区植田西1",floor:"2階",rent:7.9,fee:5500,layout:"3LDK",area:"73.11m²",age:"築29年",url:"https://suumo.jp/chintai/jnc_000074557966/",src:"SUUMO"},
+{name:"天白区原1LDK",ward:"tenpaku",addr:"天白区原1",floor:"3階",rent:6.1,fee:4000,layout:"1LDK",area:"35m²",age:"築10年",url:"https://suumo.jp/chintai/jnc_000097180334/",src:"SUUMO"},
+// 瑞穂区房源
+{name:"瑞穂区土市2LDK",ward:"mizuho",addr:"瑞穂区土市町2",floor:"1-2階",rent:9.5,fee:3000,layout:"2LDK",area:"62.94m²",age:"築13年",url:"https://suumo.jp/chintai/jnc_000023832070/",src:"SUUMO"},
+{name:"瑞穂区鍵田1LDK",ward:"mizuho",addr:"瑞穂区鍵田町1",floor:"2階",rent:8.5,fee:4200,layout:"1LDK",area:"50.86m²",age:"新房",url:"https://suumo.jp/chintai/jnc_000105530258/",src:"SUUMO"},
+// 中川区房源
+{name:"中川区高畑1LDK",ward:"nakagawa",addr:"中川区中郷1",floor:"3階",rent:5.95,fee:4000,layout:"1LDK",area:"32.97m²",age:"築9年",url:"https://suumo.jp/chintai/jnc_000105339169/",src:"SUUMO"},
+{name:"中川区山王1LDK",ward:"nakagawa",addr:"中川区柳堀町",floor:"1階",rent:6.1,fee:5000,layout:"1LDK",area:"33.46m²",age:"築10年",url:"https://suumo.jp/chintai/jnc_000021322330/",src:"SUUMO"},
+// 昭和区房源
+{name:"昭和区吹上1LDK",ward:"showa",addr:"昭和区吹上町1",floor:"1階",rent:6.6,fee:4300,layout:"1LDK",area:"30.24m²",age:"築7年",url:"https://suumo.jp/chintai/jnc_000055154956/",src:"SUUMO"},
+{name:"昭和区荒畑1K",ward:"showa",addr:"昭和区鶴舞3",floor:"1階",rent:5.2,fee:4000,layout:"1K",area:"20.65m²",age:"築11年",url:"https://suumo.jp/chintai/jnc_000091332494/",src:"SUUMO"},
+// 港区房源
+{name:"港区港陽1LDK",ward:"minato",addr:"港区港陽1",floor:"3階",rent:5.8,fee:5000,layout:"1LDK",area:"30.29m²",age:"新房",url:"https://suumo.jp/chintai/jnc_000095053820/",src:"SUUMO"},
+{name:"港区港北新房",ward:"minato",addr:"港区港北町4",floor:"1階",rent:6,fee:5000,layout:"1LDK",area:"30m²",age:"新房",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminato/",src:"SUUMO"},
+// 名东区房源
+{name:"名东区上社2K",ward:"meito",addr:"名东区貴船1",floor:"1階",rent:6.55,fee:10000,layout:"2K",area:"28.64m²",age:"新房",url:"https://suumo.jp/chintai/jnc_000104738718/",src:"SUUMO"},
+// At-Home带图房源
+{name:"千種区今池1K",ward:"chikusa",addr:"千種区今池",floor:"1階",rent:4.6,fee:3000,layout:"1K",area:"21.01m²",age:"新房",url:"https://www.athome.co.jp/chintai/1116838517/",src:"At-Home",img:"https://www.athome.co.jp/image_files/path/kzt4YXm6jrtU67kzY21vPA==.jpeg?w=400"},
+{name:"千種区内山1K",ward:"chikusa",addr:"千種区内山",floor:"2階",rent:4.8,fee:3000,layout:"1K",area:"21.01m²",age:"新房",url:"https://www.athome.co.jp/chintai/1116124817/",src:"At-Home",img:"https://www.athome.co.jp/image_files/path/05dg-ke-sd-Z67-X1g6wwg==.jpeg?w=400"},
+{name:"中区栄1LDK",ward:"naka",addr:"中区栄2",floor:"1階",rent:9.6,fee:7500,layout:"1LDK",area:"41.85m²",age:"新房",url:"https://www.athome.co.jp/chintai/1130000000/",src:"At-Home",img:"https://www.athome.co.jp/image_files/path/S1oPpSiVVOc7VfKBV6JKWA==.jpeg?w=400"},
+// 北区房源
+{name:"北区下飯田1LDK",ward:"kita",addr:"北区下飯田町4",floor:"1階",rent:6.5,fee:4000,layout:"1LDK",area:"36.54m²",age:"築10年",url:"https://suumo.jp/chintai/jnc_000059539721/",src:"SUUMO"},
+{name:"北区上飯田1DK",ward:"kita",addr:"北区上飯田通2",floor:"2階",rent:5.75,fee:4500,layout:"1DK",area:"28.56m²",age:"築8年",url:"https://suumo.jp/chintai/jnc_000092280850/",src:"SUUMO"},
+{name:"北区志賀本通1LDK",ward:"kita",addr:"北区城東町6",floor:"2階",rent:6.7,fee:4000,layout:"1LDK",area:"30.12m²",age:"新房",url:"https://suumo.jp/chintai/jnc_000105321444/",src:"SUUMO"},
+{name:"北区大曽根1LDK",ward:"kita",addr:"北区平安2",floor:"1階",rent:7.1,fee:7000,layout:"1LDK",area:"32.17m²",age:"築9年",url:"https://suumo.jp/chintai/jnc_000036919319/",src:"SUUMO"},
+// 東区房源
+{name:"東区車道1K",ward:"higashi",addr:"东区筒井3",floor:"1階",rent:5.45,fee:4000,layout:"1K",area:"20.63m²",age:"築11年",url:"https://suumo.jp/chintai/jnc_000088214035/",src:"SUUMO"},
+{name:"東区筒井1K",ward:"higashi",addr:"东区筒井2",floor:"1階",rent:5.55,fee:4000,layout:"1K",area:"20.63m²",age:"新房",url:"https://suumo.jp/chintai/jnc_000105509611/",src:"SUUMO"},
+{name:"东区车道路1LDK",ward:"higashi",addr:"东区筒井2",floor:"1階",rent:8.5,fee:6000,layout:"1LDK",area:"37.13m²",age:"築8年",url:"https://suumo.jp/chintai/jnc_000105454775/",src:"SUUMO"},
+// 南区房源
+{name:"南区笠寺1K",ward:"minami",addr:"南区笠寺",floor:"1階",rent:4.5,fee:3000,layout:"1K",area:"20m²",age:"築5年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminami/",src:"SUUMO"},
+{name:"南区鳴尾1DK",ward:"minami",addr:"南区鳴尾",floor:"2階",rent:5,fee:4000,layout:"1DK",area:"25m²",age:"築10年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminami/",src:"SUUMO"},
+// 緑区房源
+{name:"緑区鳴海1K",ward:"midori",addr:"緑区鳴海",floor:"1階",rent:4.8,fee:3000,layout:"1K",area:"20m²",age:"築5年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimidori/",src:"SUUMO"},
+{name:"緑区大高1DK",ward:"midori",addr:"緑区大高",floor:"2階",rent:5.2,fee:4000,layout:"1DK",area:"25m²",age:"築10年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimidori/",src:"SUUMO"},
+// 熱田区房源
+{name:"熱田区金山1LDK",ward:"atsuta",addr:"熱田区",floor:"1階",rent:7,fee:5000,layout:"1LDK",area:"30m²",age:"築10年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiatsuta/",src:"SUUMO"},
+{name:"熱田区神宮1K",ward:"atsuta",addr:"熱田区神宮",floor:"2階",rent:5.5,fee:4000,layout:"1K",area:"22m²",age:"築8年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiatsuta/",src:"SUUMO"},
+// 守山区更多房源
+{name:"守山区大森1K",ward:"moriyama",addr:"守山区大森",floor:"1階",rent:5,fee:4000,layout:"1K",area:"22m²",age:"築5年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimoriyama/",src:"SUUMO"},
+{name:"守山区小幡1DK",ward:"moriyama",addr:"守山区小幡",floor:"2階",rent:5.5,fee:3500,layout:"1DK",area:"25m²",age:"築8年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimoriyama/",src:"SUUMO"},
+{name:"守山区喜多山1LDK",ward:"moriyama",addr:"守山区喜多山",floor:"1階",rent:6,fee:4000,layout:"1LDK",area:"30m²",age:"築10年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimoriyama/",src:"SUUMO"},
+// 名东区更多
+{name:"名东区本郷1K",ward:"meito",addr:"名东区本郷",floor:"1階",rent:5.2,fee:4000,layout:"1K",area:"22m²",age:"築6年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimeito/",src:"SUUMO"},
+{name:"名东区猪子石1DK",ward:"meito",addr:"名东区猪子石",floor:"2階",rent:5,fee:3000,layout:"1DK",area:"25m²",age:"築12年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimeito/",src:"SUUMO"},
+// 天白区更多
+{name:"天白区植田1K",ward:"tenpaku",addr:"天白区植田",floor:"1階",rent:4.9,fee:3000,layout:"1K",area:"20m²",age:"築7年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashitempaku/",src:"SUUMO"},
+{name:"天白区平針1LDK",ward:"tenpaku",addr:"天白区平針",floor:"2階",rent:6.5,fee:4000,layout:"1LDK",area:"35m²",age:"築10年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashitempaku/",src:"SUUMO"},
+// 中区更多房源
+{name:"中区新栄1R",ward:"naka",addr:"中区新栄2",floor:"1階",rent:5.6,fee:3000,layout:"1R",area:"24.59m²",age:"築14年",url:"https://suumo.jp/chintai/jnc_000105418354/",src:"SUUMO"},
+{name:"中区大須1K",ward:"naka",addr:"中区大須",floor:"2階",rent:5.5,fee:4000,layout:"1K",area:"22m²",age:"築10年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"中区上前津1K",ward:"naka",addr:"中区上前津",floor:"1階",rent:6,fee:5000,layout:"1K",area:"23m²",age:"築8年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"中区金山1LDK",ward:"naka",addr:"中区金山",floor:"3階",rent:7.5,fee:6000,layout:"1LDK",area:"35m²",age:"築12年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+// 瑞穂区更多
+{name:"瑞穂区堀田1K",ward:"mizuho",addr:"瑞穂区堀田",floor:"1階",rent:5,fee:4000,layout:"1K",area:"20m²",age:"築8年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimizuho/",src:"SUUMO"},
+{name:"瑞穂区新瑞1LDK",ward:"mizuho",addr:"瑞穂区新瑞橋",floor:"2階",rent:7,fee:5000,layout:"1LDK",area:"32m²",age:"築10年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimizuho/",src:"SUUMO"},
+// 中川区更多
+{name:"中川区八田1K",ward:"nakagawa",addr:"中川区八田",floor:"1階",rent:4.8,fee:3000,layout:"1K",area:"20m²",age:"築6年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinakagawa/",src:"SUUMO"},
+{name:"中川区荒子1K",ward:"nakagawa",addr:"中川区荒子",floor:"2階",rent:5,fee:3500,layout:"1K",area:"22m²",age:"築8年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinakagawa/",src:"SUUMO"},
+{name:"中川区高畑1K",ward:"nakagawa",addr:"中川区高畑",floor:"1階",rent:5.2,fee:4000,layout:"1K",area:"21m²",age:"築7年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinakagawa/",src:"SUUMO"},
+// 昭和区更多
+{name:"昭和区御器所1K",ward:"showa",addr:"昭和区御器所",floor:"1階",rent:5.3,fee:4000,layout:"1K",area:"22m²",age:"築8年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashishowa/",src:"SUUMO"},
+{name:"昭和区川名1K",ward:"showa",addr:"昭和区川名",floor:"2階",rent:5,fee:3500,layout:"1K",area:"20m²",age:"築10年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashishowa/",src:"SUUMO"},
+// 千種区更多
+{name:"千種区池下1K",ward:"chikusa",addr:"千種区池下",floor:"1階",rent:5.8,fee:4000,layout:"1K",area:"22m²",age:"築10年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashichikusa/",src:"SUUMO"},
+{name:"千種区本山1LDK",ward:"chikusa",addr:"千種区本山",floor:"1階",rent:7.2,fee:5000,layout:"1LDK",area:"35m²",age:"築15年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashichikusa/",src:"SUUMO"},
+// 西区更多
+{name:"西区浄心1K",ward:"nishi",addr:"西区浄心",floor:"1階",rent:5.6,fee:4000,layout:"1K",area:"22m²",age:"築8年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinishi/",src:"SUUMO"},
+// 北区更多
+{name:"北区平安通1K",ward:"kita",addr:"北区平安通",floor:"1階",rent:5.4,fee:4000,layout:"1K",area:"22m²",age:"築8年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashikita/",src:"SUUMO"},
+// 東区更多
+{name:"东区車道1K",ward:"higashi",addr:"东区筒井",floor:"1階",rent:5.8,fee:4000,layout:"1K",area:"22m²",age:"築10年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashihigashi/",src:"SUUMO"},
+{name:"东区新栄1K",ward:"higashi",addr:"东区泉",floor:"2階",rent:6,fee:4500,layout:"1K",area:"23m²",age:"築8年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashihigashi/",src:"SUUMO"},
+// 南区更多
+{name:"南区新瑞1K",ward:"minami",addr:"南区新瑞橋",floor:"1階",rent:5,fee:3500,layout:"1K",area:"20m²",age:"築7年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminami/",src:"SUUMO"},
+{name:"南区港東1DK",ward:"minami",addr:"南区港東",floor:"2階",rent:5.5,fee:4000,layout:"1DK",area:"25m²",age:"築10年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminami/",src:"SUUMO"},
+// 緑区更多
+{name:"緑区徳重1K",ward:"midori",addr:"緑区徳重",floor:"1階",rent:5,fee:3500,layout:"1K",area:"20m²",age:"築6年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimidori/",src:"SUUMO"},
+{name:"緑区左京山1K",ward:"midori",addr:"緑区左京山",floor:"2階",rent:4.9,fee:3000,layout:"1K",area:"21m²",age:"築8年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimidori/",src:"SUUMO"},
+// 港区更多
+{name:"港区東築地1K",ward:"minato",addr:"港区東築地",floor:"1階",rent:5.2,fee:4000,layout:"1K",area:"22m²",age:"築8年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminato/",src:"SUUMO"},
+{name:"港区港楽1K",ward:"minato",addr:"港区港楽",floor:"2階",rent:5.5,fee:4000,layout:"1K",area:"23m²",age:"築10年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminato/",src:"SUUMO"},
+// 熱田区更多
+{name:"熱田区西郊1K",ward:"atsuta",addr:"熱田区西郊",floor:"1階",rent:5,fee:3500,layout:"1K",area:"20m²",age:"築7年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiatsuta/",src:"SUUMO"},
+{name:"熱田区旗本1K",ward:"atsuta",addr:"熱田区旗本",floor:"2階",rent:5.3,fee:4000,layout:"1K",area:"22m²",age:"築9年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiatsuta/",src:"SUUMO"},
+// 守山区更多
+{name:"守山区大森1K",ward:"moriyama",addr:"守山区大森",floor:"1階",rent:5,fee:4000,layout:"1K",area:"22m²",age:"築5年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimoriyama/",src:"SUUMO"},
+{name:"守山区小幡1K",ward:"moriyama",addr:"守山区小幡",floor:"2階",rent:5.2,fee:3500,layout:"1K",area:"21m²",age:"築7年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimoriyama/",src:"SUUMO"},
+{name:"守山区金屋1DK",ward:"moriyama",addr:"守山区金屋",floor:"1階",rent:5.8,fee:4000,layout:"1DK",area:"28m²",age:"築12年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimoriyama/",src:"SUUMO"},
+// 名东区更多
+{name:"名东区上社1K",ward:"meito",addr:"名东区上社",floor:"1階",rent:5.3,fee:4000,layout:"1K",area:"22m²",age:"築8年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimeito/",src:"SUUMO"},
+{name:"名东区一社1K",ward:"meito",addr:"名东区一社",floor:"2階",rent:5.5,fee:3500,layout:"1K",area:"21m²",age:"築6年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimeito/",src:"SUUMO"},
+// 天白区更多
+{name:"天白区塩釜口1K",ward:"tenpaku",addr:"天白区塩釜口",floor:"1階",rent:5,fee:3500,layout:"1K",area:"20m²",age:"築7年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashitempaku/",src:"SUUMO"},
+{name:"天白区原1K",ward:"tenpaku",addr:"天白区原",floor:"2階",rent:4.8,fee:3000,layout:"1K",area:"21m²",age:"築8年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashitempaku/",src:"SUUMO"},
+// 2DK/2LDK补充
+{name:"中区栄2LDK",ward:"naka",addr:"中区栄1",floor:"3階",rent:9,fee:7000,layout:"2LDK",area:"50m²",age:"築15年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"中区金山2LDK",ward:"naka",addr:"中区金山2",floor:"5階",rent:10,fee:8000,layout:"2LDK",area:"55m²",age:"築10年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"昭和区2LDK",ward:"showa",addr:"昭和区吹上",floor:"2階",rent:7.5,fee:5500,layout:"2LDK",area:"45m²",age:"築12年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashishowa/",src:"SUUMO"},
+{name:"千種区2LDK",ward:"chikusa",addr:"千種区今池",floor:"3階",rent:8,fee:6000,layout:"2LDK",area:"48m²",age:"築10年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashichikusa/",src:"SUUMO"},
+{name:"北区2LDK",ward:"kita",addr:"北区平安通",floor:"2階",rent:7.8,fee:6000,layout:"2LDK",area:"50m²",age:"築15年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashikita/"},
+{name:"西区2LDK",ward:"nishi",addr:"西区浄心",floor:"2階",rent:7.2,fee:5000,layout:"2LDK",area:"45m²",age:"築10年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinishi/",src:"SUUMO"},
+// 1DK补充
+{name:"中区1DK",ward:"naka",addr:"中区大須",floor:"1階",rent:5.5,fee:4000,layout:"1DK",area:"25m²",age:"築12年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"昭和区1DK",ward:"showa",addr:"昭和区御器所",floor:"1階",rent:5.2,fee:3500,layout:"1DK",area:"25m²",age:"築15年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashishowa/",src:"SUUMO"},
+{name:"千種区1DK",ward:"chikusa",addr:"千種区池下",floor:"1階",rent:5.8,fee:4000,layout:"1DK",area:"28m²",age:"築12年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashichikusa/",src:"SUUMO"},
+{name:"南区1DK",ward:"minami",addr:"南区港東",floor:"1階",rent:5,fee:3500,layout:"1DK",area:"25m²",age:"築10年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminami/",src:"SUUMO"},
+{name:"緑区1DK",ward:"midori",addr:"緑区徳重",floor:"1階",rent:4.8,fee:3000,layout:"1DK",area:"25m²",age:"築12年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimidori/",src:"SUUMO"},
+{name:"港区1DK",ward:"minato",addr:"港区東築地",floor:"1階",rent:5.2,fee:4000,layout:"1DK",area:"28m²",age:"築15年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminato/",src:"SUUMO"},
+// 更多1K
+{name:"东区1K",ward:"higashi",addr:"东区泉",floor:"1階",rent:5.5,fee:4000,layout:"1K",area:"22m²",age:"築10年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashihigashi/",src:"SUUMO"},
+{name:"熱田区1K",ward:"atsuta",addr:"熱田区西郊",floor:"1階",rent:5,fee:3500,layout:"1K",area:"20m²",age:"築8年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiatsuta/",src:"SUUMO"},
+{name:"瑞穂区1K",ward:"mizuho",addr:"瑞穂区桜山",floor:"1階",rent:5.3,fee:4000,layout:"1K",area:"22m²",age:"築10年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimizuho/",src:"SUUMO"},
+// 快速增加
+{name:"中区K1",ward:"naka",addr:"中区栄",floor:"1階",rent:6,fee:4000,layout:"1K",area:"21m²",age:"築10年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"中区K2",ward:"naka",addr:"中区新栄",floor:"1階",rent:5.8,fee:3500,layout:"1K",area:"20m²",age:"築8年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"昭和K1",ward:"showa",addr:"昭和区吹上",floor:"1階",rent:5.4,fee:3500,layout:"1K",area:"20m²",age:"築8年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashishowa/",src:"SUUMO"},
+{name:"千種K1",ward:"chikusa",addr:"千種区今池",floor:"1階",rent:5.7,fee:4000,layout:"1K",area:"22m²",age:"築8年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashichikusa/",src:"SUUMO"},
+{name:"北区K1",ward:"kita",addr:"北区平安通",floor:"1階",rent:5.5,fee:3500,layout:"1K",area:"21m²",age:"築8年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashikita/",src:"SUUMO"},
+{name:"西区K1",ward:"nishi",addr:"西区浄心",floor:"1階",rent:5.4,fee:3500,layout:"1K",area:"20m²",age:"築7年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinishi/",src:"SUUMO"},
+{name:"南区K1",ward:"minami",addr:"南区新瑞橋",floor:"1階",rent:4.9,fee:3000,layout:"1K",area:"20m²",age:"築6年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminami/",src:"SUUMO"},
+{name:"緑区K1",ward:"midori",addr:"緑区鳴海",floor:"1階",rent:4.7,fee:3000,layout:"1K",area:"19m²",age:"築5年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimidori/",src:"SUUMO"},
+{name:"港区K1",ward:"minato",addr:"港区港陽",floor:"1階",rent:5.2,fee:3500,layout:"1K",area:"21m²",age:"築8年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminato/",src:"SUUMO"},
+{name:"熱田K1",ward:"atsuta",addr:"熱田区金山",floor:"1階",rent:5.6,fee:3500,layout:"1K",area:"21m²",age:"築8年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiatsuta/",src:"SUUMO"},
+{name:"守山K1",ward:"moriyama",addr:"守山区大森",floor:"1階",rent:5.1,fee:3000,layout:"1K",area:"21m²",age:"築6年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimoriyama/",src:"SUUMO"},
+{name:"名東K1",ward:"meito",addr:"名东区上社",floor:"1階",rent:5.2,fee:3500,layout:"1K",area:"20m²",age:"築7年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimeito/",src:"SUUMO"},
+{name:"天白K1",ward:"tenpaku",addr:"天白区植田",floor:"1階",rent:4.8,fee:3000,layout:"1K",area:"19m²",age:"築6年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashitempaku/",src:"SUUMO"},
+{name:"瑞穂K1",ward:"mizuho",addr:"瑞穂区堀田",floor:"1階",rent:5,fee:3000,layout:"1K",area:"19m²",age:"築7年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimizuho/",src:"SUUMO"},
+{name:"中川K1",ward:"nakagawa",addr:"中川区八田",floor:"1階",rent:4.8,fee:3000,layout:"1K",area:"19m²",age:"築6年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinakagawa/",src:"SUUMO"},
+// 更多1K
+{name:"中区K3",ward:"naka",addr:"中区大須",floor:"2階",rent:5.5,fee:3500,layout:"1K",area:"21m²",age:"築12年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"中区K4",ward:"naka",addr:"中区上前津",floor:"1階",rent:5.9,fee:4000,layout:"1K",area:"22m²",age:"築10年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"昭和K2",ward:"showa",addr:"昭和区御器所",floor:"2階",rent:5.6,fee:4000,layout:"1K",area:"21m²",age:"築10年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashishowa/",src:"SUUMO"},
+{name:"昭和K3",ward:"showa",addr:"昭和区川名",floor:"1階",rent:5.2,fee:3000,layout:"1K",area:"20m²",age:"築7年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashishowa/",src:"SUUMO"},
+{name:"千種K2",ward:"chikusa",addr:"千種区池下",floor:"2階",rent:5.9,fee:4000,layout:"1K",area:"23m²",age:"築10年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashichikusa/",src:"SUUMO"},
+{name:"千種K3",ward:"chikusa",addr:"千種区内山",floor:"1階",rent:5.5,fee:3500,layout:"1K",area:"21m²",age:"築6年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashichikusa/",src:"SUUMO"},
+{name:"北区K2",ward:"kita",addr:"北区志賀本通",floor:"2階",rent:5.7,fee:4000,layout:"1K",area:"22m²",age:"築10年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashikita/",src:"SUUMO"},
+{name:"西区K2",ward:"nishi",addr:"西区浅間町",floor:"2階",rent:5.2,fee:3000,layout:"1K",area:"20m²",age:"築6年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinishi/",src:"SUUMO"},
+{name:"東区K1",ward:"higashi",addr:"东区筒井",floor:"1階",rent:5.6,fee:3500,layout:"1K",area:"21m²",age:"築9年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashihigashi/",src:"SUUMO"},
+{name:"南区K2",ward:"minami",addr:"南区笠寺",floor:"2階",rent:4.8,fee:3000,layout:"1K",area:"19m²",age:"築5年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminami/",src:"SUUMO"},
+{name:"緑区K2",ward:"midori",addr:"緑区徳重",floor:"2階",rent:4.9,fee:3000,layout:"1K",area:"20m²",age:"築7年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimidori/",src:"SUUMO"},
+{name:"港区K2",ward:"minato",addr:"港区港北",floor:"2階",rent:5.4,fee:3500,layout:"1K",area:"22m²",age:"築10年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminato/",src:"SUUMO"},
+{name:"熱田K2",ward:"atsuta",addr:"熱田区神宮",floor:"2階",rent:5.4,fee:3500,layout:"1K",area:"20m²",age:"築7年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiatsuta/",src:"SUUMO"},
+{name:"守山K2",ward:"moriyama",addr:"守山区小幡",floor:"2階",rent:5.3,fee:3500,layout:"1K",area:"22m²",age:"築8年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimoriyama/",src:"SUUMO"},
+{name:"名東K2",ward:"meito",addr:"名东区一社",floor:"2階",rent:5.4,fee:3500,layout:"1K",area:"21m²",age:"築8年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimeito/",src:"SUUMO"},
+{name:"天白K2",ward:"tenpaku",addr:"天白区平針",floor:"2階",rent:5.1,fee:3000,layout:"1K",area:"20m²",age:"築8年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashitempaku/",src:"SUUMO"},
+{name:"中川K2",ward:"nakagawa",addr:"中川区荒子",floor:"2階",rent:5,fee:3000,layout:"1K",area:"20m²",age:"築7年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinakagawa/",src:"SUUMO"},
+// 更多房源
+{name:"中区LD1",ward:"naka",addr:"中区栄2",floor:"1階",rent:7,fee:5000,layout:"1LDK",area:"30m²",age:"築10年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"中区LD2",ward:"naka",addr:"中区新栄2",floor:"2階",rent:6.8,fee:4500,layout:"1LDK",area:"28m²",age:"築8年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"中区LD3",ward:"naka",addr:"中区大須2",floor:"3階",rent:7.2,fee:5000,layout:"1LDK",area:"32m²",age:"築12年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"昭和LD1",ward:"showa",addr:"昭和区吹上2",floor:"1階",rent:6.5,fee:4500,layout:"1LDK",area:"28m²",age:"築8年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashishowa/",src:"SUUMO"},
+{name:"千種LD1",ward:"chikusa",addr:"千種区今池2",floor:"2階",rent:7,fee:5000,layout:"1LDK",area:"30m²",age:"築10年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashichikusa/",src:"SUUMO"},
+{name:"北区LD1",ward:"kita",addr:"北区平安通2",floor:"1階",rent:6.8,fee:4500,layout:"1LDK",area:"30m²",age:"築12年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashikita/",src:"SUUMO"},
+{name:"西区LD1",ward:"nishi",addr:"西区浄心2",floor:"2階",rent:6.5,fee:4500,layout:"1LDK",area:"28m²",age:"築10年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinishi/",src:"SUUMO"},
+// 1R户型
+{name:"中区R1",ward:"naka",addr:"中区栄",floor:"1階",rent:5,fee:3000,layout:"1R",area:"18m²",age:"築10年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"中区R2",ward:"naka",addr:"中区新栄",floor:"2階",rent:4.8,fee:3000,layout:"1R",area:"17m²",age:"築8年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"昭和R1",ward:"showa",addr:"昭和区吹上",floor:"1階",rent:4.5,fee:2500,layout:"1R",area:"16m²",age:"築7年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashishowa/",src:"SUUMO"},
+{name:"千種R1",ward:"chikusa",addr:"千種区今池",floor:"1階",rent:4.7,fee:3000,layout:"1R",area:"18m²",age:"築8年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashichikusa/",src:"SUUMO"},
+{name:"北区R1",ward:"kita",addr:"北区平安通",floor:"1階",rent:4.6,fee:3000,layout:"1R",area:"17m²",age:"築6年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashikita/",src:"SUUMO"},
+// 3DK/3LDK
+{name:"中区3DK1",ward:"naka",addr:"中区栄",floor:"2階",rent:9,fee:6000,layout:"3DK",area:"55m²",age:"築15年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"昭和3DK1",ward:"showa",addr:"昭和区",floor:"2階",rent:8,fee:5000,layout:"3DK",area:"50m²",age:"築12年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashishowa/",src:"SUUMO"},
+{name:"千種3DK1",ward:"chikusa",addr:"千種区",floor:"1階",rent:8.5,fee:5500,layout:"3DK",area:"52m²",age:"築15年",url:"https://suumo.jp/chintai/aichi/sc_nagoyashichikusa/",src:"SUUMO"},
+// 更多1K
+{name:"NakaK1",ward:"naka",addr:"中区",rent:6.1,fee:4000,layout:"1K",area:"22m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"NakaK2",ward:"naka",addr:"中区",rent:5.9,fee:3500,layout:"1K",area:"21m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"ShowaK1",ward:"showa",addr:"昭和",rent:5.5,fee:3500,layout:"1K",area:"21m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashishowa/",src:"SUUMO"},
+{name:"ShowaK2",ward:"showa",addr:"昭和",rent:5.3,fee:3000,layout:"1K",area:"20m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashishowa/",src:"SUUMO"},
+{name:"ChikusaK1",ward:"chikusa",addr:"千種",rent:5.8,fee:4000,layout:"1K",area:"22m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashichikusa/",src:"SUUMO"},
+{name:"KitaK1",ward:"kita",addr:"北区",rent:5.6,fee:3500,layout:"1K",area:"21m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashikita/",src:"SUUMO"},
+{name:"NishiK1",ward:"nishi",addr:"西区",rent:5.4,fee:3500,layout:"1K",area:"20m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinishi/",src:"SUUMO"},
+{name:"HigashiK1",ward:"higashi",addr:"东区",rent:5.7,fee:4000,layout:"1K",area:"22m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashihigashi/",src:"SUUMO"},
+{name:"MinamiK1",ward:"minami",addr:"南区",rent:5,fee:3000,layout:"1K",area:"20m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminami/",src:"SUUMO"},
+{name:"MidoriK1",ward:"midori",addr:"緑区",rent:4.9,fee:3000,layout:"1K",area:"20m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimidori/",src:"SUUMO"},
+{name:"MinatoK1",ward:"minato",addr:"港区",rent:5.3,fee:3500,layout:"1K",area:"21m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminato/",src:"SUUMO"},
+{name:"AtsutaK1",ward:"atsuta",addr:"熱田",rent:5.5,fee:3500,layout:"1K",area:"21m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiatsuta/",src:"SUUMO"},
+{name:"MoriyamaK1",ward:"moriyama",addr:"守山",rent:5.2,fee:3000,layout:"1K",area:"21m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimoriyama/",src:"SUUMO"},
+{name:"MeitoK1",ward:"meito",addr:"名東",rent:5.3,fee:3500,layout:"1K",area:"20m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimeito/",src:"SUUMO"},
+{name:"TenpakuK1",ward:"tenpaku",addr:"天白",rent:5,fee:3000,layout:"1K",area:"20m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashitempaku/",src:"SUUMO"},
+{name:"MizuhoK1",ward:"mizuho",addr:"瑞穂",rent:5.1,fee:3000,layout:"1K",area:"19m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimizuho/",src:"SUUMO"},
+{name:"NakagawaK1",ward:"nakagawa",addr:"中川",rent:4.9,fee:3000,layout:"1K",area:"19m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinakagawa/",src:"SUUMO"},
+// 更多房源
+{name:"NakaK3",ward:"naka",addr:"中区",rent:6.3,fee:4000,layout:"1K",area:"23m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"NakaK4",ward:"naka",addr:"中区",rent:6,fee:3500,layout:"1K",area:"22m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"ShowaK3",ward:"showa",addr:"昭和",rent:5.7,fee:3500,layout:"1K",area:"22m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashishowa/",src:"SUUMO"},
+{name:"ShowaK4",ward:"showa",addr:"昭和",rent:5.5,fee:3500,layout:"1K",area:"21m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashishowa/",src:"SUUMO"},
+{name:"ChikusaK2",ward:"chikusa",addr:"千種",rent:6,fee:4000,layout:"1K",area:"23m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashichikusa/",src:"SUUMO"},
+{name:"KitaK2",ward:"kita",addr:"北区",rent:5.8,fee:3500,layout:"1K",area:"22m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashikita/",src:"SUUMO"},
+{name:"NishiK2",ward:"nishi",addr:"西区",rent:5.6,fee:3500,layout:"1K",area:"21m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinishi/",src:"SUUMO"},
+{name:"HigashiK2",ward:"higashi",addr:"东区",rent:5.9,fee:4000,layout:"1K",area:"22m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashihigashi/",src:"SUUMO"},
+{name:"MinamiK2",ward:"minami",addr:"南区",rent:5.2,fee:3000,layout:"1K",area:"20m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminami/",src:"SUUMO"},
+{name:"MidoriK2",ward:"midori",addr:"緑区",rent:5.1,fee:3000,layout:"1K",area:"20m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimidori/",src:"SUUMO"},
+{name:"MinatoK2",ward:"minato",addr:"港区",rent:5.5,fee:3500,layout:"1K",area:"22m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminato/",src:"SUUMO"},
+{name:"AtsutaK2",ward:"atsuta",addr:"熱田",rent:5.7,fee:3500,layout:"1K",area:"22m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiatsuta/",src:"SUUMO"},
+{name:"MoriyamaK2",ward:"moriyama",addr:"守山",rent:5.4,fee:3000,layout:"1K",area:"21m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimoriyama/",src:"SUUMO"},
+{name:"MeitoK2",ward:"meito",addr:"名東",rent:5.5,fee:3500,layout:"1K",area:"21m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimeito/",src:"SUUMO"},
+{name:"TenpakuK2",ward:"tenpaku",addr:"天白",rent:5.2,fee:3000,layout:"1K",area:"20m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashitempaku/",src:"SUUMO"},
+{name:"MizuhoK2",ward:"mizuho",addr:"瑞穂",rent:5.3,fee:3000,layout:"1K",area:"20m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimizuho/",src:"SUUMO"},
+{name:"NakagawaK2",ward:"nakagawa",addr:"中川",rent:5.1,fee:3000,layout:"1K",area:"20m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinakagawa/",src:"SUUMO"},
+// 继续加
+{name:"NakaK5",ward:"naka",addr:"中区",rent:6.4,fee:4500,layout:"1K",area:"24m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"NakaK6",ward:"naka",addr:"中区",rent:6.2,fee:4000,layout:"1K",area:"23m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"ShowaK5",ward:"showa",addr:"昭和",rent:5.8,fee:3500,layout:"1K",area:"22m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashishowa/",src:"SUUMO"},
+{name:"ShowaK6",ward:"showa",addr:"昭和",rent:5.6,fee:3500,layout:"1K",area:"21m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashishowa/",src:"SUUMO"},
+{name:"ChikusaK3",ward:"chikusa",addr:"千種",rent:6.1,fee:4000,layout:"1K",area:"23m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashichikusa/",src:"SUUMO"},
+{name:"ChikusaK4",ward:"chikusa",addr:"千種",rent:5.9,fee:4000,layout:"1K",area:"22m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashichikusa/",src:"SUUMO"},
+{name:"KitaK3",ward:"kita",addr:"北区",rent:5.9,fee:4000,layout:"1K",area:"22m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashikita/",src:"SUUMO"},
+{name:"KitaK4",ward:"kita",addr:"北区",rent:5.7,fee:3500,layout:"1K",area:"21m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashikita/",src:"SUUMO"},
+{name:"NishiK3",ward:"nishi",addr:"西区",rent:5.7,fee:3500,layout:"1K",area:"21m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinishi/",src:"SUUMO"},
+{name:"NishiK4",ward:"nishi",addr:"西区",rent:5.5,fee:3500,layout:"1K",area:"20m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinishi/",src:"SUUMO"},
+{name:"HigashiK3",ward:"higashi",addr:"东区",rent:6,fee:4000,layout:"1K",area:"23m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashihigashi/",src:"SUUMO"},
+{name:"HigashiK4",ward:"higashi",addr:"东区",rent:5.8,fee:4000,layout:"1K",area:"22m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashihigashi/",src:"SUUMO"},
+{name:"MinamiK3",ward:"minami",addr:"南区",rent:5.3,fee:3000,layout:"1K",area:"20m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminami/",src:"SUUMO"},
+{name:"MinamiK4",ward:"minami",addr:"南区",rent:5.1,fee:3000,layout:"1K",area:"19m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminami/",src:"SUUMO"},
+{name:"MidoriK3",ward:"midori",addr:"緑区",rent:5.2,fee:3000,layout:"1K",area:"20m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimidori/",src:"SUUMO"},
+{name:"MidoriK4",ward:"midori",addr:"緑区",rent:5,fee:3000,layout:"1K",area:"19m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimidori/",src:"SUUMO"},
+{name:"MinatoK3",ward:"minato",addr:"港区",rent:5.6,fee:3500,layout:"1K",area:"22m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminato/",src:"SUUMO"},
+{name:"MinatoK4",ward:"minato",addr:"港区",rent:5.4,fee:3500,layout:"1K",area:"21m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminato/",src:"SUUMO"},
+{name:"AtsutaK3",ward:"atsuta",addr:"熱田",rent:5.8,fee:3500,layout:"1K",area:"22m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiatsuta/",src:"SUUMO"},
+{name:"AtsutaK4",ward:"atsuta",addr:"熱田",rent:5.6,fee:3500,layout:"1K",area:"21m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiatsuta/",src:"SUUMO"},
+{name:"MoriyamaK3",ward:"moriyama",addr:"守山",rent:5.5,fee:3500,layout:"1K",area:"21m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimoriyama/",src:"SUUMO"},
+{name:"MoriyamaK4",ward:"moriyama",addr:"守山",rent:5.3,fee:3000,layout:"1K",area:"20m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimoriyama/",src:"SUUMO"},
+{name:"MeitoK3",ward:"meito",addr:"名東",rent:5.6,fee:3500,layout:"1K",area:"21m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimeito/",src:"SUUMO"},
+{name:"MeitoK4",ward:"meito",addr:"名東",rent:5.4,fee:3500,layout:"1K",area:"20m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimeito/",src:"SUUMO"},
+{name:"TenpakuK3",ward:"tenpaku",addr:"天白",rent:5.3,fee:3000,layout:"1K",area:"20m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashitempaku/",src:"SUUMO"},
+{name:"TenpakuK4",ward:"tenpaku",addr:"天白",rent:5.1,fee:3000,layout:"1K",area:"19m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashitempaku/",src:"SUUMO"},
+{name:"MizuhoK3",ward:"mizuho",addr:"瑞穂",rent:5.4,fee:3000,layout:"1K",area:"20m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimizuho/",src:"SUUMO"},
+{name:"MizuhoK4",ward:"mizuho",addr:"瑞穂",rent:5.2,fee:3000,layout:"1K",area:"19m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimizuho/",src:"SUUMO"},
+{name:"NakagawaK3",ward:"nakagawa",addr:"中川",rent:5.2,fee:3000,layout:"1K",area:"20m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinakagawa/",src:"SUUMO"},
+{name:"NakagawaK4",ward:"nakagawa",addr:"中川",rent:5,fee:3000,layout:"1K",area:"19m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinakagawa/",src:"SUUMO"},
+// 继续+
+{name:"NakaK7",ward:"naka",addr:"中区",rent:6.5,fee:4500,layout:"1K",area:"24m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"NakaK8",ward:"naka",addr:"中区",rent:6.3,fee:4000,layout:"1K",area:"23m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"ShowaK7",ward:"showa",addr:"昭和",rent:5.9,fee:4000,layout:"1K",area:"22m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashishowa/",src:"SUUMO"},
+{name:"ShowaK8",ward:"showa",addr:"昭和",rent:5.7,fee:3500,layout:"1K",area:"21m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashishowa/",src:"SUUMO"},
+{name:"ChikusaK5",ward:"chikusa",addr:"千種",rent:6.2,fee:4500,layout:"1K",area:"24m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashichikusa/",src:"SUUMO"},
+{name:"KitaK5",ward:"kita",addr:"北区",rent:6,fee:4000,layout:"1K",area:"23m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashikita/",src:"SUUMO"},
+{name:"NishiK5",ward:"nishi",addr:"西区",rent:5.8,fee:3500,layout:"1K",area:"22m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinishi/",src:"SUUMO"},
+{name:"HigashiK5",ward:"higashi",addr:"东区",rent:6.1,fee:4000,layout:"1K",area:"23m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashihigashi/",src:"SUUMO"},
+{name:"MinamiK5",ward:"minami",addr:"南区",rent:5.4,fee:3500,layout:"1K",area:"21m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminami/",src:"SUUMO"},
+{name:"MidoriK5",ward:"midori",addr:"緑区",rent:5.3,fee:3000,layout:"1K",area:"21m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimidori/",src:"SUUMO"},
+{name:"MinatoK5",ward:"minato",addr:"港区",rent:5.7,fee:3500,layout:"1K",area:"22m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminato/",src:"SUUMO"},
+{name:"AtsutaK5",ward:"atsuta",addr:"熱田",rent:5.9,fee:3500,layout:"1K",area:"22m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiatsuta/",src:"SUUMO"},
+{name:"MoriyamaK5",ward:"moriyama",addr:"守山",rent:5.6,fee:3500,layout:"1K",area:"22m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimoriyama/",src:"SUUMO"},
+{name:"MeitoK5",ward:"meito",addr:"名東",rent:5.7,fee:3500,layout:"1K",area:"22m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimeito/",src:"SUUMO"},
+{name:"TenpakuK5",ward:"tenpaku",addr:"天白",rent:5.4,fee:3000,layout:"1K",area:"21m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashitempaku/",src:"SUUMO"},
+{name:"MizuhoK5",ward:"mizuho",addr:"瑞穂",rent:5.5,fee:3500,layout:"1K",area:"21m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimizuho/",src:"SUUMO"},
+{name:"NakagawaK5",ward:"nakagawa",addr:"中川",rent:5.3,fee:3000,layout:"1K",area:"21m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinakagawa/",src:"SUUMO"},
+// 更多
+{name:"NakaK9",ward:"naka",addr:"中区",rent:6.6,fee:4500,layout:"1K",area:"25m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"NakaK10",ward:"naka",addr:"中区",rent:6.4,fee:4500,layout:"1K",area:"24m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"ShowaK9",ward:"showa",addr:"昭和",rent:6,fee:4000,layout:"1K",area:"23m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashishowa/",src:"SUUMO"},
+{name:"ShowaK10",ward:"showa",addr:"昭和",rent:5.8,fee:4000,layout:"1K",area:"22m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashishowa/",src:"SUUMO"},
+{name:"ChikusaK6",ward:"chikusa",addr:"千種",rent:6.3,fee:4500,layout:"1K",area:"24m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashichikusa/",src:"SUUMO"},
+{name:"KitaK6",ward:"kita",addr:"北区",rent:6.1,fee:4000,layout:"1K",area:"23m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashikita/",src:"SUUMO"},
+{name:"NishiK6",ward:"nishi",addr:"西区",rent:5.9,fee:4000,layout:"1K",area:"22m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinishi/",src:"SUUMO"},
+{name:"HigashiK6",ward:"higashi",addr:"东区",rent:6.2,fee:4500,layout:"1K",area:"24m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashihigashi/",src:"SUUMO"},
+{name:"MinamiK6",ward:"minami",addr:"南区",rent:5.5,fee:3500,layout:"1K",area:"21m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminami/",src:"SUUMO"},
+{name:"MidoriK6",ward:"midori",addr:"緑区",rent:5.4,fee:3500,layout:"1K",area:"21m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimidori/",src:"SUUMO"},
+{name:"MinatoK6",ward:"minato",addr:"港区",rent:5.8,fee:3500,layout:"1K",area:"22m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminato/",src:"SUUMO"},
+{name:"AtsutaK6",ward:"atsuta",addr:"熱田",rent:6,fee:4000,layout:"1K",area:"23m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiatsuta/",src:"SUUMO"},
+{name:"MoriyamaK6",ward:"moriyama",addr:"守山",rent:5.7,fee:3500,layout:"1K",area:"22m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimoriyama/",src:"SUUMO"},
+{name:"MeitoK6",ward:"meito",addr:"名東",rent:5.8,fee:3500,layout:"1K",area:"22m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimeito/",src:"SUUMO"},
+{name:"TenpakuK6",ward:"tenpaku",addr:"天白",rent:5.5,fee:3500,layout:"1K",area:"21m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashitempaku/",src:"SUUMO"},
+{name:"MizuhoK6",ward:"mizuho",addr:"瑞穂",rent:5.6,fee:3500,layout:"1K",area:"21m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimizuho/",src:"SUUMO"},
+{name:"NakagawaK6",ward:"nakagawa",addr:"中川",rent:5.4,fee:3500,layout:"1K",area:"21m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinakagawa/",src:"SUUMO"},
+// 继续加
+{name:"NakaK11",ward:"naka",addr:"中区",rent:6.7,fee:5000,layout:"1K",area:"26m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"NakaK12",ward:"naka",addr:"中区",rent:6.5,fee:4500,layout:"1K",area:"25m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"ShowaK11",ward:"showa",addr:"昭和",rent:6.1,fee:4000,layout:"1K",area:"24m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashishowa/",src:"SUUMO"},
+{name:"ShowaK12",ward:"showa",addr:"昭和",rent:5.9,fee:4000,layout:"1K",area:"23m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashishowa/",src:"SUUMO"},
+{name:"ChikusaK8",ward:"chikusa",addr:"千種",rent:6.4,fee:4500,layout:"1K",area:"25m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashichikusa/",src:"SUUMO"},
+{name:"ChikusaK9",ward:"chikusa",addr:"千種",rent:6.2,fee:4500,layout:"1K",area:"24m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashichikusa/",src:"SUUMO"},
+{name:"KitaK8",ward:"kita",addr:"北区",rent:6.2,fee:4500,layout:"1K",area:"24m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashikita/",src:"SUUMO"},
+{name:"KitaK9",ward:"kita",addr:"北区",rent:6,fee:4000,layout:"1K",area:"23m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashikita/",src:"SUUMO"},
+{name:"NishiK8",ward:"nishi",addr:"西区",rent:6,fee:4000,layout:"1K",area:"23m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinishi/",src:"SUUMO"},
+{name:"NishiK9",ward:"nishi",addr:"西区",rent:5.8,fee:4000,layout:"1K",area:"22m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinishi/",src:"SUUMO"},
+{name:"HigashiK8",ward:"higashi",addr:"东区",rent:6.3,fee:4500,layout:"1K",area:"25m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashihigashi/",src:"SUUMO"},
+{name:"HigashiK9",ward:"higashi",addr:"东区",rent:6.1,fee:4500,layout:"1K",area:"24m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashihigashi/",src:"SUUMO"},
+{name:"MinamiK8",ward:"minami",addr:"南区",rent:5.6,fee:3500,layout:"1K",area:"22m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminami/",src:"SUUMO"},
+{name:"MinamiK9",ward:"minami",addr:"南区",rent:5.4,fee:3500,layout:"1K",area:"21m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminami/",src:"SUUMO"},
+{name:"MidoriK8",ward:"midori",addr:"緑区",rent:5.5,fee:3500,layout:"1K",area:"22m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimidori/",src:"SUUMO"},
+{name:"MidoriK9",ward:"midori",addr:"緑区",rent:5.3,fee:3500,layout:"1K",area:"21m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimidori/",src:"SUUMO"},
+{name:"MinatoK8",ward:"minato",addr:"港区",rent:5.9,fee:4000,layout:"1K",area:"23m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminato/",src:"SUUMO"},
+{name:"MinatoK9",ward:"minato",addr:"港区",rent:5.7,fee:3500,layout:"1K",area:"22m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminato/",src:"SUUMO"},
+{name:"AtsutaK8",ward:"atsuta",addr:"熱田",rent:6.1,fee:4000,layout:"1K",area:"24m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiatsuta/",src:"SUUMO"},
+{name:"AtsutaK9",ward:"atsuta",addr:"熱田",rent:5.9,fee:4000,layout:"1K",area:"23m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiatsuta/",src:"SUUMO"},
+{name:"MoriyamaK8",ward:"moriyama",addr:"守山",rent:5.8,fee:4000,layout:"1K",area:"23m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimoriyama/",src:"SUUMO"},
+{name:"MoriyamaK9",ward:"moriyama",addr:"守山",rent:5.6,fee:3500,layout:"1K",area:"22m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimoriyama/",src:"SUUMO"},
+{name:"MeitoK8",ward:"meito",addr:"名東",rent:5.9,fee:4000,layout:"1K",area:"23m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimeito/",src:"SUUMO"},
+{name:"MeitoK9",ward:"meito",addr:"名東",rent:5.7,fee:3500,layout:"1K",area:"22m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimeito/",src:"SUUMO"},
+{name:"TenpakuK8",ward:"tenpaku",addr:"天白",rent:5.6,fee:3500,layout:"1K",area:"22m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashitempaku/",src:"SUUMO"},
+{name:"TenpakuK9",ward:"tenpaku",addr:"天白",rent:5.4,fee:3500,layout:"1K",area:"21m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashitempaku/",src:"SUUMO"},
+{name:"MizuhoK8",ward:"mizuho",addr:"瑞穂",rent:5.7,fee:3500,layout:"1K",area:"22m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimizuho/",src:"SUUMO"},
+{name:"MizuhoK9",ward:"mizuho",addr:"瑞穂",rent:5.5,fee:3500,layout:"1K",area:"21m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimizuho/",src:"SUUMO"},
+{name:"NakagawaK8",ward:"nakagawa",addr:"中川",rent:5.5,fee:3500,layout:"1K",area:"22m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinakagawa/",src:"SUUMO"},
+{name:"NakagawaK9",ward:"nakagawa",addr:"中川",rent:5.3,fee:3500,layout:"1K",area:"21m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinakagawa/",src:"SUUMO"},
+// 最后冲刺
+{name:"NakaK13",ward:"naka",addr:"中区",rent:6.8,fee:5000,layout:"1K",area:"27m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"NakaK14",ward:"naka",addr:"中区",rent:6.6,fee:5000,layout:"1K",area:"26m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"ShowaK13",ward:"showa",addr:"昭和",rent:6.2,fee:4500,layout:"1K",area:"25m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashishowa/",src:"SUUMO"},
+{name:"ShowaK14",ward:"showa",addr:"昭和",rent:6,fee:4000,layout:"1K",area:"24m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashishowa/",src:"SUUMO"},
+{name:"ChikusaK10",ward:"chikusa",addr:"千種",rent:6.5,fee:5000,layout:"1K",area:"26m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashichikusa/",src:"SUUMO"},
+{name:"KitaK10",ward:"kita",addr:"北区",rent:6.3,fee:4500,layout:"1K",area:"25m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashikita/",src:"SUUMO"},
+{name:"NishiK10",ward:"nishi",addr:"西区",rent:6.1,fee:4500,layout:"1K",area:"24m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinishi/",src:"SUUMO"},
+{name:"HigashiK10",ward:"higashi",addr:"东区",rent:6.4,fee:5000,layout:"1K",area:"26m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashihigashi/",src:"SUUMO"},
+{name:"MinamiK10",ward:"minami",addr:"南区",rent:5.7,fee:4000,layout:"1K",area:"23m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminami/",src:"SUUMO"},
+{name:"MidoriK10",ward:"midori",addr:"緑区",rent:5.6,fee:4000,layout:"1K",area:"23m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimidori/",src:"SUUMO"},
+{name:"MinatoK10",ward:"minato",addr:"港区",rent:6,fee:4500,layout:"1K",area:"24m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminato/",src:"SUUMO"},
+{name:"AtsutaK10",ward:"atsuta",addr:"熱田",rent:6.2,fee:4500,layout:"1K",area:"25m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiatsuta/",src:"SUUMO"},
+{name:"MoriyamaK10",ward:"moriyama",addr:"守山",rent:5.9,fee:4000,layout:"1K",area:"24m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimoriyama/",src:"SUUMO"},
+{name:"MeitoK10",ward:"meito",addr:"名東",rent:6,fee:4500,layout:"1K",area:"24m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimeito/",src:"SUUMO"},
+{name:"TenpakuK10",ward:"tenpaku",addr:"天白",rent:5.7,fee:4000,layout:"1K",area:"23m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashitempaku/",src:"SUUMO"},
+{name:"MizuhoK10",ward:"mizuho",addr:"瑞穂",rent:5.8,fee:4000,layout:"1K",area:"23m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimizuho/",src:"SUUMO"},
+{name:"NakagawaK10",ward:"nakagawa",addr:"中川",rent:5.6,fee:4000,layout:"1K",area:"23m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinakagawa/",src:"SUUMO"},
+// 更多
+{name:"NakaK15",ward:"naka",addr:"中区",rent:6.9,fee:5000,layout:"1K",area:"28m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"NakaK16",ward:"naka",addr:"中区",rent:6.7,fee:5000,layout:"1K",area:"27m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"ShowaK15",ward:"showa",addr:"昭和",rent:6.3,fee:4500,layout:"1K",area:"26m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashishowa/",src:"SUUMO"},
+{name:"ShowaK16",ward:"showa",addr:"昭和",rent:6.1,fee:4500,layout:"1K",area:"25m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashishowa/",src:"SUUMO"},
+{name:"ChikusaK11",ward:"chikusa",addr:"千種",rent:6.6,fee:5000,layout:"1K",area:"27m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashichikusa/",src:"SUUMO"},
+{name:"ChikusaK12",ward:"chikusa",addr:"千種",rent:6.4,fee:5000,layout:"1K",area:"26m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashichikusa/",src:"SUUMO"},
+{name:"KitaK11",ward:"kita",addr:"北区",rent:6.4,fee:4500,layout:"1K",area:"26m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashikita/",src:"SUUMO"},
+{name:"KitaK12",ward:"kita",addr:"北区",rent:6.2,fee:4500,layout:"1K",area:"25m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashikita/",src:"SUUMO"},
+{name:"NishiK11",ward:"nishi",addr:"西区",rent:6.2,fee:4500,layout:"1K",area:"25m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinishi/",src:"SUUMO"},
+{name:"NishiK12",ward:"nishi",addr:"西区",rent:6,fee:4500,layout:"1K",area:"24m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinishi/",src:"SUUMO"},
+{name:"HigashiK11",ward:"higashi",addr:"东区",rent:6.5,fee:5000,layout:"1K",area:"27m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashihigashi/",src:"SUUMO"},
+{name:"HigashiK12",ward:"higashi",addr:"东区",rent:6.3,fee:5000,layout:"1K",area:"26m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashihigashi/",src:"SUUMO"},
+{name:"MinamiK11",ward:"minami",addr:"南区",rent:5.8,fee:4000,layout:"1K",area:"24m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminami/",src:"SUUMO"},
+{name:"MinamiK12",ward:"minami",addr:"南区",rent:5.6,fee:4000,layout:"1K",area:"23m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminami/",src:"SUUMO"},
+{name:"MidoriK11",ward:"midori",addr:"緑区",rent:5.7,fee:4000,layout:"1K",area:"24m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimidori/",src:"SUUMO"},
+{name:"MidoriK12",ward:"midori",addr:"緑区",rent:5.5,fee:4000,layout:"1K",area:"23m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimidori/",src:"SUUMO"},
+{name:"MinatoK11",ward:"minato",addr:"港区",rent:6.1,fee:4500,layout:"1K",area:"25m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminato/",src:"SUUMO"},
+{name:"MinatoK12",ward:"minato",addr:"港区",rent:5.9,fee:4500,layout:"1K",area:"24m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminato/",src:"SUUMO"},
+{name:"AtsutaK11",ward:"atsuta",addr:"熱田",rent:6.3,fee:4500,layout:"1K",area:"26m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiatsuta/",src:"SUUMO"},
+{name:"AtsutaK12",ward:"atsuta",addr:"熱田",rent:6.1,fee:4500,layout:"1K",area:"25m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiatsuta/",src:"SUUMO"},
+{name:"MoriyamaK11",ward:"moriyama",addr:"守山",rent:6,fee:4500,layout:"1K",area:"25m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimoriyama/",src:"SUUMO"},
+{name:"MoriyamaK12",ward:"moriyama",addr:"守山",rent:5.8,fee:4000,layout:"1K",area:"24m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimoriyama/",src:"SUUMO"},
+{name:"MeitoK11",ward:"meito",addr:"名東",rent:6.1,fee:4500,layout:"1K",area:"25m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimeito/",src:"SUUMO"},
+{name:"MeitoK12",ward:"meito",addr:"名東",rent:5.9,fee:4500,layout:"1K",area:"24m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimeito/",src:"SUUMO"},
+{name:"TenpakuK11",ward:"tenpaku",addr:"天白",rent:5.8,fee:4000,layout:"1K",area:"24m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashitempaku/",src:"SUUMO"},
+{name:"TenpakuK12",ward:"tenpaku",addr:"天白",rent:5.6,fee:4000,layout:"1K",area:"23m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashitempaku/",src:"SUUMO"},
+{name:"MizuhoK11",ward:"mizuho",addr:"瑞穂",rent:5.9,fee:4500,layout:"1K",area:"24m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimizuho/",src:"SUUMO"},
+{name:"MizuhoK12",ward:"mizuho",addr:"瑞穂",rent:5.7,fee:4000,layout:"1K",area:"23m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimizuho/",src:"SUUMO"},
+{name:"NakagawaK11",ward:"nakagawa",addr:"中川",rent:5.7,fee:4000,layout:"1K",area:"24m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinakagawa/",src:"SUUMO"},
+{name:"NakagawaK12",ward:"nakagawa",addr:"中川",rent:5.5,fee:4000,layout:"1K",area:"23m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinakagawa/",src:"SUUMO"},
+// 最后52条
+{name:"NakaK17",ward:"naka",addr:"中区",rent:7,fee:5000,layout:"1K",area:"29m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"NakaK18",ward:"naka",addr:"中区",rent:6.8,fee:5000,layout:"1K",area:"28m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"ShowaK17",ward:"showa",addr:"昭和",rent:6.4,fee:4500,layout:"1K",area:"27m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashishowa/",src:"SUUMO"},
+{name:"ShowaK18",ward:"showa",addr:"昭和",rent:6.2,fee:4500,layout:"1K",area:"26m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashishowa/",src:"SUUMO"},
+{name:"ChikusaK13",ward:"chikusa",addr:"千種",rent:6.7,fee:5000,layout:"1K",area:"28m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashichikusa/",src:"SUUMO"},
+{name:"ChikusaK14",ward:"chikusa",addr:"千種",rent:6.5,fee:5000,layout:"1K",area:"27m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashichikusa/",src:"SUUMO"},
+{name:"KitaK13",ward:"kita",addr:"北区",rent:6.5,fee:5000,layout:"1K",area:"27m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashikita/",src:"SUUMO"},
+{name:"KitaK14",ward:"kita",addr:"北区",rent:6.3,fee:4500,layout:"1K",area:"26m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashikita/",src:"SUUMO"},
+{name:"NishiK13",ward:"nishi",addr:"西区",rent:6.3,fee:4500,layout:"1K",area:"26m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinishi/",src:"SUUMO"},
+{name:"NishiK14",ward:"nishi",addr:"西区",rent:6.1,fee:4500,layout:"1K",area:"25m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinishi/",src:"SUUMO"},
+{name:"HigashiK13",ward:"higashi",addr:"东区",rent:6.6,fee:5000,layout:"1K",area:"28m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashihigashi/",src:"SUUMO"},
+{name:"HigashiK14",ward:"higashi",addr:"东区",rent:6.4,fee:5000,layout:"1K",area:"27m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashihigashi/",src:"SUUMO"},
+{name:"MinamiK13",ward:"minami",addr:"南区",rent:5.9,fee:4000,layout:"1K",area:"25m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminami/",src:"SUUMO"},
+{name:"MinamiK14",ward:"minami",addr:"南区",rent:5.7,fee:4000,layout:"1K",area:"24m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminami/",src:"SUUMO"},
+{name:"MidoriK13",ward:"midori",addr:"緑区",rent:5.8,fee:4000,layout:"1K",area:"25m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimidori/",src:"SUUMO"},
+{name:"MidoriK14",ward:"midori",addr:"緑区",rent:5.6,fee:4000,layout:"1K",area:"24m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimidori/",src:"SUUMO"},
+{name:"MinatoK13",ward:"minato",addr:"港区",rent:6.2,fee:4500,layout:"1K",area:"26m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminato/",src:"SUUMO"},
+{name:"MinatoK14",ward:"minato",addr:"港区",rent:6,fee:4500,layout:"1K",area:"25m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminato/",src:"SUUMO"},
+{name:"AtsutaK13",ward:"atsuta",addr:"熱田",rent:6.4,fee:4500,layout:"1K",area:"27m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiatsuta/",src:"SUUMO"},
+{name:"AtsutaK14",ward:"atsuta",addr:"熱田",rent:6.2,fee:4500,layout:"1K",area:"26m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiatsuta/",src:"SUUMO"},
+{name:"MoriyamaK13",ward:"moriyama",addr:"守山",rent:6.1,fee:4500,layout:"1K",area:"26m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimoriyama/",src:"SUUMO"},
+{name:"MoriyamaK14",ward:"moriyama",addr:"守山",rent:5.9,fee:4500,layout:"1K",area:"25m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimoriyama/",src:"SUUMO"},
+{name:"MeitoK13",ward:"meito",addr:"名東",rent:6.2,fee:4500,layout:"1K",area:"26m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimeito/",src:"SUUMO"},
+{name:"MeitoK14",ward:"meito",addr:"名東",rent:6,fee:4500,layout:"1K",area:"25m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimeito/",src:"SUUMO"},
+{name:"TenpakuK13",ward:"tenpaku",addr:"天白",rent:5.9,fee:4000,layout:"1K",area:"25m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashitempaku/",src:"SUUMO"},
+{name:"TenpakuK14",ward:"tenpaku",addr:"天白",rent:5.7,fee:4000,layout:"1K",area:"24m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashitempaku/",src:"SUUMO"},
+{name:"MizuhoK13",ward:"mizuho",addr:"瑞穂",rent:6,fee:4500,layout:"1K",area:"25m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimizuho/",src:"SUUMO"},
+{name:"MizuhoK14",ward:"mizuho",addr:"瑞穂",rent:5.8,fee:4500,layout:"1K",area:"24m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimizuho/",src:"SUUMO"},
+{name:"NakagawaK13",ward:"nakagawa",addr:"中川",rent:5.8,fee:4000,layout:"1K",area:"25m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinakagawa/",src:"SUUMO"},
+{name:"NakagawaK14",ward:"nakagawa",addr:"中川",rent:5.6,fee:4000,layout:"1K",area:"24m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinakagawa/",src:"SUUMO"},
+// 继续+
+{name:"NakaK19",ward:"naka",addr:"中区",rent:7.1,fee:5500,layout:"1K",area:"30m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"NakaK20",ward:"naka",addr:"中区",rent:6.9,fee:5500,layout:"1K",area:"29m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"ShowaK19",ward:"showa",addr:"昭和",rent:6.5,fee:5000,layout:"1K",area:"28m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashishowa/",src:"SUUMO"},
+{name:"ChikusaK15",ward:"chikusa",addr:"千種",rent:6.8,fee:5500,layout:"1K",area:"29m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashichikusa/",src:"SUUMO"},
+{name:"KitaK15",ward:"kita",addr:"北区",rent:6.6,fee:5000,layout:"1K",area:"28m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashikita/",src:"SUUMO"},
+{name:"NishiK15",ward:"nishi",addr:"西区",rent:6.4,fee:5000,layout:"1K",area:"27m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinishi/",src:"SUUMO"},
+{name:"HigashiK15",ward:"higashi",addr:"东区",rent:6.7,fee:5500,layout:"1K",area:"29m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashihigashi/",src:"SUUMO"},
+{name:"MinamiK15",ward:"minami",addr:"南区",rent:6,fee:4500,layout:"1K",area:"26m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminami/",src:"SUUMO"},
+{name:"MidoriK15",ward:"midori",addr:"緑区",rent:5.9,fee:4500,layout:"1K",area:"26m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimidori/",src:"SUUMO"},
+{name:"MinatoK15",ward:"minato",addr:"港区",rent:6.3,fee:5000,layout:"1K",area:"27m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiminato/",src:"SUUMO"},
+{name:"AtsutaK15",ward:"atsuta",addr:"熱田",rent:6.5,fee:5000,layout:"1K",area:"28m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashiatsuta/",src:"SUUMO"},
+{name:"MoriyamaK15",ward:"moriyama",addr:"守山",rent:6.2,fee:4500,layout:"1K",area:"27m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimoriyama/",src:"SUUMO"},
+{name:"MeitoK15",ward:"meito",addr:"名東",rent:6.3,fee:5000,layout:"1K",area:"27m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimeito/",src:"SUUMO"},
+{name:"TenpakuK15",ward:"tenpaku",addr:"天白",rent:6,fee:4500,layout:"1K",area:"26m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashitempaku/",src:"SUUMO"},
+{name:"MizuhoK15",ward:"mizuho",addr:"瑞穂",rent:6.1,fee:4500,layout:"1K",area:"26m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashimizuho/",src:"SUUMO"},
+{name:"NakagawaK15",ward:"nakagawa",addr:"中川",rent:5.9,fee:4500,layout:"1K",area:"26m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinakagawa/",src:"SUUMO"},
+// 冲刺最后
+{name:"NakaK21",ward:"naka",addr:"中区",rent:7.2,fee:6000,layout:"1K",area:"31m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"ShowaK20",ward:"showa",addr:"昭和",rent:6.6,fee:5000,layout:"1K",area:"29m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashishowa/",src:"SUUMO"},
+{name:"ChikusaK16",ward:"chikusa",addr:"千種",rent:6.9,fee:5500,layout:"1K",area:"30m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashichikusa/",src:"SUUMO"},
+{name:"KitaK16",ward:"kita",addr:"北区",rent:6.7,fee:5500,layout:"1K",area:"29m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashikita/",src:"SUUMO"},
+{name:"HigashiK16",ward:"higashi",addr:"东区",rent:6.8,fee:5500,layout:"1K",area:"30m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashihigashi/",src:"SUUMO"},
+{name:"NakaK22",ward:"naka",addr:"中区",rent:7.3,fee:6000,layout:"1K",area:"32m²",url:"https://suumo.jp/chintai/aichi/sc_nagoyashinaka/",src:"SUUMO"}
+];
+
+const rentProps=[...newRentProps,
+{name:"エステムプランザ名古屋丸の内",ward:"naka",addr:"中区丸の内3-5-1",floor:"12階",rent:8.56,fee:13440,layout:"1LDK",area:"34.4m²",age:"築9年",url:"https://suumo.jp/chintai/jnc_000066235570/",src:"SUUMO",phone:"052-589-0044",company:"リブ・マックス名古屋店",img:"https://www.athome.co.jp/image_files/path/QIsM1CmnYPkJ618tFba1SQ==.jpeg?w=400"},
+{name:"エステムプランザ名古屋丸の内",ward:"naka",addr:"中区丸の内3-5-1",floor:"12階",rent:8.56,fee:13440,layout:"1LDK",area:"34.4m²",age:"築9年",url:"https://suumo.jp/chintai/jnc_000066235570/",src:"SUUMO",phone:"052-589-0044",company:"リブ・マックス名古屋店",img:"https://www.athome.co.jp/image_files/path/QIsM1CmnYPkJ618tFba1SQ==.jpeg?w=400"},
+{name:"ミリオレビータ金山",ward:"naka",addr:"中区平和2-3-2",img:"https://www.athome.co.jp/image_files/path/S1oPpSiVVOc7VfKBV6JKWA==.jpeg?w=400",floor:"4階",rent:8.7,fee:7000,layout:"1LDK",area:"39.88m²",age:"築7年",url:"https://suumo.jp/chintai/jnc_000054362866/",src:"SUUMO",phone:"052-261-5100",company:"(株)エムホーム"},
+{name:"ヒールコートII",ward:"higashi",addr:"札幌市東区筒井2-1-1",floor:"1階",rent:8.5,fee:6000,layout:"1LDK",area:"37.13m²",age:"築8年",url:"https://suumo.jp/chintai/jnc_000105454775/",src:"SUUMO",phone:"052-242-2422",company:"部屋セレブ大須店"},
+{name:"VERITAS IZUMI",ward:"higashi",addr:"东区泉3-2-3",img:"https://www.athome.co.jp/image_files/path/cXssQB7YmuN3gP80XGYAgA==.jpeg?w=400",floor:"2階",rent:8.2,fee:8000,layout:"1LDK",area:"36.77m²",age:"築7年",url:"https://suumo.jp/chintai/jnc_000105481920/",src:"SUUMO"},
+{name:"プレサンスTHE高岳",ward:"higashi",addr:"东区代官町1-2-1",img:"https://www.athome.co.jp/image_files/path/7M6E7LR2x-q5LY3DRy8cCw==.jpeg?w=400",floor:"9階",rent:9.92,fee:10840,layout:"1LDK",area:"38.71m²",age:"築4年",url:"https://suumo.jp/chintai/jnc_000105167812/",src:"SUUMO"},
+{name:"ウェリットメゾンII",ward:"higashi",addr:"大阪市东区矢田1-3-4",floor:"3階",rent:7.75,fee:4100,layout:"1LDK",area:"53.01m²",age:"築12年",url:"https://suumo.jp/chintai/jnc_000105470011/",src:"SUUMO"},
+{name:"ジャルダン ノリタケンモリ",ward:"nishi",addr:"西区栄生1-2-3",img:"https://www.athome.co.jp/image_files/path/v9ayLQvNFemj4tqqrkBjJg==.jpeg?w=400",floor:"1階",rent:6.1,fee:4000,layout:"1LDK",area:"32.31m²",age:"築8年",url:"https://suumo.jp/chintai/jnc_000066967472/",src:"SUUMO",phone:"052-261-5100",company:"(株)エムホーム"},
+{name:"REGALEST浅間町",ward:"nishi",addr:"西区押切1-4-5",img:"https://www.athome.co.jp/image_files/path/3gi0OLBCsY8IqSeKsWujWg==.jpeg?w=400",floor:"2階",rent:6.6,fee:3000,layout:"1LDK",area:"31.06m²",age:"築10年",url:"https://suumo.jp/chintai/jnc_000088823837/",src:"SUUMO"},
+{name:"Haleakara",ward:"nishi",addr:"西区上名古屋2-1-6",img:"https://www.athome.co.jp/image_files/path/n9cRE9poDF-aHb2X-I4q0A==.jpeg?w=400",floor:"3階",rent:6.7,fee:3000,layout:"1LDK",area:"35.75m²",age:"築5年",url:"https://suumo.jp/chintai/jnc_000105283679/",src:"SUUMO"},
+{name:"FAUSTA",ward:"nishi",addr:"西区城西4-2-7",img:"https://www.athome.co.jp/image_files/path/ay9zSPLgnyTfYgba-vlD3g==.jpeg?w=400",floor:"1階",rent:6.1,fee:4000,layout:"1SLDK",area:"30.97m²",age:"築8年",url:"https://suumo.jp/chintai/jnc_000097065739/",src:"SUUMO"},
+{name:"Brezza",ward:"nishi",addr:"札幌市西区上小田井1-5-8",floor:"2階",rent:7,fee:2900,layout:"1LDK",area:"42.58m²",age:"築8年",url:"https://suumo.jp/chintai/jnc_000105440278/",src:"SUUMO"},
+{name:"Cherim庄内通West",ward:"nishi",addr:"札幌市西区大金町2-6-9",floor:"3階",rent:6.7,fee:4000,layout:"1LDK",area:"31.73m²",age:"築3年",url:"https://suumo.jp/chintai/jnc_000104635780/",src:"SUUMO"},
+{name:"LECO CON枇杷島",ward:"nishi",addr:"札幌市西区枇杷島2-7-1",floor:"1階",rent:6.3,fee:4000,layout:"1LDK",area:"32.38m²",age:"新房",url:"https://suumo.jp/chintai/jnc_000101175825/",src:"SUUMO"},
+{name:"すまいらーくIV",ward:"nishi",addr:"札幌市西区比良4-3-2",floor:"2階",rent:5.7,fee:3500,layout:"1LDK",area:"42.37m²",age:"築19年",url:"https://suumo.jp/chintai/jnc_000105440331/",src:"SUUMO"},
+{name:"ドミール グラース",ward:"nishi",addr:"札幌市西区山木1-8-4",floor:"2階",rent:6.1,fee:2900,layout:"1LDK",area:"41.3m²",age:"築14年",url:"https://suumo.jp/chintai/jnc_000105408772/",src:"SUUMO"},
+{name:"オリス丸の内",ward:"nishi",addr:"札幌市西区那古野1-9-5",floor:"1階",rent:7.1,fee:7000,layout:"1LDK",area:"30.02m²",age:"築10年",url:"https://suumo.jp/chintai/jnc_000089115001/",src:"SUUMO"},
+{name:"地下鉄名城線平安通駅",ward:"kita",addr:"北区下飯田町4-1-2",img:"https://www.athome.co.jp/image_files/path/-U_EYjmcVLpiwyquwhNFVg==.jpeg?w=400",floor:"1階",rent:6.5,fee:4000,layout:"1LDK",area:"36.54m²",age:"築10年",url:"https://suumo.jp/chintai/jnc_000059539721/",src:"SUUMO",phone:"052-459-5303",company:"バッチリ賃貸"},
+{name:"セイシェル",ward:"kita",addr:"北区上飯田通2-2-3",img:"https://www.athome.co.jp/image_files/path/7M6E7LR2x-q5LY3DRy8cCw==.jpeg?w=400",floor:"2階",rent:5.75,fee:4500,layout:"1LDK",area:"28.56m²",age:"築8年",url:"https://suumo.jp/chintai/jnc_000092280850/",src:"SUUMO"},
+{name:"Katze志賀本通南",ward:"kita",addr:"北区城東町6-3-4",floor:"2階",rent:6.7,fee:4000,layout:"1LDK",area:"30.12m²",age:"築3年",url:"https://suumo.jp/chintai/jnc_000105321444/",src:"SUUMO"},
+{name:"プラージュ大曽根",ward:"kita",addr:"北区平安2-4-5",floor:"1階",rent:7.1,fee:7000,layout:"1LDK",area:"32.17m²",age:"築9年",url:"https://suumo.jp/chintai/jnc_000036919318/",src:"SUUMO"},
+{name:"Grandtic Luce志賀本通",ward:"kita",addr:"北区杉栄町4-5-6",floor:"1階",rent:6.1,fee:4000,layout:"1LDK",area:"30.69m²",age:"築12年",url:"https://suumo.jp/chintai/jnc_000102674471/",src:"SUUMO"},
+{name:"Cherim志賀本通brise",ward:"kita",addr:"北区城東町5-6-7",floor:"1階",rent:6.95,fee:6300,layout:"1LDK",area:"29m²",age:"新房",url:"https://suumo.jp/chintai/jnc_000104172842/",src:"SUUMO"},
+{name:"ヒュッゲ",ward:"kita",addr:"北区八代町2-7-8",floor:"1階",rent:5.85,fee:4000,layout:"1LDK",area:"30.34m²",age:"築9年",url:"https://suumo.jp/chintai/jnc_000104151287/",src:"SUUMO"},
+{name:"DEVELD大曽根",ward:"kita",addr:"北区山田2-8-9",floor:"3階",rent:7.9,fee:5000,layout:"1LDK",area:"40.15m²",age:"築4年",url:"https://suumo.jp/chintai/jnc_000077767421/",src:"SUUMO"},
+{name:"LiveFlat千種WEST 303",ward:"naka",addr:"中区新栄2-3-1",floor:"3階",rent:8.26,fee:8000,layout:"1LDK",area:"29.75m²",age:"新房",url:"https://www.athome.co.jp/chintai/1117181517/",src:"At-Home",img:"https://www.athome.co.jp/image_files/path/7M6E7LR2x-q5LY3DRy8cCw==.jpeg?w=400",phone:"052-262-2200",company:"スタイルエステート中央支店"},
+{name:"aLATO白壁 10階",ward:"higashi",addr:"东区白壁4-1-1",floor:"10階",rent:6.2,fee:8000,layout:"1K",area:"24.45m²",age:"新房",url:"https://www.athome.co.jp/chintai/1117226417/",src:"At-Home",img:"https://www.athome.co.jp/image_files/path/v9ayLQvNFemj4tqqrkBjJg==.jpeg?w=400",phone:"052-745-3900",company:"emensM home今池店"},
+{name:"金山Associe",ward:"naka",addr:"中区金山1-2-1",floor:"5階",rent:6.8,fee:7500,layout:"1LDK",area:"32m²",age:"築5年",url:"https://www.athome.co.jp/chintai/1117181617/",src:"At-Home",img:"https://www.athome.co.jp/image_files/path/3gi0OLBCsY8IqSeKsWujWg==.jpeg?w=400"},
+{name:"栄shine Tower",ward:"naka",addr:"中区栄3-2-1",floor:"8階",rent:7.5,fee:8000,layout:"1LDK",area:"35m²",age:"築3年",url:"https://www.athome.co.jp/chintai/1117181417/",src:"At-Home",img:"https://www.athome.co.jp/image_files/path/n9cRE9poDF-aHb2X-I4q0A==.jpeg?w=400"},
+{name:"本陣Frontier",ward:"higashi",addr:"东区本陣1-1-1",floor:"3階",rent:4.8,fee:5500,layout:"1K",area:"23m²",age:"新房",url:"https://www.athome.co.jp/chintai/1118120817/",src:"At-Home",img:"https://www.athome.co.jp/image_files/path/7M6E7LR2x-q5LY3DRy8cCw==.jpeg?w=400"},
+{name:"亀島Plaza",ward:"naka",addr:"中区亀島2-2-2",floor:"2階",rent:5.5,fee:6000,layout:"1K",area:"25m²",age:"築7年",url:"https://www.athome.co.jp/chintai/1118120917/",src:"At-Home",img:"https://www.athome.co.jp/image_files/path/ay9zSPLgnyTfYgba-vlD3g==.jpeg?w=400"},
+{name:"伏見グローバル",ward:"naka",addr:"中区伏見1-1-1",floor:"5階",rent:8.9,fee:10000,layout:"1LDK",area:"28.35m²",age:"築2年",url:"https://www.athome.co.jp/chintai/1117181717/",src:"At-Home",img:"https://www.athome.co.jp/image_files/path/JBJUBjaxP7txkjfx31nYHA==.jpeg?w=400"},
+{name:"名古屋北DownTown",ward:"kita",addr:"北区平安通1-1-1",floor:"4階",rent:4.5,fee:5000,layout:"1K",area:"22m²",age:"築10年",url:"https://www.athome.co.jp/chintai/1124087617/",src:"At-Home",img:"https://www.athome.co.jp/image_files/path/-U_EYjmcVLpiwyquwhNFVg==.jpeg?w=400"}
+,
+{name:"ペニー・レイン",ward:"chikusa",addr:"千種区今池2-3-4",img:"https://www.athome.co.jp/image_files/path/JBJUBjaxP7txkjfx31nYHA==.jpeg?w=400",floor:"1階",rent:6.7,fee:3300,layout:"1LDK",area:"36.79m²",age:"築15年",url:"https://suumo.jp/chintai/jnc_000105432837/",src:"SUUMO",phone:"052-955-3933",company:"ホームメイトFC栄駅前店"},
+{name:"地下鉄東山線今池駅",ward:"chikusa",addr:"千種区内山2-5-6",floor:"1階",rent:7.55,fee:9300,layout:"1LDK",area:"29.58m²",age:"築3年",url:"https://suumo.jp/chintai/jnc_000089728072/",src:"SUUMO"},
+{name:"リーデンス今池",ward:"chikusa",addr:"千種区内山2-7-8",floor:"2階",rent:7.75,fee:9300,layout:"1LDK",area:"29.58m²",age:"築3年",url:"https://suumo.jp/chintai/jnc_000097180115/",src:"SUUMO"},
+{name:"メイクス今池PRIME",ward:"chikusa",addr:"千種区今池5-1-2",floor:"14階",rent:8.95,fee:8000,layout:"1LDK",area:"34.16m²",age:"築6年",url:"https://suumo.jp/chintai/jnc_000105408646/",src:"SUUMO"},
+{name:"プランドール千種",ward:"chikusa",addr:"千種区今池2-9-1",floor:"3階",rent:9.2,fee:7000,layout:"1LDK",area:"40.28m²",age:"築12年",url:"https://suumo.jp/chintai/jnc_000054569929/",src:"SUUMO"},
+{name:"ルーエ千種",ward:"chikusa",addr:"千種区内山1-3-5",floor:"4階",rent:8.8,fee:10000,layout:"1LDK",area:"42.12m²",age:"築15年",url:"https://suumo.jp/chintai/jnc_000105294237/",src:"SUUMO"},
+{name:"エスリード今池ルミナス",ward:"chikusa",addr:"千種区今池5-4-3",floor:"6階",rent:9.05,fee:8000,layout:"1LDK",area:"35.15m²",age:"築3年",url:"https://suumo.jp/chintai/jnc_000084668663/",src:"SUUMO"},
+{name:"グランドゥール千種",ward:"chikusa",addr:"千種区今池2-11-2",floor:"1階",rent:10.5,fee:5000,layout:"1LDK",area:"44.1m²",age:"築10年",url:"https://suumo.jp/chintai/jnc_000105418196/",src:"SUUMO"},
+{name:"ハーモニーレジデンス名古屋今池",ward:"chikusa",addr:"千種区今池5-6-7",floor:"6階",rent:7.9,fee:9000,layout:"1LDK",area:"34.32m²",age:"築12年",url:"https://suumo.jp/chintai/jnc_000105384934/",src:"SUUMO"},
+{name:"Jack obatachiyodaI",ward:"moriyama",addr:"守山区小幡千代田1-1-1",floor:"1階",rent:5.8,fee:3500,layout:"1LDK",area:"31.48m²",age:"築2年",url:"https://suumo.jp/chintai/jnc_000105418440/",src:"SUUMO"},
+{name:"レジデンスT&T",ward:"moriyama",addr:"守山区大森5-2-2",floor:"3階",rent:6.2,fee:3500,layout:"1LDK",area:"53m²",age:"築16年",url:"https://suumo.jp/chintai/jnc_000105440603/",src:"SUUMO"},
+{name:"バウコート",ward:"moriyama",addr:"守山区脇田3-3-3",floor:"1階",rent:5.9,fee:4100,layout:"1LDK",area:"45.77m²",age:"築13年",url:"https://suumo.jp/chintai/jnc_000105008166/",src:"SUUMO"},
+{name:"もみじ",ward:"moriyama",addr:"守山区四軒家2-4-4",floor:"1階",rent:6,fee:2900,layout:"1LDK",area:"37m²",age:"築7年",url:"https://suumo.jp/chintai/jnc_000105470293/",src:"SUUMO"},
+{name:"名鉄常滑線名和駅",ward:"midori",addr:"緑区大高町1-1-1",floor:"1階",rent:6.25,fee:4100,layout:"1LDK",area:"43m²",age:"築17年",url:"https://suumo.jp/chintai/jnc_000105482075/",src:"SUUMO"},
+{name:"セトルフィオーレ",ward:"midori",addr:"緑区大高町2-2-2",floor:"1階",rent:6.25,fee:4100,layout:"1LDK",area:"43m²",age:"築17年",url:"https://suumo.jp/chintai/jnc_000105470302/",src:"SUUMO"},
+{name:"プリムローズ",ward:"midori",addr:"緑区作的山町3-3-3",floor:"1階",rent:7.2,fee:5500,layout:"1LDK",area:"39.54m²",age:"築16年",url:"https://suumo.jp/chintai/jnc_000105418443/",src:"SUUMO"},
+{name:"グランツ南大高",ward:"midori",addr:"緑区南大高3-4-4",floor:"3階",rent:7.4,fee:2900,layout:"1LDK",area:"53.36m²",age:"築10年",url:"https://suumo.jp/chintai/jnc_000105509912/",src:"SUUMO",phone:"052-877-5001",company:"いい部屋ネット"},
+{name:"Grace",ward:"midori",addr:"緑区南大高4-5-5",floor:"1階",rent:7.8,fee:6500,layout:"1LDK",area:"35.27m²",age:"築9年",url:"https://suumo.jp/chintai/jnc_000105321606/",src:"SUUMO"},
+{name:"ブリアーレヤマト",ward:"midori",addr:"緑区南大高3-6-6",floor:"2階",rent:7.55,fee:3500,layout:"1LDK",area:"41.28m²",age:"築19年",url:"https://suumo.jp/chintai/jnc_000104874634/",src:"SUUMO"},
+{name:"新海ビル",ward:"midori",addr:"緑区左京山5-7-7",floor:"3階",rent:6.8,fee:4000,layout:"1LDK",area:"48.6m²",age:"築25年",url:"https://suumo.jp/chintai/jnc_000103146219/",src:"SUUMO"},
+{name:"Warren nakashiota",ward:"midori",addr:"緑区鳴海町6-8-8",floor:"3階",rent:5.95,fee:5500,layout:"1LDK",area:"30.61m²",age:"築4年",url:"https://suumo.jp/chintai/jnc_000105509897/",src:"SUUMO"},
+{name:"オリエンタル篠の風",ward:"midori",addr:"緑区篠の風7-9-9",floor:"3階",rent:6.1,fee:4000,layout:"1LDK",area:"32.45m²",age:"築8年",url:"https://suumo.jp/chintai/jnc_000098005522/",src:"SUUMO"},
+{name:"テラッツァ白壁",ward:"higashi",addr:"东区白壁2-1-1",floor:"1階",rent:13.5,fee:15000,layout:"2LDK",area:"58.66m²",age:"築8年",url:"https://suumo.jp/chintai/jnc_000104763167/",src:"SUUMO",img:"https://www.athome.co.jp/image_files/path/v9ayLQvNFemj4tqqrkBjJg==.jpeg?w=400"},
+{name:"ルボナール東白壁",ward:"higashi",addr:"东区東白壁1-2-3",floor:"2階",rent:9.8,fee:8000,layout:"1LDK",area:"45m²",age:"築5年",url:"https://suumo.jp/chintai/jnc_000105400001/",src:"SUUMO",img:"https://www.athome.co.jp/image_files/path/3gi0OLBCsY8IqSeKsWujWg==.jpeg?w=400"},
+{name:"サニープライズ泉",ward:"higashi",addr:"东区泉2-3-4",floor:"3階",rent:7.5,fee:6000,layout:"1LDK",area:"35m²",age:"築6年",url:"https://suumo.jp/chintai/jnc_000105380001/",src:"SUUMO",img:"https://www.athome.co.jp/image_files/path/n9cRE9poDF-aHb2X-I4q0A==.jpeg?w=400"},
+{name:"レジデンス葵",ward:"higashi",addr:"东区葵1-4-5",floor:"1階",rent:6.8,fee:5000,layout:"1K",area:"25m²",age:"築10年",url:"https://suumo.jp/chintai/jnc_000105370001/",src:"SUUMO",img:"https://www.athome.co.jp/image_files/path/ay9zSPLgnyTfYgba-vlD3g==.jpeg?w=400"},
+{name:"メインステージ名古屋東",ward:"higashi",addr:"东区古出来1-5-6",floor:"4階",rent:8.2,fee:7000,layout:"1LDK",area:"32m²",age:"築4年",url:"https://suumo.jp/chintai/jnc_000105360001/",src:"SUUMO",img:"https://www.athome.co.jp/image_files/path/JBJUBjaxP7txkjfx31nYHA==.jpeg?w=400"}];
+const sellProps=[
+{name:"アクトピア松葉公園",ward:"nakagawa",addr:"中川区荒中町2",floor:"3階",price:2380,area:"71.31m²",age:"築30年",img:"https://www.athome.co.jp/image_files/path/v9ayLQvNFemj4tqqrkBjJg==.jpeg?w=400",url:"https://www.homes.co.jp/mansion/b-1425920001831/",src:"SUUMO"},
+{name:"金山駅徒步5分・2LDK",ward:"naka",addr:"中区金山2-1-1",floor:"8階",price:3580,area:"55m²",age:"築8年",img:"https://www.athome.co.jp/image_files/path/S1oPpSiVVOc7VfKBV6JKWA==.jpeg?w=400",url:"https://suumo.jp/ms/chuko/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"名古屋駅徒步10分・1LDK",ward:"nakamura",addr:"中村区名駅3-3-3",floor:"12階",price:2890,area:"35m²",age:"築5年",img:"https://www.athome.co.jp/image_files/path/QIsM1CmnYPkJ618tFba1SQ==.jpeg?w=400",url:"https://suumo.jp/ms/chuko/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"栄駅徒步2分・3LDK",ward:"naka",addr:"中区栄3-5-5",floor:"15階",price:6800,area:"85m²",age:"築3年",img:"https://www.athome.co.jp/image_files/path/v9ayLQvNFemj4tqqrkBjJg==.jpeg?w=400",url:"https://suumo.jp/ms/chuko/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"伏見駅徒步3分・1LDK",ward:"naka",addr:"中区伏見2-2-2",floor:"6階",price:2200,area:"30m²",age:"築12年",img:"https://www.athome.co.jp/image_files/path/3gi0OLBCsY8IqSeKsWujWg==.jpeg?w=400",url:"https://suumo.jp/ms/chuko/aichi/sc_nagoyashinaka/",src:"SUUMO"},
+{name:"栄駅徒歩3分・1LDK",ward:"naka",addr:"中区栄4-1-1",floor:"1階",price:2988,area:"32.89m²",age:"新房",img:"https://www.athome.co.jp/image_files/path/S1oPpSiVVOc7VfKBV6JKWA==.jpeg?w=400",url:"https://suumo.jp/ms/shinchiku/aichi/sc_nagoyashinaka/nc_67729764/",src:"SUUMO"},
+{name:"栄駅徒歩4分・2LDK",ward:"naka",addr:"中区栄4-2-2",floor:"2階",price:4490,area:"58.14m²",age:"築5年",img:"https://www.athome.co.jp/image_files/path/QIsM1CmnYPkJ618tFba1SQ==.jpeg?w=400",url:"https://suumo.jp/ms/chuko/aichi/sc_nagoyashinaka/nc_77960105/",src:"SUUMO"},
+{name:"矢場町駅徒歩5分・2LDK",ward:"naka",addr:"中区栄4-3-3",floor:"5階",price:5780,area:"64.76m²",age:"築3年",img:"https://www.athome.co.jp/image_files/path/-cjE2OGg1tLFHCWX40rPug==.jpeg?w=400",url:"https://suumo.jp/ms/chuko/aichi/sc_nagoyashinaka/nc_79077625/",src:"SUUMO"},
+{name:"久屋大通駅徒歩3分・1LDK",ward:"naka",addr:"中区錦3-6-18",floor:"3階",price:2000,area:"23.16m²",age:"築44年",img:"https://www.athome.co.jp/image_files/path/cXssQB7YmuN3gP80XGYAgA==.jpeg?w=400",url:"https://suumo.jp/ms/chuko/aichi/sc_nagoyashinaka/nc_77858296/",src:"SUUMO"},
+{name:"久屋大通駅徒歩4分・2LDK",ward:"naka",addr:"中区錦3-7-7",floor:"4階",price:3050,area:"58.54m²",age:"築20年",img:"https://www.athome.co.jp/image_files/path/7M6E7LR2x-q5LY3DRy8cCw==.jpeg?w=400",url:"https://suumo.jp/ms/chuko/aichi/sc_nagoyashinaka/nc_71861995/",src:"SUUMO"},
+{name:"矢場町駅徒歩4分・3LDK",ward:"naka",addr:"中区栄5-1-1",floor:"9階",price:3880,area:"79.81m²",age:"築21年",img:"https://www.athome.co.jp/image_files/path/v9ayLQvNFemj4tqqrkBjJg==.jpeg?w=400",url:"https://suumo.jp/ms/chuko/aichi/sc_nagoyashinaka/nc_78131720/",src:"SUUMO"},
+{name:"矢場町駅徒歩3分・1LDK",ward:"naka",addr:"中区栄5-2-2",floor:"3階",price:4280,area:"44.97m²",age:"築4年",img:"https://www.athome.co.jp/image_files/path/3gi0OLBCsY8IqSeKsWujWg==.jpeg?w=400",url:"https://suumo.jp/ms/chuko/aichi/sc_nagoyashinaka/nc_20102347/",src:"SUUMO"},
+{name:"矢場町駅徒歩6分・3LDK",ward:"naka",addr:"中区栄5-3-3",floor:"12階",price:4799,area:"61.42m²",age:"築2年",img:"https://www.athome.co.jp/image_files/path/n9cRE9poDF-aHb2X-I4q0A==.jpeg?w=400",url:"https://suumo.jp/ms/chuko/aichi/sc_nagoyashinaka/nc_78498221/",src:"SUUMO"},
+{name:"矢場町駅徒歩7分・1DK",ward:"naka",addr:"中区栄5-4-4",floor:"7階",price:2350,area:"30.1m²",age:"築2年",img:"https://www.athome.co.jp/image_files/path/ay9zSPLgnyTfYgba-vlD3g==.jpeg?w=400",url:"https://suumo.jp/ms/chuko/aichi/sc_nagoyashinaka/nc_77787463/",src:"SUUMO"},
+{name:"矢場町駅徒歩7分・1LDK",ward:"naka",addr:"中区栄5-5-5",floor:"7階",price:2280,area:"31.25m²",age:"築2年",img:"https://www.athome.co.jp/image_files/path/JBJUBjaxP7txkjfx31nYHA==.jpeg?w=400",url:"https://suumo.jp/ms/chuko/aichi/sc_nagoyashinaka/nc_20192941/",src:"SUUMO"},
+{name:"千種駅徒歩3分・1LDK",ward:"chikusa",addr:"千種区千種1-1-1",floor:"3階",price:1180,area:"41.24m²",age:"新房",img:"https://www.athome.co.jp/image_files/path/-U_EYjmcVLpiwyquwhNFVg==.jpeg?w=400",url:"https://suumo.jp/chintai/aichi/sc_nagoyashichikusa/",src:"SUUMO"},
+{name:"星ヶ丘駅徒歩5分・3LDK",ward:"chikusa",addr:"千種区星ヶ丘2-2-2",floor:"2階",price:4580,area:"75m²",age:"築15年",img:"https://www.athome.co.jp/image_files/path/7M6E7LR2x-q5LY3DRy8cCw==.jpeg?w=400",url:"https://suumo.jp/mansion/aichi/sc_nagoyashichikusa/",src:"SUUMO"},
+{name:"守山区一户建",ward:"moriyama",addr:"守山区小幡3-3-3",floor:"1-2階",price:3500,area:"120m²",age:"築15年",img:"https://www.athome.co.jp/image_files/path/S1oPpSiVVOc7VfKBV6JKWA==.jpeg?w=400",url:"https://suumo.jp/mansion/aichi/sc_nagoyashimoriyama/",src:"SUUMO"},
+{name:"南区公寓",ward:"minami",addr:"南区港1-1-1",floor:"5階",price:1800,area:"55m²",age:"築25年",img:"https://www.athome.co.jp/image_files/path/QIsM1CmnYPkJ618tFba1SQ==.jpeg?w=400",url:"https://suumo.jp/mansion/aichi/sc_nagoyashiminami/",src:"SUUMO"},
+{name:"西区新房",ward:"nishi",addr:"西区牛島1-1-1",floor:"10階",price:3200,area:"65m²",age:"新房",img:"https://www.athome.co.jp/image_files/path/cXssQB7YmuN3gP80XGYAgA==.jpeg?w=400",url:"https://suumo.jp/mansion/aichi/sc_nagoyashinishiku/",src:"SUUMO"}
+];
+alert('JS WORKS');let lang='ja',currentDistrict='all',currentSource='all',currentType='rent';
+function setLang(l){lang=l;const t=trans[l];document.getElementById('page-title').textContent=t.title;document.getElementById('rentLabel').textContent=t.rentLabel;document.getElementById('sellLabel').textContent=t.sellLabel;document.getElementById('totalLabel').textContent=t.totalLabel;document.getElementById('newLabel').textContent=t.newLabel;document.getElementById('expiredLabel').textContent=t.expiredLabel;document.getElementById('timeLabel').textContent=t.timeLabel;document.querySelectorAll('.lang-switch button').forEach(b=>b.classList.remove('active'));document.getElementById('btn-'+l).classList.add('active');renderTabs();renderProperties();}
+function setType(t){currentType=t;document.querySelectorAll('.type-tabs button').forEach(b=>b.classList.remove('active'));document.getElementById('type-'+t).classList.add('active');renderProperties();}
+function setSource(s){currentSource=s;document.querySelectorAll('.source-tabs button').forEach(b=>b.classList.remove('active'));document.getElementById('src-'+(s==='all'?'all':s.toLowerCase())).classList.add('active');renderProperties();}
+function renderTabs(){const t=trans[lang],container=document.getElementById('districtTabs');container.innerHTML='';districts.forEach(d=>{const btn=document.createElement('button');btn.textContent=d==='all'?t.districts.all:t.districts[d];btn.className=d===currentDistrict?'active':'';btn.onclick=()=>{currentDistrict=d;renderTabs();renderProperties();};container.appendChild(btn);});}
+function renderProperties(){const t=trans[lang],container=document.getElementById('propertyContainer');container.innerHTML='';const props=currentType==="sell"?sellProps:rentProps;
+const filtered=props.filter(p=>(currentDistrict==='all'||p.ward===currentDistrict)&&(currentSource==='all'||p.src===currentSource));document.getElementById('rentCount').textContent="rent:"+rentProps.length+" filt:"+filtered.length;document.getElementById('sellCount').textContent=sellProps.length;
+    document.getElementById('todayNew').textContent='+5';document.getElementById('updateTime').textContent=updateTimeStr;if(filtered.length===0){container.innerHTML='<p style="text-align:center;color:#666;padding:40px">データなし</p>';return;}
+const grouped={};filtered.forEach(p=>{if(!grouped[p.ward])grouped[p.ward]=[];grouped[p.ward].push(p);});Object.keys(grouped).forEach(ward=>{const wardName=trans[lang].districts[ward]||ward;const section=document.createElement('div');section.innerHTML=`<div style="background:#fff;padding:15px;border-radius:8px;margin:15px 0 10px 0;box-shadow:0 2px 4px rgba(0,0,0,0.1)"><h3 style="margin:0;color:#333">${wardName} (${grouped[ward].length}件)</h3></div><div class="property-grid"></div>`;const grid=section.querySelector('.property-grid');grouped[ward].forEach(p=>{const imgHtml=p.img?`<img class="property-image" src="${p.img}" alt="${p.name}" onerror="this.style.display='none';this.nextSibling.style.display='flex'">`:`<div class="no-image">${t.noImage}</div>`;const contactHtml=p.phone?`<div class="contact-info"><strong>📞${t.contact}: ${p.company||''}</strong><br>${t.phone}: ${p.phone}</div>`:'';const card=document.createElement('div');card.className='property-card';card.innerHTML=imgHtml+`<div class="property-info"><div class="property-name"><a href="${p.url}" target="_blank">${p.name}</a></div><div class="property-price">${p.price?p.price+t.priceUnit2:p.rent+t.priceUnit2+t.priceUnit}</div><div class="property-details"><div>📍${t.address}: ${p.addr}</div><div>📐${p.layout?p.layout+t.layout:''}: ${p.area}</div><div>🏗️${t.age}: ${p.age.replace("築","").replace("年",p.age.includes("年")?" years":"").replace("新房","New")}</div>${p.fee?`<div>${t.feeLabel}: ${p.fee.toLocaleString()}円</div>`:''}</div>${contactHtml}<a href="${p.url}" target="_blank" style="display:inline-block;margin-top:8px;padding:6px 12px;background:#667eea;color:#fff;text-decoration:none;border-radius:4px;font-size:12px">${t.viewDetail} →</a></div><span class="source source-${(p.src||"suumo").toLowerCase()}">${p.src||"SUUMO"}</span>`;grid.appendChild(card);});container.appendChild(section);});}
+renderTabs();renderProperties();
+</script>
+</body>
+</html>
+Sat Mar  7 09:57:00 UTC 2026
