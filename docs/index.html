@@ -107,7 +107,14 @@ const rentProps=[
 {name:"MOVE本陣GRANDE",ward:"nakamura",addr:"中村区松原町5",floor:"1階",rent:6.8,fee:5000,layout:"1LDK",area:"30.73m²",age:"築2年",url:"https://suumo.jp/chintai/jnc_000100992067/",src:"SUUMO",img:"https://img01.suumo.com/front/gazo/fr/bukken/217/100410522217/100410522217_go.jpg"},
 {name:"REGALEST東枇杷島",ward:"nakamura",addr:"中村区新富町4",floor:"1階",rent:7.5,fee:3000,layout:"2LDK",area:"41.46m²",age:"新房",url:"https://suumo.jp/chintai/jnc_000105470085/",src:"SUUMO",img:"https://img01.suumo.com/front/gazo/fr/bukken/774/100493538774/100493538774_go.jpg"},
 ];
-const sellProps=[];
+const sellProps=[
+{name:"CATTLEYA GARDEN",ward:"naka",addr:"中区千代田4",floor:"2階",rent:7.8,fee:8000,layout:"1LDK",area:"36.45m²",age:"築7年",url:"https://www.chintai.net/detail/bk-0000002370000000005077850001/",src:"CHINTAI",phone:"052-259-0331",company:"エイブル矢場町店"},
+{name:"サウスポイント",ward:"naka",addr:"中区栄2",floor:"3階",rent:8.62,fee:8850,layout:"1LDK",area:"32.76m²",age:"築5年",url:"https://suumo.jp/chintai/jnc_000105547742/",src:"SUUMO",img:"https://img01.suumo.com/front/gazo/fr/bukken/511/100494130511/100494130511_go.jpg"},
+{name:"エステムプランザ丸の内2",ward:"naka",addr:"中区丸の内3",floor:"12階",rent:8.56,fee:14990,layout:"1LDK",area:"34.4m²",age:"築9年",url:"https://suumo.jp/chintai/jnc_000105481994/",src:"SUUMO",img:"https://img01.suumo.com/front/gazo/fr/bukken/337/100493646337/100493646337_go.jpg"},
+{name:"RadIAnce鶴舞B",ward:"naka",addr:"中区千代田4",floor:"4階",rent:7.3,fee:4500,layout:"1LDK",area:"34.99m²",age:"築9年",url:"https://suumo.jp/chintai/jnc_000105339132/",src:"SUUMO",img:"https://img01.suumo.com/front/gazo/fr/bukken/931/100454948931/100454948931_go.jpg"},
+{name:"RadIAnce鶴舞A",ward:"naka",addr:"中区千代田4",floor:"2階",rent:7.3,fee:4500,layout:"ワンルーム",area:"34.99m²",age:"築9年",url:"https://suumo.jp/chintai/jnc_000039709809/",src:"SUUMO",img:"https://img01.suumo.com/front/gazo/fr/bukken/190/100492285190/100492285190_go.jpg"},
+{name:"ルジェンテ上前津",ward:"naka",addr:"中区千代田3",floor:"15階",rent:7.5,fee:8000,layout:"1DK",area:"26.65m²",age:"築20年",url:"https://suumo.jp/chintai/jnc_000103225763/",src:"SUUMO",img:"https://img01.suumo.com/front/gazo/fr/bukken/287/100480722287/100480722287_go.jpg"}
+];
 let lang='ja',currentDistrict='all',currentSource='all',currentType='rent';
 function setLang(l){lang=l;const t=trans[l];document.getElementById('page-title').textContent=t.title;document.getElementById('rentLabel').textContent=t.rentLabel;document.getElementById('sellLabel').textContent=t.sellLabel;document.getElementById('newLabel').textContent=t.newLabel;document.getElementById('timeLabel').textContent=t.timeLabel;document.querySelectorAll('.lang-switch button').forEach(b=>b.classList.remove('active'));document.getElementById('btn-'+l).classList.add('active');renderTabs();renderProperties();}
 function setType(t){currentType=t;document.querySelectorAll('.type-tabs button').forEach(b=>b.classList.remove('active'));document.getElementById('type-'+t).classList.add('active');renderProperties();}
