@@ -85,7 +85,28 @@ const districts=["all","naka","higashi","nishi","kita","minami","nakamura","chik
 const now=new Date();const jst=new Date(now.getTime()+9*60*60*1000);
 const updateTimeStr=jst.getHours()+":"+String(jst.getMinutes()).padStart(2,'0');
 
-const rentProps=[];
+const rentProps=[
+{name:"グランドステージ新栄",ward:"naka",addr:"中区新栄2",floor:"1階",rent:5.6,fee:3000,layout:"ワンルーム",area:"24.59m²",age:"築14年",url:"https://suumo.jp/chintai/jnc_000105418354/",src:"SUUMO"},
+{name:"エステムプランザ名古屋丸の内",ward:"naka",addr:"中区丸の内3",floor:"12階",rent:8.56,fee:13440,layout:"1LDK",area:"34.4m²",age:"築9年",url:"https://suumo.jp/chintai/jnc_000066235570/",src:"SUUMO",phone:"052-589-0044",company:"リブ・マックス名古屋店"},
+{name:"ミリオレビータ金山",ward:"naka",addr:"中区平和2",floor:"4階",rent:8.7,fee:7000,layout:"1LDK",area:"39.88m²",age:"築7年",url:"https://suumo.jp/chintai/jnc_000054362866/",src:"SUUMO",phone:"052-261-5100",company:"(株)エムホーム"},
+{name:"プレサンス上前津エレスタ",ward:"naka",addr:"中区千代田3",floor:"4階",rent:5.9,fee:7010,layout:"1K",area:"23.37m²",age:"築3年",url:"https://suumo.jp/chintai/jnc_000100870645/",src:"SUUMO"},
+{name:"ペンハウスS",ward:"naka",addr:"中区新栄2",floor:"1階",rent:7.3,fee:4000,layout:"1LDK",area:"36.1m²",age:"築5年",url:"https://suumo.jp/chintai/jnc_000067494571/",src:"SUUMO"},
+{name:"リーデンス今池",ward:"chikusa",addr:"千種区内山2",floor:"2階",rent:7.75,fee:9300,layout:"1LDK",area:"29.58m²",age:"築3年",url:"https://suumo.jp/chintai/jnc_000097180115/",src:"SUUMO"},
+{name:"プラージュ大曽根",ward:"kita",addr:"北区平安2",floor:"1階",rent:7.1,fee:7000,layout:"1LDK",area:"32.17m²",age:"築9年",url:"https://suumo.jp/chintai/jnc_000036919319/",src:"SUUMO"},
+{name:"Bay Tree OZONE",ward:"kita",addr:"北区平安2",floor:"2階",rent:6.9,fee:4000,layout:"1LDK",area:"39.1m²",age:"築12年",url:"https://suumo.jp/chintai/jnc_000070861086/",src:"SUUMO"},
+{name:"LONE STAR茶屋ケ坂",ward:"chikusa",addr:"千種区赤坂町1",floor:"5階",rent:8.6,fee:9000,layout:"3LDK",area:"65.55m²",age:"築32年",url:"https://suumo.jp/chintai/jnc_000068852021/",src:"SUUMO"},
+{name:"ヒールコートII",ward:"higashi",addr:"东区筒井2",floor:"1階",rent:8.5,fee:6000,layout:"1LDK",area:"37.13m²",age:"築8年",url:"https://suumo.jp/chintai/jnc_000105454775/",src:"SUUMO",phone:"052-242-2422",company:"部屋セレブ大須店"},
+{name:"ランドハウス泉",ward:"higashi",addr:"东区泉2",floor:"11階",rent:10.6,fee:7000,layout:"1LDK",area:"51.43m²",age:"築14年",url:"https://suumo.jp/chintai/jnc_000054858669/",src:"SUUMO"},
+{name:"リアレクト白壁",ward:"higashi",addr:"东区白壁2",floor:"1階",rent:13.8,fee:9500,layout:"2LDK",area:"63.53m²",age:"築3年",url:"https://suumo.jp/chintai/jnc_000104858451/",src:"SUUMO"},
+{name:"ジャルダン・ノリタケの森",ward:"nishi",addr:"西区栄生1",floor:"1階",rent:6.1,fee:4000,layout:"1LDK",area:"32.31m²",age:"築8年",url:"https://suumo.jp/chintai/jnc_000066967472/",src:"SUUMO"},
+{name:"FAUSTA",ward:"nishi",addr:"西区城西4",floor:"1階",rent:6.1,fee:4000,layout:"1LDK",area:"30.97m²",age:"築8年",url:"https://suumo.jp/chintai/jnc_000097065739/",src:"SUUMO"},
+{name:"Haleakara",ward:"nishi",addr:"西区上名古屋1",floor:"3階",rent:6.7,fee:3000,layout:"1LDK",area:"35.75m²",age:"築5年",url:"https://suumo.jp/chintai/jnc_000105283679/",src:"SUUMO"},
+{name:"Brezza",ward:"nishi",addr:"西区上小田井1",floor:"2階",rent:7,fee:2900,layout:"1LDK",area:"42.58m²",age:"築8年",url:"https://suumo.jp/chintai/jnc_000105440278/",src:"SUUMO"},
+{name:"コンフォート鳴浜",ward:"minami",addr:"南区鳴浜町1",floor:"2階",rent:6.7,fee:3000,layout:"1LDK",area:"38.04m²",age:"築3年",url:"https://suumo.jp/chintai/jnc_000102505964/",src:"SUUMO"},
+{name:"Tribute星崎",ward:"minami",addr:"南区星崎1",floor:"2階",rent:5.5,fee:5000,layout:"1LDK",area:"30.63m²",age:"築15年",url:"https://suumo.jp/chintai/jnc_000105482058/",src:"SUUMO"},
+{name:"MOVE本陣GRANDE",ward:"nakamura",addr:"中村区松原町5",floor:"1階",rent:6.8,fee:5000,layout:"1LDK",area:"30.73m²",age:"築2年",url:"https://suumo.jp/chintai/jnc_000100992067/",src:"SUUMO"},
+{name:"REGALEST東枇杷島",ward:"nakamura",addr:"中村区新富町4",floor:"1階",rent:7.5,fee:3000,layout:"2LDK",area:"41.46m²",age:"新房",url:"https://suumo.jp/chintai/jnc_000105470085/",src:"SUUMO"},
+];
 const sellProps=[];
 let lang='ja',currentDistrict='all',currentSource='all',currentType='rent';
 function setLang(l){lang=l;const t=trans[l];document.getElementById('page-title').textContent=t.title;document.getElementById('rentLabel').textContent=t.rentLabel;document.getElementById('sellLabel').textContent=t.sellLabel;document.getElementById('newLabel').textContent=t.newLabel;document.getElementById('timeLabel').textContent=t.timeLabel;document.querySelectorAll('.lang-switch button').forEach(b=>b.classList.remove('active'));document.getElementById('btn-'+l).classList.add('active');renderTabs();renderProperties();}
