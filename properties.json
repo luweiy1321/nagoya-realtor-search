@@ -3,7 +3,7 @@
     "At-Home",
     "SUUMO"
   ],
-  "lastUpdate": "2026-03-07T00:18:41.199Z",
+  "lastUpdate": "2026-03-07T00:19:51.543Z",
   "properties": [
     {
       "name": "エステムプランザ名古屋丸の内",
@@ -562,6 +562,58 @@
       "area": "34.32m²",
       "age": "築12年",
       "url": "https://suumo.jp/chintai/jnc_000105384934/",
+      "src": "SUUMO"
+    },
+    {
+      "name": "Jack obatachiyodaI",
+      "ward": "moriyama",
+      "addr": "守山区小幡千代田1-1-1",
+      "floor": "1階",
+      "rent": 5.8,
+      "fee": 3500,
+      "layout": "1LDK",
+      "area": "31.48m²",
+      "age": "築2年",
+      "url": "https://suumo.jp/chintai/jnc_000105418440/",
+      "src": "SUUMO"
+    },
+    {
+      "name": "レジデンスT&T",
+      "ward": "moriyama",
+      "addr": "守山区大森5-2-2",
+      "floor": "3階",
+      "rent": 6.2,
+      "fee": 3500,
+      "layout": "1LDK",
+      "area": "53m²",
+      "age": "築16年",
+      "url": "https://suumo.jp/chintai/jnc_000105440603/",
+      "src": "SUUMO"
+    },
+    {
+      "name": "バウコート",
+      "ward": "moriyama",
+      "addr": "守山区脇田3-3-3",
+      "floor": "1階",
+      "rent": 5.9,
+      "fee": 4100,
+      "layout": "1LDK",
+      "area": "45.77m²",
+      "age": "築13年",
+      "url": "https://suumo.jp/chintai/jnc_000105008166/",
+      "src": "SUUMO"
+    },
+    {
+      "name": "もみじ",
+      "ward": "moriyama",
+      "addr": "守山区四軒家2-4-4",
+      "floor": "1階",
+      "rent": 6,
+      "fee": 2900,
+      "layout": "1LDK",
+      "area": "37m²",
+      "age": "築7年",
+      "url": "https://suumo.jp/chintai/jnc_000105470293/",
       "src": "SUUMO"
     }
   ]
