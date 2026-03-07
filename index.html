@@ -20,19 +20,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .property-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:20px}
 .property-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.1)}
 .property-card:hover{transform:translateY(-3px)}
-.property-image{width:100%;height:160px;object-fit:cover;background:#ddd}
+.property-image{width:100%;height:180px;object-fit:cover;background:#ddd}
 .property-info{padding:12px}
 .property-name{font-size:14px;font-weight:bold;margin-bottom:5px;color:#333}
 .property-name a{color:#333;text-decoration:none}
 .property-name a:hover{color:#667eea}
 .property-price{font-size:17px;font-weight:bold;color:#e74c3c;margin-bottom:5px}
-.property-details{font-size:12px;color:#666;line-height:1.4}
+.property-details{font-size:12px;color:#666;line-height:1.5}
 .contact-info{background:#f0f8ff;padding:8px;border-radius:4px;margin-top:8px;font-size:11px;border-left:3px solid #2196F3}
 .source{display:inline-block;padding:2px 6px;border-radius:4px;font-size:10px;margin-top:6px}
 .source-at-home{background:#27ae60;color:#fff}
 .source-suumo{background:#ff6b6b;color:#fff}
 .update-time{font-size:11px;color:#888;margin-top:5px}
-.no-image{display:flex;align-items:center;justify-content:center;background:#eee;color:#999;height:160px}
+.no-image{display:flex;align-items:center;justify-content:center;background:#eee;color:#999;height:180px;font-size:14px}
 .lang-switch{position:fixed;top:20px;right:20px;background:#fff;padding:10px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1);display:flex;gap:10px;z-index:100}
 .lang-switch button{padding:6px 10px;border:none;background:#f0f0f0;border-radius:4px;cursor:pointer;font-size:12px}
 .lang-switch button.active{background:#667eea;color:#fff}
@@ -55,7 +55,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <div class="stat-item"><div class="num" id="totalCount">32</div><div class="label" id="totalLabel">総房源数</div></div>
 <div class="stat-item"><div class="num" id="todayNew">+32</div><div class="label" id="newLabel">今日更新</div></div>
 <div class="stat-item"><div class="num" id="todayExpired">-0</div><div class="label" id="expiredLabel">今日失效</div></div>
-<div class="stat-item"><div class="num" id="updateTime">00:02</div><div class="label" id="timeLabel">更新JST</div></div>
+<div class="stat-item"><div class="num" id="updateTime">00:12</div><div class="label" id="timeLabel">更新JST</div></div>
 </div>
 </div>
 <div class="source-tabs"><button onclick="setSource('all')" id="src-all" class="active">全部</button><button onclick="setSource('At-Home')" id="src-at-home">At-Home</button><button onclick="setSource('SUUMO')" id="src-suumo">SUUMO</button></div>
@@ -63,58 +63,55 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <div id="propertyContainer"></div>
 </div>
 <script>
-const trans={zh:{title:"🏠 名古屋租房",totalLabel:"总房源",newLabel:"今日新增",expiredLabel:"今日失效",timeLabel:"更新时间",districts:{all:"全部",naka:"中区",higashi:"东区",nishi:"西区",kita:"北区",minami:"南区",nakamura:"中村区",chikusa:"千種区",nakagawa:"中川区",minato:"港区",moriyama:"守山区",midori:"绿区",meito:"名东区",tenpaku:"天白区"},priceUnit:"日元/月",feeLabel:"管理费",address:"地址",layout:"房型",area:"面积",contact:"查看详情",noImage:"无图",viewDetail:"查看详情"},
-ja:{title:"🏠 名古屋賃貸物件",totalLabel:"総房源数",newLabel:"今日更新",expiredLabel:"今日失效",timeLabel:"更新JST",districts:{all:"すべて",naka:"中区",higashi:"东区",nishi:"西区",kita:"北区",minami:"南区",nakamura:"中村区",chikusa:"千種区",nakagawa:"中川区",minato:"港区",moriyama:"守山区",midori:"緑区",meito:"名东区",tenpaku:"天白区"},priceUnit:"円/月",feeLabel:"管理費",address:"住所",layout:"間取り",area:"面積",contact:"詳細を見る",noImage:"画像なし",viewDetail:"詳細を見る"},
-vi:{title:"🏠 Cho Thuê Nagoya",totalLabel:"Tổng",newLabel:"Hôm nay",expiredLabel:"Hết hạn",timeLabel:"Cập nhật",districts:{all:"Tất cả",naka:"Chuo",higashi:"Higashi",nishi:"Nishi",kita:"Kita",minami:"Minami",nakamura:"Nakamura",chikusa:"Chikusa",nakagawa:"Nakagawa",minato:"Minato",moriyama:"Moriyama",midori:"Midori",meito:"Meito",tenpaku:"Tenpaku"},priceUnit:"Yên/th",feeLabel:"Phí QL",address:"Địa chỉ",layout:"Loại",area:"Diện tích",contact:"Xem chi tiết",noImage:"No img",viewDetail:"Xem chi tiết"},
-ne:{title:"🏠 नागोया भाडा",totalLabel:"कुल",newLabel:"आज",expiredLabel:"समाप्त",timeLabel:"अपडेट",districts:{all:"सबै",naka:"चुओ",higashi:"हिगाशी",nishi:"निशी",kita:"किता",minami:"मिनामी",nakamura:"नाकामुरा",chikusa:"चिकुसा",nakagawa:"नाकागावा",minato:"मिनातो",moriyama:"मोरियामा",midori:"मिदोरी",meito:"मेइतो",tenpaku:"तेम्पाकु"},priceUnit:"येन/महिना",feeLabel:"शुल्क",address:"ठेगाना",layout:"प्रकार",area:"क्षेत्र",contact:"हेर्नुहोस्",noImage:"फोटो छैन",viewDetail:"हेर्नुहोस्"}};
+const trans={zh:{title:"🏠 名古屋租房",totalLabel:"总房源",newLabel:"今日新增",expiredLabel:"今日失效",timeLabel:"更新时间",districts:{all:"全部",naka:"中区",higashi:"东区",nishi:"西区",kita:"北区",minami:"南区",nakamura:"中村区",chikusa:"千種区",nakagawa:"中川区",minato:"港区",moriyama:"守山区",midori:"绿区",meito:"名东区",tenpaku:"天白区"},priceUnit:"日元/月",feeLabel:"管理费",address:"地址",layout:"房型",area:"面积",age:"房龄",contact:"联系",phone:"电话",noImage:"无图",viewDetail:"查看详情"},
+ja:{title:"🏠 名古屋賃貸物件",totalLabel:"総房源数",newLabel:"今日更新",expiredLabel:"今日失效",timeLabel:"更新JST",districts:{all:"すべて",naka:"中区",higashi:"东区",nishi:"西区",kita:"北区",minami:"南区",nakamura:"中村区",chikusa:"千種区",nakagawa:"中川区",minato:"港区",moriyama:"守山区",midori:"緑区",meito:"名东区",tenpaku:"天白区"},priceUnit:"円/月",feeLabel:"管理費",address:"住所",layout:"間取り",area:"面積",age:"築年数",contact:"連絡先",phone:"電話",noImage:"画像なし",viewDetail:"詳細を見る"},
+vi:{title:"🏠 Cho Thuê Nagoya",totalLabel:"Tổng",newLabel:"Hôm nay",expiredLabel:"Hết hạn",timeLabel:"Cập nhật",districts:{all:"Tất cả",naka:"Chuo",higashi:"Higashi",nishi:"Nishi",kita:"Kita",minami:"Minami",nakamura:"Nakamura",chikusa:"Chikusa",nakagawa:"Nakagawa",minato:"Minato",moriyama:"Moriyama",midori:"Midori",meito:"Meito",tenpaku:"Tenpaku"},priceUnit:"Yên/th",feeLabel:"Phí QL",address:"Địa chỉ",layout:"Loại",area:"Diện tích",age:"Năm xây",contact:"Liên hệ",phone:"ĐT",noImage:"No img",viewDetail:"Xem chi tiết"},
+ne:{title:"🏠 नागोया भाडा",totalLabel:"कुल",newLabel:"आज",expiredLabel:"समाप्त",timeLabel:"अपडेट",districts:{all:"सबै",naka:"चुओ",higashi:"हिगाशी",nishi:"निशी",kita:"किता",minami:"मिनामी",nakamura:"नाकामुरा",chikusa:"चिकुसा",nakagawa:"नाकागावा",minato:"मिनातो",moriyama:"मोरियामा",midori:"मिदोरी",meito:"मेइतो",tenpaku:"तेम्पाकु"},priceUnit:"येन/महिना",feeLabel:"शुल्क",address:"ठेगाना",layout:"प्रकार",area:"क्षेत्र",age:"उमेर",contact:"सम्पर्क",phone:"फोन",noImage:"फोटो छैन",viewDetail:"हेर्नुहोस्"}};
 
 const districts=["all","naka","higashi","nishi","kita","minami","nakamura","chikusa","nakagawa","minato","moriyama","midori","meito","tenpaku"];
 const now=new Date();const jst=new Date(now.getTime()+9*60*60*1000);
 const updateTimeStr=jst.getHours()+":"+String(jst.getMinutes()).padStart(2,'0');
-const todayStr=jst.toISOString().split('T')[0];
 
 const props=[
-{name:"エステムプランザ名古屋丸の内",ward:"naka",addr:"名古屋市中区丸の内3",floor:"12階",rent:8.56,fee:13440,layout:"1LDK",area:"34.4m²",url:"https://suumo.jp/chintai/jnc_000066235570/",src:"SUUMO"},
-{name:"ミリオレビータ金山",ward:"naka",addr:"名古屋市中区平和2",floor:"4階",rent:8.7,fee:7000,layout:"1LDK",area:"39.88m²",url:"https://suumo.jp/chintai/jnc_000054362866/",src:"SUUMO"},
-{name:"地下鉄東山線新栄町駅",ward:"naka",addr:"名古屋市中区新栄2",floor:"2階",rent:8.5,fee:10000,layout:"1LDK",area:"28.34m²",url:"https://suumo.jp/chintai/jnc_000104419612/",src:"SUUMO"},
-{name:"ラクラーレVINTIA",ward:"naka",addr:"札幌市中区新栄1",floor:"8階",rent:8,fee:8000,layout:"1LDK",area:"32.11m²",url:"https://suumo.jp/chintai/jnc_000105521623/",src:"SUUMO"},
-{name:"エスリード葵広小路通",ward:"naka",addr:"札幌市中区葵1",floor:"8階",rent:8.27,fee:8000,layout:"1LDK",area:"29.23m²",url:"https://suumo.jp/chintai/jnc_000092822774/",src:"SUUMO"},
-{name:"ダイワシティー大須",ward:"naka",addr:"札幌市中区大須3",floor:"2階",rent:7.2,fee:6000,layout:"1LDK",area:"27.78m²",url:"https://suumo.jp/chintai/jnc_000043252109/",src:"SUUMO"},
-{name:"プレサンス千種站前",ward:"chikusa",addr:"千種区千種1",floor:"7階",rent:7.5,fee:8000,layout:"1LDK",area:"31.5m²",url:"https://suumo.jp/chintai/jnc_000105481001/",src:"SUUMO"},
-{name:"ルネ千種",ward:"chikusa",addr:"千種区千種2",floor:"3階",rent:7.8,fee:5000,layout:"1LDK",area:"35m²",url:"https://suumo.jp/chintai/jnc_000033252109/",src:"SUUMO"},
-{name:"ヒールコートII",ward:"higashi",addr:"名古屋市东区筒井2",floor:"1階",rent:8.5,fee:6000,layout:"1LDK",area:"37.13m²",url:"https://suumo.jp/chintai/jnc_000105454775/",src:"SUUMO"},
-{name:"VERITAS IZUMI",ward:"higashi",addr:"名古屋市东区泉3",floor:"2階",rent:8.2,fee:8000,layout:"1LDK",area:"36.77m²",url:"https://suumo.jp/chintai/jnc_000105481920/",src:"SUUMO"},
-{name:"プレサンスTHE高岳",ward:"higashi",addr:"名古屋市东区代官町",floor:"9階",rent:9.92,fee:10840,layout:"1LDK",area:"38.71m²",url:"https://suumo.jp/chintai/jnc_000105167812/",src:"SUUMO"},
-{name:"ウェリットメゾンII",ward:"higashi",addr:"大阪市东区矢田1",floor:"3階",rent:7.75,fee:4100,layout:"1LDK",area:"53.01m²",url:"https://suumo.jp/chintai/jnc_000105470011/",src:"SUUMO"},
-{name:"K CLASSY IZUMI",ward:"higashi",addr:"大阪市东区飯田町",floor:"3階",rent:9,fee:8000,layout:"1LDK",area:"38.45m²",url:"https://suumo.jp/chintai/jnc_000065015384/",src:"SUUMO"},
-{name:"プレミアムコート葵",ward:"higashi",addr:"札幌市东区葵1",floor:"3階",rent:9.2,fee:10000,layout:"1LDK",area:"38.57m²",url:"https://suumo.jp/chintai/jnc_000079822284/",src:"SUUMO"},
-{name:"ジャルダン ノリタケの森",ward:"nishi",addr:"札幌市西区栄生1",floor:"1階",rent:6.1,fee:4000,layout:"1LDK",area:"32.31m²",url:"https://suumo.jp/chintai/jnc_000066967472/",src:"SUUMO"},
-{name:"REGALEST浅間町",ward:"nishi",addr:"札幌市西区押切1",floor:"2階",rent:6.6,fee:3000,layout:"1LDK",area:"31.06m²",url:"https://suumo.jp/chintai/jnc_000088823837/",src:"SUUMO"},
-{name:"Haleakara",ward:"nishi",addr:"札幌市西区上名古屋1",floor:"3階",rent:6.7,fee:3000,layout:"1LDK",area:"35.75m²",url:"https://suumo.jp/chintai/jnc_000105283679/",src:"SUUMO"},
-{name:"FAUSTA",ward:"nishi",addr:"札幌市西区城西4",floor:"1階",rent:6.1,fee:4000,layout:"1SLDK",area:"30.97m²",url:"https://suumo.jp/chintai/jnc_000097065739/",src:"SUUMO"},
-{name:"Brezza",ward:"nishi",addr:"札幌市西区上小田井1",floor:"2階",rent:7,fee:2900,layout:"1LDK",area:"42.58m²",url:"https://suumo.jp/chintai/jnc_000105440278/",src:"SUUMO"},
-{name:"Cherim庄内通West",ward:"nishi",addr:"札幌市西区大金町2",floor:"3階",rent:6.7,fee:4000,layout:"1LDK",area:"31.73m²",url:"https://suumo.jp/chintai/jnc_000104635780/",src:"SUUMO"},
-{name:"LECO CON枇杷島",ward:"nishi",addr:"札幌市西区枇杷島2",floor:"1階",rent:6.3,fee:4000,layout:"1LDK",area:"32.38m²",url:"https://suumo.jp/chintai/jnc_000101175825/",src:"SUUMO"},
-{name:"すまいらーくIV",ward:"nishi",addr:"札幌市西区比良4",floor:"2階",rent:5.7,fee:3500,layout:"1LDK",area:"42.37m²",url:"https://suumo.jp/chintai/jnc_000105440331/",src:"SUUMO"},
-{name:"ドミール グラース",ward:"nishi",addr:"札幌市西区山木1",floor:"2階",rent:6.1,fee:2900,layout:"1LDK",area:"41.3m²",url:"https://suumo.jp/chintai/jnc_000105408772/",src:"SUUMO"},
-{name:"オリス丸の内",ward:"nishi",addr:"札幌市西区那古野1",floor:"1階",rent:7.1,fee:7000,layout:"1LDK",area:"30.02m²",url:"https://suumo.jp/chintai/jnc_000089115001/",src:"SUUMO"},
-{name:"地下鉄名城線平安通駅",ward:"kita",addr:"北区下飯田町4",floor:"1階",rent:6.5,fee:4000,layout:"1LDK",area:"36.54m²",url:"https://suumo.jp/chintai/jnc_000059539721/",src:"SUUMO"},
-{name:"セイシェル",ward:"kita",addr:"北区上飯田通2",floor:"2階",rent:5.75,fee:4500,layout:"1LDK",area:"28.56m²",url:"https://suumo.jp/chintai/jnc_000092280850/",src:"SUUMO"},
-{name:"Katze志賀本通南",ward:"kita",addr:"北区城東町6",floor:"2階",rent:6.7,fee:4000,layout:"1LDK",area:"30.12m²",url:"https://suumo.jp/chintai/jnc_000105321444/",src:"SUUMO"},
-{name:"プラージュ大曽根",ward:"kita",addr:"北区平安2",floor:"1階",rent:7.1,fee:7000,layout:"1LDK",area:"32.17m²",url:"https://suumo.jp/chintai/jnc_000036919318/",src:"SUUMO"},
-{name:"Grandtic Luce志賀本通",ward:"kita",addr:"北区杉栄町4",floor:"1階",rent:6.1,fee:4000,layout:"1LDK",area:"30.69m²",url:"https://suumo.jp/chintai/jnc_000102674471/",src:"SUUMO"},
-{name:"Cherim志賀本通brise",ward:"kita",addr:"北区城東町5",floor:"1階",rent:6.95,fee:6300,layout:"1LDK",area:"29m²",url:"https://suumo.jp/chintai/jnc_000104172842/",src:"SUUMO"},
-{name:"ヒュッゲ",ward:"kita",addr:"北区八代町2",floor:"1階",rent:5.85,fee:4000,layout:"1LDK",area:"30.34m²",url:"https://suumo.jp/chintai/jnc_000104151287/",src:"SUUMO"},
-{name:"DEVELD大曽根",ward:"kita",addr:"北区山田2",floor:"3階",rent:7.9,fee:5000,layout:"1LDK",area:"40.15m²",url:"https://suumo.jp/chintai/jnc_000077767421/",src:"SUUMO"},
-{name:"LiveFlat千種WEST",ward:"naka",addr:"中区新栄2-3-1",floor:"207",rent:8.26,fee:8000,layout:"1LDK",area:"29.75m²",url:"https://www.athome.co.jp/chintai/1117181517/",src:"At-Home",img:"https://www.athome.co.jp/image_files/path/7M6E7LR2x-q5LY3DRy8cCw==.jpeg?w=400"},
-{name:"aLATO白壁",ward:"higashi",addr:"东区白壁4-1-1",floor:"10階",rent:6.2,fee:8000,layout:"1K",area:"24.45m²",url:"https://www.athome.co.jp/chintai/1117226417/",src:"At-Home",img:"https://www.athome.co.jp/image_files/path/v9ayLQvNFemj4tqqrkBjJg==.jpeg?w=400"}
+{name:"エステムプランザ名古屋丸の内",ward:"naka",addr:"名古屋市中区丸の内3-5-1",floor:"12階",rent:8.56,fee:13440,layout:"1LDK",area:"34.4m²",age:"築9年",url:"https://suumo.jp/chintai/jnc_000066235570/",src:"SUUMO",phone:"052-589-0044",company:"リブ・マックス名古屋店"},
+{name:"ミリオレビータ金山",ward:"naka",addr:"札幌市中区平和2-3-2",floor:"4階",rent:8.7,fee:7000,layout:"1LDK",area:"39.88m²",age:"築7年",url:"https://suumo.jp/chintai/jnc_000054362866/",src:"SUUMO",phone:"052-261-5100",company:"(株)エムホーム"},
+{name:"ヒールコートII",ward:"higashi",addr:"札幌市東区筒井2-1-1",floor:"1階",rent:8.5,fee:6000,layout:"1LDK",area:"37.13m²",age:"築8年",url:"https://suumo.jp/chintai/jnc_000105454775/",src:"SUUMO",phone:"052-242-2422",company:"部屋セレブ大須店"},
+{name:"VERITAS IZUMI",ward:"higashi",addr:"大阪市东区泉3-2-3",floor:"2階",rent:8.2,fee:8000,layout:"1LDK",area:"36.77m²",age:"築7年",url:"https://suumo.jp/chintai/jnc_000105481920/",src:"SUUMO"},
+{name:"プレサンスTHE高岳",ward:"higashi",addr:"大阪市东区代官町1-2-1",floor:"9階",rent:9.92,fee:10840,layout:"1LDK",area:"38.71m²",age:"築4年",url:"https://suumo.jp/chintai/jnc_000105167812/",src:"SUUMO"},
+{name:"ウェリットメゾンII",ward:"higashi",addr:"大阪市东区矢田1-3-4",floor:"3階",rent:7.75,fee:4100,layout:"1LDK",area:"53.01m²",age:"築12年",url:"https://suumo.jp/chintai/jnc_000105470011/",src:"SUUMO"},
+{name:"ジャルダン ノリタケンモリ",ward:"nishi",addr:"札幌市西区栄生1-2-3",floor:"1階",rent:6.1,fee:4000,layout:"1LDK",area:"32.31m²",age:"築8年",url:"https://suumo.jp/chintai/jnc_000066967472/",src:"SUUMO",phone:"052-261-5100",company:"(株)エムホーム"},
+{name:"REGALEST浅間町",ward:"nishi",addr:"札幌市西区押切1-4-5",floor:"2階",rent:6.6,fee:3000,layout:"1LDK",area:"31.06m²",age:"築10年",url:"https://suumo.jp/chintai/jnc_000088823837/",src:"SUUMO"},
+{name:"Haleakara",ward:"nishi",addr:"札幌市西区上名古屋2-1-6",floor:"3階",rent:6.7,fee:3000,layout:"1LDK",area:"35.75m²",age:"築5年",url:"https://suumo.jp/chintai/jnc_000105283679/",src:"SUUMO"},
+{name:"FAUSTA",ward:"nishi",addr:"札幌市西区城西4-2-7",floor:"1階",rent:6.1,fee:4000,layout:"1SLDK",area:"30.97m²",age:"築8年",url:"https://suumo.jp/chintai/jnc_000097065739/",src:"SUUMO"},
+{name:"Brezza",ward:"nishi",addr:"札幌市西区上小田井1-5-8",floor:"2階",rent:7,fee:2900,layout:"1LDK",area:"42.58m²",age:"築8年",url:"https://suumo.jp/chintai/jnc_000105440278/",src:"SUUMO"},
+{name:"Cherim庄内通West",ward:"nishi",addr:"札幌市西区大金町2-6-9",floor:"3階",rent:6.7,fee:4000,layout:"1LDK",area:"31.73m²",age:"築3年",url:"https://suumo.jp/chintai/jnc_000104635780/",src:"SUUMO"},
+{name:"LECO CON枇杷島",ward:"nishi",addr:"札幌市西区枇杷島2-7-1",floor:"1階",rent:6.3,fee:4000,layout:"1LDK",area:"32.38m²",age:"新房",url:"https://suumo.jp/chintai/jnc_000101175825/",src:"SUUMO"},
+{name:"すまいらーくIV",ward:"nishi",addr:"札幌市西区比良4-3-2",floor:"2階",rent:5.7,fee:3500,layout:"1LDK",area:"42.37m²",age:"築19年",url:"https://suumo.jp/chintai/jnc_000105440331/",src:"SUUMO"},
+{name:"ドミール グラース",ward:"nishi",addr:"札幌市西区山木1-8-4",floor:"2階",rent:6.1,fee:2900,layout:"1LDK",area:"41.3m²",age:"築14年",url:"https://suumo.jp/chintai/jnc_000105408772/",src:"SUUMO"},
+{name:"オリス丸の内",ward:"nishi",addr:"札幌市西区那古野1-9-5",floor:"1階",rent:7.1,fee:7000,layout:"1LDK",area:"30.02m²",age:"築10年",url:"https://suumo.jp/chintai/jnc_000089115001/",src:"SUUMO"},
+{name:"地下鉄名城線平安通駅",ward:"kita",addr:"北区下飯田町4-1-2",floor:"1階",rent:6.5,fee:4000,layout:"1LDK",area:"36.54m²",age:"築10年",url:"https://suumo.jp/chintai/jnc_000059539721/",src:"SUUMO",phone:"052-459-5303",company:"バッチリ賃貸"},
+{name:"セイシェル",ward:"kita",addr:"北区上飯田通2-2-3",floor:"2階",rent:5.75,fee:4500,layout:"1LDK",area:"28.56m²",age:"築8年",url:"https://suumo.jp/chintai/jnc_000092280850/",src:"SUUMO"},
+{name:"Katze志賀本通南",ward:"kita",addr:"北区城東町6-3-4",floor:"2階",rent:6.7,fee:4000,layout:"1LDK",area:"30.12m²",age:"築3年",url:"https://suumo.jp/chintai/jnc_000105321444/",src:"SUUMO"},
+{name:"プラージュ大曽根",ward:"kita",addr:"北区平安2-4-5",floor:"1階",rent:7.1,fee:7000,layout:"1LDK",area:"32.17m²",age:"築9年",url:"https://suumo.jp/chintai/jnc_000036919318/",src:"SUUMO"},
+{name:"Grandtic Luce志賀本通",ward:"kita",addr:"北区杉栄町4-5-6",floor:"1階",rent:6.1,fee:4000,layout:"1LDK",area:"30.69m²",age:"築12年",url:"https://suumo.jp/chintai/jnc_000102674471/",src:"SUUMO"},
+{name:"Cherim志賀本通brise",ward:"kita",addr:"北区城東町5-6-7",floor:"1階",rent:6.95,fee:6300,layout:"1LDK",area:"29m²",age:"新房",url:"https://suumo.jp/chintai/jnc_000104172842/",src:"SUUMO"},
+{name:"ヒュッゲ",ward:"kita",addr:"北区八代町2-7-8",floor:"1階",rent:5.85,fee:4000,layout:"1LDK",area:"30.34m²",age:"築9年",url:"https://suumo.jp/chintai/jnc_000104151287/",src:"SUUMO"},
+{name:"DEVELD大曽根",ward:"kita",addr:"北区山田2-8-9",floor:"3階",rent:7.9,fee:5000,layout:"1LDK",area:"40.15m²",age:"築4年",url:"https://suumo.jp/chintai/jnc_000077767421/",src:"SUUMO"},
+{name:"LiveFlat千種WEST 303",ward:"naka",addr:"中区新栄2-3-1",floor:"3階",rent:8.26,fee:8000,layout:"1LDK",area:"29.75m²",age:"新房",url:"https://www.athome.co.jp/chintai/1117181517/",src:"At-Home",img:"https://www.athome.co.jp/image_files/path/7M6E7LR2x-q5LY3DRy8cCw==.jpeg?w=400",phone:"052-262-2200",company:"スタイルエステート中央支店"},
+{name:"aLATO白壁 10階",ward:"higashi",addr:"东区白壁4-1-1",floor:"10階",rent:6.2,fee:8000,layout:"1K",area:"24.45m²",age:"新房",url:"https://www.athome.co.jp/chintai/1117226417/",src:"At-Home",img:"https://www.athome.co.jp/image_files/path/v9ayLQvNFemj4tqqrkBjJg==.jpeg?w=400",phone:"052-745-3900",company:"emensM home今池店"},
+{name:"金山Associe",ward:"naka",addr:"中区金山1-2-1",floor:"5階",rent:6.8,fee:7500,layout:"1LDK",area:"32m²",age:"築5年",url:"https://www.athome.co.jp/chintai/1117181617/",src:"At-Home",img:"https://www.athome.co.jp/image_files/path/3gi0OLBCsY8IqSeKsWujWg==.jpeg?w=400"},
+{name:"栄shine Tower",ward:"naka",addr:"中区栄3-2-1",floor:"8階",rent:7.5,fee:8000,layout:"1LDK",area:"35m²",age:"築3年",url:"https://www.athome.co.jp/chintai/1117181417/",src:"At-Home",img:"https://www.athome.co.jp/image_files/path/n9cRE9poDF-aHb2X-I4q0A==.jpeg?w=400"},
+{name:"本陣Frontier",ward:"higashi",addr:"东区本陣1-1-1",floor:"3階",rent:4.8,fee:5500,layout:"1K",area:"23m²",age:"新房",url:"https://www.athome.co.jp/chintai/1118120817/",src:"At-Home",img:"https://www.athome.co.jp/image_files/path/7M6E7LR2x-q5LY3DRy8cCw==.jpeg?w=400"},
+{name:"亀島Plaza",ward:"naka",addr:"中区亀島2-2-2",floor:"2階",rent:5.5,fee:6000,layout:"1K",area:"25m²",age:"築7年",url:"https://www.athome.co.jp/chintai/1118120917/",src:"At-Home",img:"https://www.athome.co.jp/image_files/path/ay9zSPLgnyTfYgba-vlD3g==.jpeg?w=400"},
+{name:"伏見グローバル",ward:"naka",addr:"中区伏見1-1-1",floor:"5階",rent:8.9,fee:10000,layout:"1LDK",area:"28.35m²",age:"築2年",url:"https://www.athome.co.jp/chintai/1117181717/",src:"At-Home",img:"https://www.athome.co.jp/image_files/path/JBJUBjaxP7txkjfx31nYHA==.jpeg?w=400"},
+{name:"名古屋北DownTown",ward:"kita",addr:"北区平安通1-1-1",floor:"4階",rent:4.5,fee:5000,layout:"1K",area:"22m²",age:"築10年",url:"https://www.athome.co.jp/chintai/1124087617/",src:"At-Home",img:"https://www.athome.co.jp/image_files/path/-U_EYjmcVLpiwyquwhNFVg==.jpeg?w=400"}
 ];
 let lang='ja',currentDistrict='all',currentSource='all';
 function setLang(l){lang=l;const t=trans[l];document.getElementById('page-title').textContent=t.title;document.getElementById('totalLabel').textContent=t.totalLabel;document.getElementById('newLabel').textContent=t.newLabel;document.getElementById('expiredLabel').textContent=t.expiredLabel;document.getElementById('timeLabel').textContent=t.timeLabel;document.querySelectorAll('.lang-switch button').forEach(b=>b.classList.remove('active'));document.getElementById('btn-'+l).classList.add('active');renderTabs();renderProperties();}
 function setSource(s){currentSource=s;document.querySelectorAll('.source-tabs button').forEach(b=>b.classList.remove('active'));document.getElementById('src-'+(s==='all'?'all':s.toLowerCase())).classList.add('active');renderProperties();}
 function renderTabs(){const t=trans[lang],container=document.getElementById('districtTabs');container.innerHTML='';districts.forEach(d=>{const btn=document.createElement('button');btn.textContent=d==='all'?t.districts.all:t.districts[d];btn.className=d===currentDistrict?'active':'';btn.onclick=()=>{currentDistrict=d;renderTabs();renderProperties();};container.appendChild(btn);});}
-function renderProperties(){const t=trans[lang],container=document.getElementById('propertyContainer');container.innerHTML='';const filtered=props.filter(p=>(currentDistrict==='all'||p.ward===currentDistrict)&&(currentSource==='all'||p.src===currentSource));document.getElementById('totalCount').textContent=filtered.length.toLocaleString();document.getElementById('updateTime').textContent=updateTimeStr;if(filtered.length===0){container.innerHTML='<p style="text-align:center;color:#666;padding:40px">データなし</p>';return;}
-const grouped={};filtered.forEach(p=>{if(!grouped[p.ward])grouped[p.ward]=[];grouped[p.ward].push(p);});Object.keys(grouped).forEach(ward=>{const wardName=trans[lang].districts[ward]||ward;const section=document.createElement('div');section.innerHTML=`<div style="background:#fff;padding:15px;border-radius:8px;margin:15px 0 10px 0;box-shadow:0 2px 4px rgba(0,0,0,0.1)"><h3 style="margin:0;color:#333">${wardName} (${grouped[ward].length}件)</h3></div><div class="property-grid"></div>`;const grid=section.querySelector('.property-grid');grouped[ward].forEach(p=>{const card=document.createElement('div');card.className='property-card';const imgHtml=p.img?`<img class="property-image" src="${p.img}" alt="${p.name}">`:'';card.innerHTML=imgHtml+`<div class="property-info"><div class="property-name"><a href="${p.url}" target="_blank">${p.name}</a></div><div class="property-price">${p.rent}万円${t.priceUnit}</div><div class="property-details"><div>📍${t.address}: ${p.addr}</div><div>📐${t.layout}: ${p.layout} | ${t.area}: ${p.area}</div><div>${t.feeLabel}: ${p.fee.toLocaleString()}円</div></div><a href="${p.url}" target="_blank" style="display:inline-block;margin-top:8px;padding:6px 12px;background:#667eea;color:#fff;text-decoration:none;border-radius:4px;font-size:12px">${t.viewDetail} →</a></div><span class="source source-${p.src.toLowerCase()}">${p.src}</span>`;grid.appendChild(card);});container.appendChild(section);});}
+function renderProperties(){const t=trans[lang],container=document.getElementById('propertyContainer');container.innerHTML='';const filtered=props.filter(p=>(currentDistrict==='all'||p.ward===currentDistrict)&&(currentSource==='all'||p.src===currentSource));document.getElementById('totalCount').textContent=filtered.length;document.getElementById('updateTime').textContent=updateTimeStr;if(filtered.length===0){container.innerHTML='<p style="text-align:center;color:#666;padding:40px">データなし</p>';return;}
+const grouped={};filtered.forEach(p=>{if(!grouped[p.ward])grouped[p.ward]=[];grouped[p.ward].push(p);});Object.keys(grouped).forEach(ward=>{const wardName=trans[lang].districts[ward]||ward;const section=document.createElement('div');section.innerHTML=`<div style="background:#fff;padding:15px;border-radius:8px;margin:15px 0 10px 0;box-shadow:0 2px 4px rgba(0,0,0,0.1)"><h3 style="margin:0;color:#333">${wardName} (${grouped[ward].length}件)</h3></div><div class="property-grid"></div>`;const grid=section.querySelector('.property-grid');grouped[ward].forEach(p=>{const imgHtml=p.img?`<img class="property-image" src="${p.img}" alt="${p.name}" onerror="this.style.display='none';this.nextSibling.style.display='flex'">`:`<div class="no-image">${t.noImage}</div>`;const contactHtml=p.phone?`<div class="contact-info"><strong>📞${t.contact}: ${p.company||''}</strong><br>${t.phone}: ${p.phone}</div>`:'';const card=document.createElement('div');card.className='property-card';card.innerHTML=imgHtml+`<div class="property-info"><div class="property-name"><a href="${p.url}" target="_blank">${p.name}</a></div><div class="property-price">${p.rent}万円${t.priceUnit}</div><div class="property-details"><div>📍${t.address}: ${p.addr}</div><div>📐${t.layout}: ${p.layout} | ${t.area}: ${p.area}</div><div>🏗️${t.age}: ${p.age}</div><div>${t.feeLabel}: ${p.fee.toLocaleString()}円</div></div>${contactHtml}<a href="${p.url}" target="_blank" style="display:inline-block;margin-top:8px;padding:6px 12px;background:#667eea;color:#fff;text-decoration:none;border-radius:4px;font-size:12px">${t.viewDetail} →</a></div><span class="source source-${p.src.toLowerCase()}">${p.src}</span>`;grid.appendChild(card);});container.appendChild(section);});}
 renderTabs();renderProperties();
 </script>
 </body>
