@@ -1,8 +1,9 @@
 {
-  "last_updated": "2026-03-07 03:58:14",
+  "last_updated": "2026-03-07 04:57:00",
   "total_properties": 8,
   "new_listings": 0,
   "removed_listings": 0,
   "additions": [],
-  "removals": []
+  "removals": [],
+  "note": "无法获取新数据 - SUUMO页面访问返回404，爬虫需要本地Chrome环境"
 }
