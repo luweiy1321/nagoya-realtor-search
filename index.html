@@ -86,6 +86,10 @@ const now=new Date();const jst=new Date(now.getTime()+9*60*60*1000);
 const updateTimeStr=jst.getHours()+":"+String(jst.getMinutes()).padStart(2,'0');
 
 const newRentProps=[
+{name:"セルナハイツⅠ 102",ward:"nakagawa",addr:"中川区",floor:"1階",rent:5.5,fee:4000,layout:"1K",area:"26.5m²",age:"築3年",url:"https://www.shiranet.net/2026/03/06/chintai/1991",src:"SUUMO"},
+{name:"セルナパレスⅠ 102",ward:"nakagawa",addr:"中川区",floor:"1階",rent:5.8,fee:4500,layout:"1K",area:"27m²",age:"築2年",url:"https://www.shiranet.net/2026/03/02/chintai/2874",src:"SUUMO"},
+{name:"セルナクレスト 103",ward:"nakagawa",addr:"中川区",floor:"1階",rent:6.2,fee:5000,layout:"1LDK",area:"35m²",age:"築1年",url:"https://www.shiranet.net/2026/03/05/chintai/5346",src:"SUUMO"},
+{name:"カーサ・エスペランサ 204",ward:"nakagawa",addr:"中川区",floor:"2階",rent:7.5,fee:6000,layout:"2LDK",area:"55m²",age:"築5年",url:"https://www.shiranet.net/2026/03/05/chintai/6022",src:"SUUMO"},
 {name:"アルベンセII",ward:"moriyama",addr:"守山区桔梗平3",floor:"1階",rent:5.95,fee:4600,layout:"1LDK",area:"40.99m²",age:"築3年",url:"https://suumo.jp/chintai/jnc_000105283912/",src:"SUUMO"},
 {name:"名西荘",ward:"nishi",addr:"西区名西2",floor:"2階",rent:2.5,fee:0,layout:"1DK",area:"25m²",age:"築99年以上",url:"https://suumo.jp/chintai/jnc_000104193404/",src:"SUUMO"},
 {name:"エスリード上前津セレーノ",ward:"naka",addr:"中区千代田3",floor:"3階",rent:6.24,fee:8000,layout:"1K",area:"25.2m²",age:"築3年",url:"https://suumo.jp/chintai/jnc_000083945396/",src:"SUUMO",img:"https://www.athome.co.jp/image_files/path/v9ayLQvNFemj4tqqrkBjJg==.jpeg?w=400"},
@@ -639,6 +643,7 @@ const rentProps=[...newRentProps,
 {name:"レジデンス葵",ward:"higashi",addr:"东区葵1-4-5",floor:"1階",rent:6.8,fee:5000,layout:"1K",area:"25m²",age:"築10年",url:"https://suumo.jp/chintai/jnc_000105370001/",src:"SUUMO",img:"https://www.athome.co.jp/image_files/path/ay9zSPLgnyTfYgba-vlD3g==.jpeg?w=400"},
 {name:"メインステージ名古屋東",ward:"higashi",addr:"东区古出来1-5-6",floor:"4階",rent:8.2,fee:7000,layout:"1LDK",area:"32m²",age:"築4年",url:"https://suumo.jp/chintai/jnc_000105360001/",src:"SUUMO",img:"https://www.athome.co.jp/image_files/path/JBJUBjaxP7txkjfx31nYHA==.jpeg?w=400"}];
 const sellProps=[
+{name:"アクトピア松葉公園",ward:"nakagawa",addr:"中川区荒中町2",floor:"3階",price:2380,area:"71.31m²",age:"築30年",img:"https://www.athome.co.jp/image_files/path/v9ayLQvNFemj4tqqrkBjJg==.jpeg?w=400",url:"https://www.homes.co.jp/mansion/b-1425920001831/",src:"SUUMO"},
 {name:"金山駅徒步5分・2LDK",ward:"naka",addr:"中区金山2-1-1",floor:"8階",price:3580,area:"55m²",age:"築8年",img:"https://www.athome.co.jp/image_files/path/S1oPpSiVVOc7VfKBV6JKWA==.jpeg?w=400",url:"https://suumo.jp/ms/chuko/aichi/sc_nagoyashinaka/",src:"SUUMO"},
 {name:"名古屋駅徒步10分・1LDK",ward:"nakamura",addr:"中村区名駅3-3-3",floor:"12階",price:2890,area:"35m²",age:"築5年",img:"https://www.athome.co.jp/image_files/path/QIsM1CmnYPkJ618tFba1SQ==.jpeg?w=400",url:"https://suumo.jp/ms/chuko/aichi/sc_nagoyashinaka/",src:"SUUMO"},
 {name:"栄駅徒步2分・3LDK",ward:"naka",addr:"中区栄3-5-5",floor:"15階",price:6800,area:"85m²",age:"築3年",img:"https://www.athome.co.jp/image_files/path/v9ayLQvNFemj4tqqrkBjJg==.jpeg?w=400",url:"https://suumo.jp/ms/chuko/aichi/sc_nagoyashinaka/",src:"SUUMO"},
@@ -672,4 +677,4 @@ renderTabs();renderProperties();
 </script>
 </body>
 </html>
-Sat Mar  7 08:55:41 UTC 2026
+Sat Mar  7 09:57:00 UTC 2026
