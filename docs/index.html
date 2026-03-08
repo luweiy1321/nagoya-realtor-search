@@ -275,7 +275,8 @@ const sellProps=[{name:"NAGOYA the TOWER",ward:"nakamura",addr:"中村区名駅4
 {name:"中古マンション",ward:"higashi",addr:"东区",floor:"?",price:2398,layout:"?",area:"?",age:"?",url:"https://suumo.jp/ms/chuko/aichi/sc_nagoyashihigashi/nc_79231075/",src:"SUUMO",img:""},
 {name:"中古マンション",ward:"kita",addr:"北区",floor:"?",price:2599,layout:"?",area:"?",age:"?",url:"https://suumo.jp/ms/chuko/aichi/sc_nagoyashikita/nc_78097811/",src:"SUUMO",img:""},
 {name:"中古マンション",ward:"kita",addr:"北区",floor:"?",price:2098,layout:"?",area:"?",age:"?",url:"https://suumo.jp/ms/chuko/aichi/sc_nagoyashikita/nc_20082174/",src:"SUUMO",img:""},
-{name:"中古マンション",ward:"naka",addr:"中区",floor:"?",price:3690,layout:"?",area:"?",age:"?",url:"https://suumo.jp/ms/chuko/aichi/sc_nagoyashinaka/nc_77377578/",src:"SUUMO",img:""}];
+{name:"中古マンション",ward:"naka",addr:"中区",floor:"?",price:3690,layout:"?",area:"?",age:"?",url:"https://suumo.jp/ms/chuko/aichi/sc_nagoyashinaka/nc_77377578/",src:"SUUMO",img:""},
+{name:"中古マンション",ward:"nakagawa",addr:"中川区",floor:"?",price:1790,layout:"?",area:"?",age:"?",url:"https://suumo.jp/ms/chuko/aichi/sc_nagoyashinakagawa/nc_20366624/",src:"SUUMO",img:""}];
 let lang='ja',currentDistrict='all',currentSource='all',currentType='rent';
 function setLang(l){lang=l;const t=trans[l];document.getElementById('page-title').textContent=t.title;document.getElementById('rentLabel').textContent=t.rentLabel;document.getElementById('sellLabel').textContent=t.sellLabel;document.getElementById('newLabel').textContent=t.newLabel;document.getElementById('timeLabel').textContent=t.timeLabel;document.querySelectorAll('.lang-switch button').forEach(b=>b.classList.remove('active'));document.getElementById('btn-'+l).classList.add('active');renderTabs();renderProperties();}
 function setType(t){currentType=t;document.querySelectorAll('.type-tabs button').forEach(b=>b.classList.remove('active'));document.getElementById('type-'+t).classList.add('active');renderProperties();}
